@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.CorpusKeywordsDao" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.CorpusKeywords" >
+    <result column="idx" property="idx" jdbcType="BIGINT" />
+    <result column="kw" property="kw" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="base_column_list"> idx, kw, create_time, update_time</sql>
+  
+   <sql id="where_condition">
+		<trim prefix=" where " suffixOverrides="and">
+			<if test="id != null">
+				idx = #{idx} and
+			</if>
+			<if test="kw != null and searchType=='like'">
+			    kw like '%${kw}%'  and
+			</if>
+			<if test="kw != null and searchType=='eq'">
+			    kw=#{kw}  and
+			</if>
+		</trim>
+	</sql>
+	<sql id="limitAndOrderBy">
+		<if test="sortAndDesc != null">
+			order by ${sortAndDesc}
+		</if>
+	</sql>
+    
+    <select id="list" resultMap="BaseResultMap" parameterType="Measure">
+		select
+		<include refid="base_column_list" />
+		from qding_bi.corpus_keywords
+		<include refid="where_condition" />
+		<include refid="limitAndOrderBy" />
+	</select>
+	<select id="count" resultType="Integer" parameterType="Measure">
+		select count(1)
+		from qding_bi.corpus_keywords
+		<include refid="where_condition" />
+	</select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="Measure">
+		select
+		<include refid="base_column_list" />
+		from qding_bi.corpus_keywords
+		where idx=#{idx} limit 1
+	</select>
+
+	<insert id="save" parameterType="Measure">
+		insert into qding_bi.corpus_keywords
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="idx != null">
+				idx,
+			</if>
+			<if test="kw != null">
+				kw,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="idx != null">
+				#{idx},
+			</if>
+			<if test="kw != null">
+				#{kw},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateById" parameterType="Measure">
+		update qding_bi.corpus_keywords
+		<set>
+			<if test="kw != null">
+				kw = #{kw},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+		</set>
+		where idx = #{idx}
+	</update>
+	<delete id="delete" parameterType="Measure">
+		delete from qding_bi.corpus_keywords
+		<include refid="where_condition" />
+	</delete>
+	<select id="listByIDs" resultMap="BaseResultMap" parameterType="String">
+		select
+		<include refid="base_column_list" />
+		from qding_bi.corpus_keywords
+		where idx in (${idxs})
+	</select>
+</mapper>

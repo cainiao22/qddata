@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.PCompanyPersonInfoDao">
+
+    <select id="queryAllPerson" resultType="java.lang.Double">
+        select count(user_id_p) from "p_company_person_info"
+        <where>
+            <include refid="condition"/>
+        </where>
+    </select>
+    <select id="queryAllRegPerson" resultType="java.lang.Double">
+        select count(user_id_p) from "p_company_person_info"
+        <where>
+            <include refid="condition"/>
+        </where>
+        and user_is_regsited='1'
+    </select>
+    <select id="queryAllPersonByCompany" resultType="java.util.Map">
+        select company_id, count(user_id_p) as num from "p_company_person_info"
+        <where>
+            <include refid="condition"/>
+        </where>
+        group by company_id
+    </select>
+    <select id="queryAllRegPersonByCompany" resultType="java.util.Map">
+    select company_id, count(user_id_p) as num from "p_company_person_info" where user_is_regsited='1' and user_status='1' group by company_id
+  </select>
+    <select id="queryPersonByCompany" resultType="java.util.Map">
+        select company_name,company_id, count(user_id_p) as num from "p_company_person_info"
+        <where>
+            <include refid="condition"/>
+        </where>
+        <if test="qrYcompanyId != '' and qrYcompanyId != null and qrYcompanyId != 'all'">
+            and qyr_company_binary_list like '%${qrYcompanyId}%'
+        </if>
+        group by company_name,company_id
+    </select>
+    <select id="queryRegPersonByCompany" resultType="java.util.Map">
+        select company_name,company_id, count(user_id_p) as num from "p_company_person_info"
+        <where>
+            <include refid="condition"/>
+        </where>
+        <if test="qrYcompanyId != '' and qrYcompanyId != null and qrYcompanyId != 'all'">
+            and qyr_company_binary_list like '%${qrYcompanyId}%'
+        </if>
+        and user_is_regsited='1'
+        group by company_name,company_id
+    </select>
+    <select id="queryAllPersonByQryCompany" resultType="java.lang.Long">
+        select count(user_id_p) from "p_company_person_info"
+        <where>
+            <include refid="condition"/>
+        </where>
+        <if test="qrYcompanyId != '' and qrYcompanyId != null and qrYcompanyId != 'all'">
+            and qyr_company_binary_list like '%${qrYcompanyId}%'
+        </if>
+    </select>
+    <select id="queryAllRegPersonByQryCompany" resultType="java.lang.Long">
+        select count(user_id_p) from "p_company_person_info"
+        <where>
+            <include refid="condition"/>
+        </where>
+        and user_is_regsited='1'
+        <if test="qrYcompanyId != '' and qrYcompanyId != null and qrYcompanyId != 'all'">
+            and qyr_company_binary_list like '%${qrYcompanyId}%'
+        </if>
+    </select>
+    <select id="queryRegPersonByCondition" resultType="java.lang.Double">
+        select count(user_id_p) from "p_company_person_info"
+        <where>
+            <include refid="condition"/>
+        </where>
+        and user_is_regsited='1'
+        <if test="qrYcompanyId != '' and qrYcompanyId != null and qrYcompanyId != 'all'">
+            and qyr_company_binary_list like '%${qrYcompanyId}%'
+        </if>
+        <if test="companyId != '' and companyId != null and companyId != 'all'">
+            and company_id=#{companyId}
+        </if>
+
+    </select>
+    <select id="queryPersonDetails" resultType="java.util.Map">
+        select user_id_p as "user_id", user_create_date as "user_regist_date" ,user_telphone,user_name,user_gender,company_name,user_city_name,user_regist_date as "first_visit_date",user_active_date as "last_visit_date"  from "p_company_person_info"
+        <where>
+            <include refid="condition"/>
+            <if test="param.companyId != null and param.companyId != '' and param.companyId != 'all'">
+                and company_id=#{param.companyId}
+            </if>
+            <if test="param.userName != '' and param.userName != null">
+                and user_name like '%${param.userName}%'
+            </if>
+            <if test="param.telphone != '' and param.telphone != null">
+                and user_telphone = #{param.telphone}
+            </if>
+            <if test="param.registered">
+                and user_is_regsited=1
+            </if>
+            <if test="param.registerDate != null and param.registerDate != ''">
+                and user_regist_date=#{param.registerDate}
+            </if>
+            <if test="param.activeDate != null and param.activeDate != ''">
+                and user_active_date=#{param.activeDate}
+            </if>
+        </where>
+    </select>
+
+    <sql id="condition">
+        and user_status='1'
+    </sql>
+
+</mapper>

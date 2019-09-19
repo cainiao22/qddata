@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.StarVeinSalesWlwWtDao" >
+
+    <resultMap id="BaseResultMap" type="StarVeinSalesWlwWt">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="dim_type" property="dim_type" jdbcType="VARCHAR" />
+        <result column="person" property="person" jdbcType="VARCHAR" />
+        <result column="client_name" property="client_name" jdbcType="VARCHAR" />
+        <result column="plan_amount" property="plan_amount" jdbcType="VARCHAR" />
+        <result column="main_product" property="main_product" jdbcType="VARCHAR" />
+        <result column="project_stage" property="project_stage" jdbcType="VARCHAR" />
+        <result column="plan_date" property="plan_date" jdbcType="VARCHAR" />
+        <result column="shipment_info" property="shipment_info" jdbcType="VARCHAR" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="save" parameterType="StarVeinSalesWlwWt">
+        INSERT INTO ds_star_vein_sales_wlw_wt(id,dim_type,person,client_name,plan_amount,main_product,project_stage,plan_date,shipment_info,remarks)
+        VALUES (#{id},#{dim_type},#{person},#{client_name},#{plan_amount},#{main_product},#{project_stage},#{plan_date},#{shipment_info},#{remarks})
+    </insert>
+
+    <select id="list" resultMap="BaseResultMap" parameterType="StarVeinSalesWlwWt">
+        select
+        id,dim_type,person,client_name,plan_amount,main_product,project_stage,plan_date,shipment_info,remarks
+        from ds_star_vein_sales_wlw_wt
+        <where>
+            <if test="dim_type != null" >
+                dim_type = #{dim_type}
+            </if>
+        </where>
+    </select>
+    <delete id="delete" parameterType="StarVeinSalesWlwWt">
+        delete from ds_star_vein_sales_wlw_wt
+        where  dim_type = #{dim_type}
+    </delete>
+</mapper>

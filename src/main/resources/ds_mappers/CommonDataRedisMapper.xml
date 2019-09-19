@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.CommonDataRedisDao" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.CommonDataRedis" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="data_type" property="dataType" jdbcType="CHAR" />
+    <result column="key" property="key" jdbcType="VARCHAR" />
+    <result column="fields" property="fields" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="disabled" property="disabled" jdbcType="SMALLINT" />
+    <result column="common_data_summary_id" property="commonDataSummaryId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, data_type, key, fields, create_time, update_time, disabled, common_data_summary_id
+  </sql>
+  <insert id="insert" parameterType="com.qding.bigdata.ds.model.CommonDataRedis" >
+    insert into ds_common_data_redis (data_type, `key`, fields,
+      create_time, update_time, disabled, 
+      common_data_summary_id)
+    values (#{dataType,jdbcType=CHAR}, #{key,jdbcType=VARCHAR}, #{fields,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{disabled,jdbcType=SMALLINT}, 
+      #{commonDataSummaryId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.CommonDataRedis" >
+    insert into ds_common_data_redis
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dataType != null" >
+        data_type,
+      </if>
+      <if test="key != null" >
+        `key`,
+      </if>
+      <if test="fields != null" >
+        fields,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="disabled != null" >
+        disabled,
+      </if>
+      <if test="commonDataSummaryId != null" >
+        common_data_summary_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dataType != null" >
+        #{dataType,jdbcType=CHAR},
+      </if>
+      <if test="key != null" >
+        #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="fields != null" >
+        #{fields,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="disabled != null" >
+        #{disabled,jdbcType=SMALLINT},
+      </if>
+      <if test="commonDataSummaryId != null" >
+        #{commonDataSummaryId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateBySummaryId" parameterType="com.qding.bigdata.ds.model.CommonDataRedis" >
+    update ds_common_data_redis
+    set data_type = #{dataType,jdbcType=CHAR},
+      key = #{key,jdbcType=VARCHAR},
+      fields = #{fields,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where common_data_summary_id = #{commonDataSummaryId} and disabled=0
+  </update>
+  <select id="getListBySummaryIds" parameterType="com.qding.bigdata.ds.model.CommonDataRedis" resultMap="BaseResultMap">
+    SELECT * FROM ds_common_data_redis WHERE common_data_summary_id IN
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+      #{item.commonDataSummaryId}
+    </foreach>
+    AND disabled = 0
+  </select>
+  <update id="deleteBySummaryId">
+    update ds_common_data_redis set disabled = 1 WHERE common_data_summary_id= #{commonDataSummaryId} and disabled = 0
+  </update>
+  <select id="getBySummaryId" resultMap="BaseResultMap">
+    SELECT * FROM ds_common_data_redis WHERE common_data_summary_id=#{commonDataSummaryId} and disabled = 0 limit 1
+  </select>
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.dw.dao.ReportDao">
+	<sql id="column_list">
+		<trim suffixOverrides="," prefixOverrides=",">
+
+			<if test="groupFieldList!=null">
+
+				<foreach item="item" collection="groupFieldList" separator=",">
+					<if test="item.segment != null  and item.segment!=''">
+						${item.segment}
+					</if>
+				</foreach>
+			</if>
+			,
+			<foreach item="item" collection="meterFieldList" separator=",">
+				<if test="item.segment != null  and item.segment!=''">
+					${item.segment}
+				</if>
+			</foreach>
+		</trim>
+	</sql>
+	<sql id="where_condition">
+		<if test="queryFieldList!=null">
+			<trim prefix=" where " suffixOverrides="and">
+				<foreach item="item" collection="queryFieldList" separator="and ">
+					<if test="item.segment != null  and item.segment!=''">
+						${item.segment}
+					</if>
+				</foreach>
+			</trim>
+
+		</if>
+	</sql>
+	<sql id="group_condition">
+		<if test="groupFieldList!=null">
+
+			<trim prefix=" group by " suffixOverrides=",">
+				<foreach item="item" collection="groupFieldList" separator=",">
+					<if test="item.segment != null  and item.segment!=''">
+						${item.segment}
+					</if>
+				</foreach>
+			</trim>
+		</if>
+
+	</sql>
+	<sql id="limitAndOrderBy">
+		<if test="sortFieldList!=null">
+			<trim prefix=" order by " suffixOverrides=",">
+			
+			<foreach collection="sortFieldList"  item="item" 
+				separator="," >  
+				<if test="item.segment != null  and item.segment!=''">
+						${item.segment}
+					</if>
+				
+				 </foreach>
+		</trim>
+		</if>
+	</sql>
+	<select id="execute" parameterType="Report" resultType="Map">
+		select
+		<include refid="column_list" />
+		from ${dataTable}
+		<include refid="where_condition" />
+		<include refid="group_condition" />
+		<include refid="limitAndOrderBy" />
+	</select>
+	<select id="loadDimension" parameterType="Dimension" resultType="Map">
+		select
+		*
+		from ${table} order by sort 
+	</select>
+	<select id="executeSql" parameterType="String" resultType="Map">
+		${sql}
+	</select>
+	<insert id="addlog"   >
+		insert into test_tracker(param,ts)values('${param}','${ts}');
+	</insert>
+
+</mapper>

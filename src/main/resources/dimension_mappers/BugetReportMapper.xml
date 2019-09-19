@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.BugetReportDao" >
+
+    <resultMap id="BaseResultMap" type="BugetReport">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="data_dt" property="data_dt" jdbcType="VARCHAR" />
+        <result column="update_dt" property="update_dt" jdbcType="VARCHAR" />
+        <result column="year" property="year" jdbcType="VARCHAR" />
+        <result column="first_format" property="first_format" jdbcType="VARCHAR" />
+        <result column="second_format" property="second_format" jdbcType="INTEGER" />
+        <result column="third_format" property="third_format" jdbcType="VARCHAR" />
+        <result column="month" property="month" jdbcType="VARCHAR" />
+        <result column="shouru_month" property="shouru_month" jdbcType="DECIMAL" />
+        <result column="maoli_month" property="maoli_month" jdbcType="DECIMAL" />
+        <result column="gsv_month" property="gsv_month" jdbcType="DECIMAL" />
+        <result column="week" property="week" jdbcType="INTEGER" />
+        <result column="shouru_week" property="shouru_week" jdbcType="DECIMAL" />
+        <result column="maoli_week" property="maoli_week" jdbcType="DECIMAL" />
+        <result column="gsv_week" property="gsv_week" jdbcType="DECIMAL" />
+    </resultMap>
+
+    <insert id="save" parameterType="com.qding.bigdata.ds.model.BugetReport">
+       INSERT INTO ds_dim_budget_jiashicang(data_dt,year, first_format,first_format_en, second_format,second_format_en, third_format,third_format_en, month, shouru_month,maoli_month,gsv_month,week,shouru_week,maoli_week,gsv_week,id)
+       VALUES (#{data_dt},#{year},#{first_format},#{first_format_en},#{second_format},#{second_format_en},#{third_format},#{third_format_en},#{month},#{shouru_month},#{maoli_month},#{gsv_month},#{week},#{shouru_week},#{maoli_week},#{gsv_week},#{id})
+    </insert>
+
+    <select id="list" resultMap="BaseResultMap" parameterType="BugetReport">
+        select
+         id,data_dt,year, first_format, second_format, third_format, month, shouru_month ,maoli_month,gsv_month,week,shouru_week,maoli_week,gsv_week
+        from ds_dim_budget_jiashicang
+        <where>
+            <if test="year != null" >
+                year = #{year}
+            </if>
+            <if test="first_format_en != null" >
+                AND first_format_en =#{first_format_en}
+            </if>
+            <if test="second_format_en != null" >
+                AND second_format_en = #{second_format_en}
+            </if>
+        </where>
+	</select>
+
+    <select id="getTotal" resultMap="BaseResultMap" parameterType="BugetReport">
+       select
+            data_dt,year, CASE WHEN first_format = '本地服务' then '生活服务' else first_format END first_format , month,week,
+            sum(shouru_month)shouru_month,
+            sum(maoli_month)maoli_month,
+            sum(gsv_month)gsv_month,week,
+            sum(shouru_week)shouru_week,
+            sum(maoli_week)maoli_week,
+            sum(gsv_week)gsv_week
+        from ds_dim_budget_jiashicang WHERE year=#{year} and first_format_en =#{first_format_en} and second_format_en in
+        <foreach item="item" index="index" collection="second_format_totalList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY month,week;
+    </select>
+
+
+
+
+    <update id="updateById" parameterType="BugetReport" >
+        update ds_dim_budget_jiashicang
+        <set >
+            <if test="data_dt != null" >
+                data_dt = #{data_dt,jdbcType=VARCHAR},
+            </if>
+            <if test="update_dt != null" >
+                update_dt = #{update_dt,jdbcType=VARCHAR},
+            </if>
+            <if test="year != null" >
+                year = #{year,jdbcType=VARCHAR},
+            </if>
+            <if test="first_format != null" >
+                first_format = #{first_format,jdbcType=VARCHAR},
+            </if>
+            <if test="first_format_en != null" >
+                first_format_en = #{first_format_en,jdbcType=VARCHAR},
+            </if>
+            <if test="second_format != null" >
+                second_format = #{second_format,jdbcType=INTEGER},
+            </if>
+            <if test="second_format_en != null" >
+                second_format_en = #{second_format_en,jdbcType=INTEGER},
+            </if>
+            <if test="third_format != null" >
+                third_format = #{second_format,jdbcType=VARCHAR},
+            </if>
+            <if test="third_format_en != null" >
+                third_format_en = #{third_format_en,jdbcType=VARCHAR},
+            </if>
+            <if test="month != null" >
+                month = #{month,jdbcType=VARCHAR},
+            </if>
+            <if test="shouru_month != null" >
+                shouru_month = #{shouru_month,jdbcType=DECIMAL},
+            </if>
+            <if test="maoli_month != null" >
+                maoli_month = #{maoli_month,jdbcType=DECIMAL},
+            </if>
+            <if test="gsv_month != null" >
+                gsv_month = #{gsv_month,jdbcType=DECIMAL},
+            </if>
+            <if test="week != null" >
+                week = #{week,jdbcType=INTEGER},
+            </if>
+            <if test="shouru_week != null" >
+                shouru_week = #{shouru_week,jdbcType=DECIMAL},
+            </if>
+            <if test="maoli_week != null" >
+                maoli_week = #{maoli_week,jdbcType=DECIMAL},
+            </if>
+            <if test="gsv_week != null" >
+                gsv_week = #{gsv_week,jdbcType=DECIMAL},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

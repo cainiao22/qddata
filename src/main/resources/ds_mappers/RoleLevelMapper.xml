@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.RoleLevelDao">
+	<resultMap id="BaseResultMap" type="RoleLevel">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="cn_name" property="cnName" jdbcType="VARCHAR" />
+		<result column="en_name" property="enName" jdbcType="VARCHAR" />
+		<result column="level_no" property="level" jdbcType="INTEGER" />
+		<result column="role_id" property="roleId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="base_column_list">
+		id, cn_name, en_name, level_no, role_id
+	</sql>
+	<sql id="where_condition">
+		<trim prefix=" where " suffixOverrides="and">
+			<if test="id != null">
+				id = #{id} and
+			</if>
+			<if test="cnName != null">
+				cn_name = #{cnName} and
+			</if>
+			<if test="enName != null">
+				en_name = #{enName} and
+			</if>
+			<if test="level != null">
+				level_no = #{level} and
+			</if>
+			<if test="roleId != null">
+				role_id = #{roleId} and
+			</if>
+		</trim>
+	</sql>
+	<sql id="limitAndOrderBy">
+		<if test="sortAndDesc != null">
+			order by ${sortAndDesc}
+		</if>
+		limit  #{pageCount} offset #{offset} 
+	</sql>
+	<select id="list" resultMap="BaseResultMap" parameterType="RoleLevel">
+		select
+		<include refid="base_column_list" />
+		from ds_rolelevel
+		<include refid="where_condition" />
+		<include refid="limitAndOrderBy" />
+	</select>
+	<select id="listAll" resultMap="BaseResultMap" parameterType="RoleLevel">
+		select
+		<include refid="base_column_list" />
+		from ds_rolelevel
+		<include refid="where_condition" />
+	</select>
+	<select id="count" resultType="Integer" parameterType="RoleLevel">
+		select count(1)
+		from ds_rolelevel
+		<include refid="where_condition" />
+	</select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="RoleLevel">
+		select
+		<include refid="base_column_list" />
+		from ds_rolelevel
+		where id=#{id} limit 1
+	</select>
+	<insert id="save" parameterType="RoleLevel">
+		insert into ds_rolelevel
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="cnName != null">
+				cn_name,
+			</if>
+			<if test="enName != null">
+				en_name,
+			</if>
+			<if test="level != null">
+				level_no,
+			</if>
+			<if test="roleId != null">
+				role_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="cnName != null">
+				#{cnName},
+			</if>
+			<if test="enName != null">
+				#{enName},
+			</if>
+			<if test="level != null">
+				#{level},
+			</if>
+			<if test="roleId != null">
+				#{roleId},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateById" parameterType="RoleLevel">
+		update ds_rolelevel
+		<set>
+			<if test="cnName != null">
+				cn_name = #{cnName},
+			</if>
+			<if test="enName != null">
+				en_name = #{enName},
+			</if>
+			<if test="level != null">
+				level_no = #{level},
+			</if>
+			<if test="roleId != null">
+				role_id = #{roleId},
+			</if>
+			<if test="updateTime != null">
+				update_time=#{updateTime},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<delete id="delete" parameterType="RoleLevel">
+		delete from ds_rolelevel
+		<include refid="where_condition" />
+	</delete>
+	<select id="listByIDs" resultMap="BaseResultMap" parameterType="String">
+		select
+		<include refid="base_column_list" />
+		from ds_rolelevel
+		where id in (${ids})
+	</select>
+
+	<select id="getByEnName" resultMap="BaseResultMap" parameterType="String">
+		select
+		<include refid="base_column_list" />
+		from ds_rolelevel
+		where en_name=#{enName}
+	</select>
+</mapper>

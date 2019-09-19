@@ -1,0 +1,35 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/cache
+     http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+    <cache:annotation-driven/>
+    <bean id="redisCache" class="com.qding.bigdata.ds.cache.RedisCache">
+        <constructor-arg index="0" value="${redis.cluster.prefix}" />
+        <constructor-arg index="1" value="redisCache" />
+        <property name="expire" value="8000"/>
+        <property name="prefix" value="${redis.cluster.prefix}" />
+        <property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+        <property name="valueSerializer">
+            <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
+        </property>
+        <property name="redisCluster" ref="redisCluster"/>
+        <property name="name" value="redisCache"/>
+    </bean>
+    <!-- generic cache manager -->
+    <bean id="cacheManager"
+          class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <ref bean="redisCache"/>
+            </set>
+        </property>
+    </bean>
+    <bean id="authorityUtil" class="com.qding.bigdata.ds.util.AuthorityUtil"/>
+</beans>

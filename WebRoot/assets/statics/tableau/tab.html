@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+    <title>移动驾驶舱</title>
+    <script>
+        //设置为 1rem=100px;
+        (function(doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function() {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    docEl.style.fontSize = 100 * (clientWidth / 320) + 'px';
+                };
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            recalc();
+        })(document, window);
+    </script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        a{
+            color: #000000;
+            text-decoration: none;
+            background-color: transparent;
+            -webkit-text-decoration-skip: objects
+        }
+        .contain{
+            overflow: hidden;
+            height: 0.52rem;
+            position: relative;
+        }
+        .nav{
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 0.5rem;
+            list-style: none;
+            transition: 0.5s ease;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .nav::after{
+            content: "";
+            display: block;
+            height: 0;
+            clear: both;
+        }
+        .nav-item{
+            float: left;
+            width: 0.7rem;
+            line-height: 0.5rem;
+            font-size: 0.13rem;
+            text-align: center;
+        }
+        .nav-item span{
+            display: inline-block;
+            padding: 0 7px;
+            cursor: pointer;
+        }
+        .nav-item .active{
+            color: #00f;
+            border-bottom: 2px solid #00f;
+        }
+        .tab-pane{
+            display: none;
+        }
+        .tab-content .active{
+            display: block;
+        }
+        #tableau-svg-spinner-0 svg, #tableau-svg-spinner-1 svg, #tableau-svg-spinner-2 svg, #tableau-svg-spinner-3 svg, #tableau-svg-spinner-4 svg, #tableau-svg-spinner-5 svg{
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+
+<body class="fix-header card-no-border">
+<div id="main-wrapper">
+    <!-- Nav tabs -->
+    <div class="contain">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <span data-id="home" data-btn="true" class="hidden-xs-down">用户指标</span>
+            </li>
+            <li class="nav-item">
+                <span data-id="profile" data-btn="true" class="hidden-xs-down">OKR</span>
+            </li>
+            <li class="nav-item">
+                <span data-id="messages" data-btn="true" class="hidden-xs-down">丁老板</span>
+            </li>
+            <li class="nav-item">
+                <span data-id="kehufuwu" data-btn="true" class="hidden-xs-down">客户服务</span>
+            </li>
+            <li class="nav-item">
+                <span data-id="wuyefuwu" data-btn="true" class="hidden-xs-down">物业服务</span>
+            </li>
+            <li class="nav-item">
+                <span data-id="devsource" data-btn="true" class="hidden-xs-down">研发资源</span>
+            </li>
+        </ul>
+    </div>
+    <!-- Tab panes -->
+    <div class="tab-content tabcontent-border" align="center">
+        <div class="tab-pane p-20"></div>
+        <div class="tab-pane p-20"></div>
+        <div class="tab-pane p-20"></div>
+        <div class="tab-pane p-20"></div>
+        <div class="tab-pane p-20"></div>
+        <div class="tab-pane p-20"></div>
+    </div>
+    <div class="common"></div>
+</div>
+<script src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+<script src="https://cdn.bootcss.com/touchjs/0.2.14/touch.min.js"></script>
+<script>
+    $(function () {
+        var timer = null;
+        // 设置nav的宽
+        var len = $('.nav-item').length,
+            aLi = $('.nav-item').width(),
+            win = window.outerWidth;
+        var aUl = aLi * len + 1;
+        var max = win - aUl;
+        $('.nav').css('width', aUl + 'px');
+        // 滑动导航条(左滑)
+        $('.nav').on('swipeleft', () => {
+            if (max < 0) {
+            var left = parseFloat($('.nav').css('left'));
+            left -= 200;
+            if (left < max) {
+                left = max;
+            }
+            $('.nav').css('left', left + 'px');
+        }
+    })
+        // 滑动导航条(右滑)
+        $('.nav').on('swiperight', () => {
+            var left2 = parseFloat($('.nav').css('left'));
+        if (left2 < 0) {
+            left2 += 200;
+            if (left2 > 0) {
+                left2 = 0;
+            }
+            $('.nav').css('left', left2 + 'px');
+        }
+    })
+        $('.hidden-xs-down').on('click', function () {
+            var target = $(this).data('id'),
+                status = $(this).data('btn'),
+                index = $(this).parent().index();
+            $('.hidden-xs-down').removeClass('active');
+            $('.tab-pane').removeClass('active');
+            $(this).addClass('active');
+            $('.tab-pane').eq(index).addClass('active');
+            if(!status){
+                return;
+            }
+            $('.tab-pane').eq(index).html("");
+            $.get("/getHttpData?url=http://10.37.253.50/trusted&params[username]=zhangshicun&post=true",
+                function (data) {
+                    var ticket = data;
+                    var inner = '';
+                    if (target === 'home') {
+                        inner = `<div class='tableauPlaceholder' style='width: 371px; height: 2177px;'>
+                                <object class='tableauViz' width='371' height='2177' style='display:none;'>
+                                    <param name='host_url' value='http://tableau.qdingnet.com/' />
+                                    <param name='embed_code_version' value='3' />
+                                    <param name='site_root' value='' />
+                                    <param name='name' value='v1&#47;V1' />
+                                    <param name='tabs' value='no' />
+                                    <param name='toolbar' value='false' />
+                                    <param name='showAppBanner' value='false' />
+                                    <param name='filter' value='iframeSizedToWindow=true' />
+                                    <param name='ticket' value='${ticket}'/>
+                                </object>
+                            </div>`;
+                    } else if (target === 'profile') {
+                        inner = `<div class='tableauPlaceholder' style='width: 355px; height: 827px;'>
+                                <object class='tableauViz' width='355' height='827' style='display:none;'>
+                                    <param name='host_url' value='http://tableau.qdingnet.com/' />
+                                    <param name='embed_code_version' value='3' />
+                                    <param name='site_root' value='' />
+                                    <param name='name' value='OKR-&#47;okr-' />
+                                    <param name='tabs' value='no' />
+                                    <param name='toolbar' value='no' />
+                                    <param name='showAppBanner' value='false' />
+                                    <param name='filter' value='iframeSizedToWindow=true' />
+                                    <param name='ticket' value='${ticket}'/>
+                                </object>
+                            </div>`;
+                    } else if (target === 'messages') {
+                        inner = `<div class='tableauPlaceholder' style='width: 355px; height: 1677px;'>
+                                <object class='tableauViz' width='355' height='1677' style='display:none;'>
+                                    <param name='host_url' value='http://tableau.qdingnet.com/' />
+                                    <param name='embed_code_version' value='3' />
+                                    <param name='site_root' value='' />
+                                    <param name='name' value='0423&#47;1' />
+                                    <param name='tabs' value='no' />
+                                    <param name='toolbar' value='no' />
+                                    <param name='showAppBanner' value='false' />
+                                    <param name='filter' value='iframeSizedToWindow=true' />
+                                    <param name='ticket' value='${ticket}'/>
+                                </object>
+                            </div>`;
+                    } else if (target === 'kehufuwu') {
+                        inner = `<div class='tableauPlaceholder' style='width: 375px; height: 730px;'>
+                                <object class='tableauViz' width='375' height='730' style='display:none;'>
+                                    <param name='host_url' value='http://tableau.qdingnet.com/' />
+                                    <param name='embed_code_version' value='3' />
+                                    <param name='site_root' value='' />
+                                    <param name='name' value='0510&#47;--' />
+                                    <param name='tabs' value='false' />
+                                    <param name='toolbar' value='false' />
+                                    <param name='showAppBanner' value='false' />
+                                    <param name='filter' value='iframeSizedToWindow=true' />
+                                    <param name='ticket' value='${ticket}'/>
+                                </object>
+                            </div>`;
+                    } else if (target === 'wuyefuwu') {
+                        inner = `<div class='tableauPlaceholder' style='width: 375px; height: 730px;'>
+                                <object class='tableauViz' width='371' height='3227' style='display:none;'>
+                                    <param name='host_url' value='http://tableau.qdingnet.com/' />
+                                    <param name='embed_code_version' value='3' />
+                                    <param name='site_root' value='' />
+                                    <param name='name' value='_0&#47;1' />
+                                    <param name='tabs' value='false' />
+                                    <param name='toolbar' value='false' />
+                                    <param name='showAppBanner' value='false' />
+                                    <param name='filter' value='iframeSizedToWindow=true' />
+                                    <param name='ticket' value='${ticket}'/>
+                                </object>
+                            </div>`;
+                    } else if (target === 'devsource') {
+                        inner = `<div class='tableauPlaceholder' style='width: 371px; height: 1727px;'>
+                                <object class='tableauViz' width='371' height='1727' style='display:none;'>
+                                    <param name='host_url' value='http://tableau.qdingnet.com/' />
+                                    <param name='embed_code_version' value='3' />
+                                    <param name='site_root' value='' />
+                                    <param name='name' value='_1&#47;1' />
+                                    <param name='tabs' value='no' />
+                                    <param name='toolbar' value='yes' />
+                                    <param name='showAppBanner' value='false' />
+                                    <param name='filter' value='iframeSizedToWindow=true' />
+                                    <param name='ticket' value='${ticket}'/>
+                                </object>
+                            </div>`;
+                    }
+                    var aS = $('<script>');
+                    aS.attr('src', 'http://tableau.qdingnet.com/javascripts/api/viz_v1.js');
+                    $('.tab-pane').eq(index).append(aS);
+                    $('.tab-pane').eq(index).append(inner);
+                    $('.hidden-xs-down').eq(index).data('btn', 'false');
+                }
+            );
+        });
+        $('.hidden-xs-down').eq(0).trigger('click');
+    })
+</script>
+</body>
+</html>

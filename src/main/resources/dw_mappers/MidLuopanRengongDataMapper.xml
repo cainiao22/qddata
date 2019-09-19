@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.MidLuopanRengongDataDao" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.MidLuopanRengongData" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="date_value" property="dateValue" jdbcType="VARCHAR" />
+    <result column="region_id" property="regionId" jdbcType="VARCHAR" />
+    <result column="region_name" property="regionName" jdbcType="VARCHAR" />
+    <result column="project_id" property="projectId" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="propertyinfo_name" property="propertyinfoName" jdbcType="VARCHAR" />
+    <result column="key" property="key" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+  </resultMap>
+  <!--数据基本信息-->
+  <sql id="base_column_list">*
+  </sql>
+  <!--查询基本条件-->
+  <sql id="where_condition">
+    <trim prefix=" where " suffixOverrides="and">
+      <if test="id != null">
+        id = #{id} and
+      </if>
+      <if test="dateValue != null and dateValue !=''">
+        date_value = #{dateValue} and
+      </if>
+      <if test="regionId != null  and regionId !=''">
+        region_id = #{regionId} and
+      </if>
+      <if test="regionName != null  and regionName !=''">
+        region_name = #{regionName} and
+      </if>
+      <if test="projectId != null  and projectId !=''">
+        project_id = #{projectId} and
+      </if>
+      <if test="projectName != null  and projectName !=''">
+        project_name = #{projectName} and
+      </if>
+      <if test="key != null and key !=''">
+        key = #{key} and
+      </if>
+    </trim>
+  </sql>
+  <!--排序和分页sql-->
+  <sql id="limitAndOrderBy">
+    <if test="sortAndDesc != null">
+      order by ${sortAndDesc}
+    </if>
+    limit  #{pageCount} offset #{offset}
+  </sql>
+
+  <insert id="insert" parameterType="com.qding.bigdata.ds.model.MidLuopanRengongData" >
+    insert into mid.mid_luopan_rengong_data (id, date_value, region_id,
+      region_name, key, value, 
+      create_time, update_time,create_user,update_user)
+    values (#{id,jdbcType=VARCHAR}, #{dateValue,jdbcType=VARCHAR}, #{regionId,jdbcType=VARCHAR},
+      #{regionName,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}, #{value,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.MidLuopanRengongData" >
+    insert into mid.mid_luopan_rengong_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dateValue != null" >
+        date_value,
+      </if>
+      <if test="regionId != null" >
+        region_id,
+      </if>
+      <if test="regionName != null" >
+        region_name,
+      </if>
+      <if test="projectId != null" >
+        project_id,
+      </if>
+      <if test="projectName != null" >
+        project_name,
+      </if>
+      <if test="propertyinfoName != null" >
+        propertyinfo_name,
+      </if>
+      <if test="key != null" >
+        key,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="updateUser != null" >
+        update_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="dateValue != null" >
+        #{dateValue,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null" >
+        #{regionId,jdbcType=VARCHAR},
+      </if>
+      <if test="regionName != null" >
+        #{regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyinfoName != null" >
+        #{propertyinfoName,jdbcType=VARCHAR},
+      </if>
+      <if test="key != null" >
+        #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!--依据主键删除-->
+  <delete id="delete" parameterType="com.qding.bigdata.ds.model.MidLuopanRengongData">
+    delete from mid.mid_luopan_rengong_data where id = #{id}
+  </delete>
+
+  <!--查询人工录入数据列表-->
+  <select id="list" parameterType="com.qding.bigdata.ds.model.MidLuopanRengongData" resultMap="BaseResultMap">
+    SELECT
+    <include refid="base_column_list" />
+    FROM  mid.mid_luopan_rengong_data
+    <include refid="where_condition" />
+    <!--<include refid="limitAndOrderBy" />-->
+  </select>
+  <!--查询不带分页-->
+  <select id="listNoPage" parameterType="com.qding.bigdata.ds.model.MidLuopanRengongData" resultMap="BaseResultMap">
+    SELECT
+    <include refid="base_column_list" />
+    FROM  mid.mid_luopan_rengong_data
+    <include refid="where_condition" />
+    <if test="sortAndDesc != null">
+      order by ${sortAndDesc}
+    </if>
+  </select>
+  <!--查询总条数-->
+  <select id="count" resultType="Integer" parameterType="com.qding.bigdata.ds.model.MidLuopanRengongData">
+    select count(1)
+    from mid.mid_luopan_rengong_data
+    <include refid="where_condition" />
+  </select>
+
+  <!--更新一条人工录入数据-->
+  <update id="updateById" parameterType="com.qding.bigdata.ds.model.MidLuopanRengongData">
+    update mid.mid_luopan_rengong_data
+    <set>
+      <if test="dateValue != null">
+        date_value = #{dateValue},
+      </if>
+      <if test="regionId != null">
+        region_id = #{regionId},
+      </if>
+      <if test="regionName != null ">
+        region_name = #{regionName},
+      </if>
+      <if test="projectId != null" >
+        project_id = #{projectId},
+      </if>
+      <if test="projectName != null" >
+        project_name = #{projectName},
+      </if>
+      <if test="propertyinfoName != null" >
+        propertyinfo_name = #{propertyinfoName},
+      </if>
+      <if test="key != null">
+        key = #{key},
+      </if>
+      <if test="value != null">
+        value = #{value},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+
+  <!--获取单条工录入信息-->
+  <select id="getById" resultMap="BaseResultMap" parameterType="com.qding.bigdata.ds.model.MidLuopanRengongData">
+    select
+    <include refid="base_column_list" />
+    from mid.mid_luopan_rengong_data
+    where id=#{id} limit 1
+  </select>
+
+  <!--更新一条-->
+  <update id="updateByParam" parameterType="com.qding.bigdata.ds.model.MidLuopanRengongData">
+    update mid.mid_luopan_rengong_data
+    <set>
+      <if test="value != null">
+        value = #{value},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser},
+      </if>
+    </set>
+    where date_value = #{dateValue} and  key = #{key} and region_id = #{regionId}
+  </update>
+
+  <!--社区下拉列表查询-->
+  <select id="selectProjectByQ" resultType="map" parameterType="map">
+    SELECT
+    dim.dim_project.uuid AS id,
+    dim.dim_project.project_id,
+    dim.dim_project.project_name,
+    dim.dim_project.region_id,
+    dim.dim_project.region_name,
+    dim.dim_project.propertyinfo_name,
+    dim.dim_project.propertyinfo_id
+    FROM
+    dim.dim_project
+    WHERE
+    dim.dim_project.region_id != '-1'
+    <if test="q != null">
+      and dim.dim_project.project_name  LIKE '%${q}%'
+    </if>
+    ORDER BY dim.dim_project.region_id
+  </select>
+
+  <select id="getProjectById" resultType="map" parameterType="string">
+    SELECT
+    dim.dim_project.uuid,
+    dim.dim_project.project_id,
+    dim.dim_project.project_name,
+    dim.dim_project.region_id,
+    dim.dim_project.region_name,
+    dim.dim_project.propertyinfo_name,
+    dim.dim_project.propertyinfo_id
+    FROM
+    dim.dim_project
+    WHERE
+    dim.dim_project.uuid = #{id}
+  </select>
+
+  <!--查询一条社区 有社区ID从社区id取 去掉 is_app条件-->
+  <select id="selectOneProjectUUid" resultType="map" parameterType="map">
+    SELECT
+    dim.dim_project.uuid,
+    dim.dim_project.project_id,
+    dim.dim_project.project_name,
+    dim.dim_project.region_id,
+    dim.dim_project.region_name,
+    dim.dim_project.propertyinfo_name,
+    dim.dim_project.propertyinfo_id
+    FROM
+    dim.dim_project
+    <where>
+      <if test="projectId != null">
+        dim.dim_project.project_id  = #{projectId} AND
+      </if>
+      dim.dim_project.region_id != '-1'
+    </where>
+   limit 1
+  </select>
+
+  <!--物业云状态录入数据时,判断是否存在-->
+  <select id="checkCount" resultType="Integer" parameterType="com.qding.bigdata.ds.model.MidLuopanRengongData">
+    select count(1)
+    from mid.mid_luopan_rengong_data
+    WHERE
+    date_value = #{dateValue} and  key = #{key} and region_id = #{regionId} and project_id = #{projectId} and propertyinfo_name = #{propertyinfoName}
+  </select>
+
+  <!--物业云实施状态更新时更新一条-->
+  <update id="updateToWuyeyunByParam" parameterType="com.qding.bigdata.ds.model.MidLuopanRengongData">
+    update mid.mid_luopan_rengong_data
+    <set>
+      <if test="value != null">
+        value = #{value},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser},
+      </if>
+    </set>
+    where date_value = #{dateValue} and  key = #{key} and region_id = #{regionId} and project_id = #{projectId}
+  </update>
+</mapper>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.CommonDataSqlDao" >
+ <!--<cache
+        eviction="LRU"
+        flushInterval="120000"
+        size="10240"
+        readOnly="true"
+    />-->
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.CommonDataSql" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="common_data_summary_id" property="commonDataSummaryId" jdbcType="INTEGER" />
+    <result column="query_content" property="queryContent" jdbcType="VARCHAR" />
+    <result column="disabled" property="disabled" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, common_data_summary_id, query_content, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from
+    ds_common_data_sql
+    where id = #{id,jdbcType=INTEGER} AND disabled = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ds_common_data_sql
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qding.bigdata.ds.model.CommonDataSql" >
+    <selectKey keyProperty="id" resultType="int">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ds_common_data_sql (common_data_summary_id, query_content,
+      create_time, update_time)
+    values (#{commonDataSummaryId,jdbcType=INTEGER}, #{queryContent,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.CommonDataSql" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ds_common_data_sql
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null">
+        id,
+      </if>
+      <if test="commonDataSummaryId != null" >
+        common_data_summary_id,
+      </if>
+      <if test="queryContent != null" >
+        query_content,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="commonDataSummaryId != null" >
+        #{commonDataSummaryId,jdbcType=INTEGER},
+      </if>
+      <if test="queryContent != null" >
+        #{queryContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qding.bigdata.ds.model.CommonDataSql" >
+    update ds_common_data_sql
+    <set >
+      <if test="commonDataSummaryId != null" >
+        common_data_summary_id = #{commonDataSummaryId,jdbcType=INTEGER},
+      </if>
+      <if test="queryContent != null" >
+        query_content = #{queryContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER} and disabled = 0
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qding.bigdata.ds.model.CommonDataSql" >
+    update ds_common_data_sql
+    set common_data_summary_id = #{commonDataSummaryId,jdbcType=INTEGER},
+      query_content = #{queryContent,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER} and disabled = 0
+  </update>
+  <update id="deleteBySummaryId">
+    update ds_common_data_sql set disabled = 1 WHERE common_data_summary_id= #{commonDataSummaryId} and disabled = 0
+  </update>
+  <select id="execute" parameterType="java.lang.String" resultType="java.util.Map">
+    ${sql}
+  </select>
+  <select id="getBySummaryId" resultMap="BaseResultMap">
+    SELECT * FROM ds_common_data_sql WHERE common_data_summary_id=#{commonDataSummaryId} and disabled = 0 limit 1
+  </select>
+
+  <update id="updateBySummaryId" parameterType="com.qding.bigdata.ds.model.CommonDataSql" >
+    update ds_common_data_sql
+    <set >
+      <if test="queryContent != null" >
+        query_content = #{queryContent,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where common_data_summary_id = #{commonDataSummaryId} and disabled = 0
+  </update>
+  <select id="getListBySummaryIds" parameterType="com.qding.bigdata.ds.model.CommonDataSql" resultMap="BaseResultMap">
+    SELECT * FROM ds_common_data_sql WHERE common_data_summary_id IN
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+      #{item.commonDataSummaryId}
+    </foreach>
+    AND disabled = 0
+  </select>
+
+    <select id="getBySummaryName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM ds_common_data_sql WHERE common_data_summary_id IN
+        (SELECT id from ds_common_data_summary WHERE name=#{name}) limit 1
+    </select>
+</mapper>

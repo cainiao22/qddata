@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qding.bigdata.ds.dao.LpUserDao">
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.LpUser">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="module_name" jdbcType="VARCHAR" property="moduleName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_name, real_name, module_name
+  </sql>
+  <!--依据主键id查询一条用户数据-->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lp_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <!--依据主键删除用户-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from lp_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <!--插入一条用户信息,全部字段均需有值-->
+  <insert id="insert" parameterType="com.qding.bigdata.ds.model.LpUser">
+    insert into lp_user (id, user_name, real_name, 
+      module_name)
+    values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, 
+      #{moduleName,jdbcType=VARCHAR})
+  </insert>
+  <!--插入一条用户信息-->
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.LpUser">
+    insert into lp_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="realName != null">
+        real_name,
+      </if>
+      <if test="moduleName != null">
+        module_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleName != null">
+        #{moduleName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!--依据主键更新一条用户 不为null字段-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.qding.bigdata.ds.model.LpUser">
+    update lp_user
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleName != null">
+        module_name = #{moduleName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!--依据主键更新整条用户数据-->
+  <update id="updateByPrimaryKey" parameterType="com.qding.bigdata.ds.model.LpUser">
+    update lp_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      module_name = #{moduleName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!--查询全部用户-->
+  <select id="selectAll" resultMap="BaseResultMap">
+  select
+  <include refid="Base_Column_List" />
+  from lp_user
+</select>
+
+  <!--依据用户账号查询一条用户信息-->
+  <select id="selectLpUserByUserName" resultMap="BaseResultMap" parameterType="com.qding.bigdata.ds.model.LpUser">
+    select
+    <include refid="Base_Column_List" />
+    from lp_user
+    <where>
+      user_name = #{userName}
+      <if test="moduleName != null">
+        AND module_name = #{moduleName}
+      </if>
+    </where>
+    limit 1
+  </select>
+</mapper>

@@ -1,0 +1,2 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<footer class="footer" style="text-align: center"> Copyrights © 2014-2018 千丁互联网科技有限公司 All Rights Reserved </footer>

@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.DIMSKUDao" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.DIMSKU" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="fsku_id" property="fskuId" jdbcType="BIGINT" />
+    <result column="ware_id" property="wareId" jdbcType="BIGINT" />
+    <result column="ware_name" property="wareName" jdbcType="VARCHAR" />
+    <result column="provider_id" property="providerId" jdbcType="BIGINT" />
+    <result column="shop_id" property="shopId" jdbcType="VARCHAR" />
+    <result column="special1" property="special1" jdbcType="VARCHAR" />
+    <result column="special2" property="special2" jdbcType="VARCHAR" />
+    <result column="special3" property="special3" jdbcType="VARCHAR" />
+    <result column="special4" property="special4" jdbcType="VARCHAR" />
+    <result column="special5" property="special5" jdbcType="VARCHAR" />
+    <result column="is_main" property="isMain" jdbcType="BIGINT" />
+    <result column="is_del" property="isDel" jdbcType="BIGINT" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+    <result column="update_at" property="updateAt" jdbcType="TIMESTAMP" />
+    <result column="sku_code" property="skuCode" jdbcType="VARCHAR" />
+    <result column="prop_id" property="propId" jdbcType="BIGINT" />
+    <result column="prop_code" property="propCode" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="main_product_no" property="mainProductNo" jdbcType="VARCHAR" />
+    <result column="attach" property="attach" jdbcType="VARCHAR" />
+    <result column="third_sku_bn" property="thirdSkuBn" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, fsku_id, ware_id, ware_name, provider_id, shop_id, special1, special2, special3, 
+    special4, special5, is_main, is_del, create_at, update_at, sku_code, prop_id, prop_code, 
+    version, main_product_no, attach, third_sku_bn
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from dim_sku
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from dim_sku
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qding.bigdata.ds.model.DIMSKU" >
+    insert into dim_sku (id, fsku_id, ware_id, 
+      ware_name, provider_id, shop_id, 
+      special1, special2, special3, 
+      special4, special5, is_main, 
+      is_del, create_at, update_at, 
+      sku_code, prop_id, prop_code, 
+      version, main_product_no, attach, 
+      third_sku_bn)
+    values (#{id,jdbcType=BIGINT}, #{fskuId,jdbcType=BIGINT}, #{wareId,jdbcType=BIGINT}, 
+      #{wareName,jdbcType=VARCHAR}, #{providerId,jdbcType=BIGINT}, #{shopId,jdbcType=VARCHAR}, 
+      #{special1,jdbcType=VARCHAR}, #{special2,jdbcType=VARCHAR}, #{special3,jdbcType=VARCHAR}, 
+      #{special4,jdbcType=VARCHAR}, #{special5,jdbcType=VARCHAR}, #{isMain,jdbcType=BIGINT}, 
+      #{isDel,jdbcType=BIGINT}, #{createAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP}, 
+      #{skuCode,jdbcType=VARCHAR}, #{propId,jdbcType=BIGINT}, #{propCode,jdbcType=VARCHAR}, 
+      #{version,jdbcType=INTEGER}, #{mainProductNo,jdbcType=VARCHAR}, #{attach,jdbcType=VARCHAR}, 
+      #{thirdSkuBn,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.DIMSKU" >
+    insert into dim_sku
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="fskuId != null" >
+        fsku_id,
+      </if>
+      <if test="wareId != null" >
+        ware_id,
+      </if>
+      <if test="wareName != null" >
+        ware_name,
+      </if>
+      <if test="providerId != null" >
+        provider_id,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="special1 != null" >
+        special1,
+      </if>
+      <if test="special2 != null" >
+        special2,
+      </if>
+      <if test="special3 != null" >
+        special3,
+      </if>
+      <if test="special4 != null" >
+        special4,
+      </if>
+      <if test="special5 != null" >
+        special5,
+      </if>
+      <if test="isMain != null" >
+        is_main,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="updateAt != null" >
+        update_at,
+      </if>
+      <if test="skuCode != null" >
+        sku_code,
+      </if>
+      <if test="propId != null" >
+        prop_id,
+      </if>
+      <if test="propCode != null" >
+        prop_code,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="mainProductNo != null" >
+        main_product_no,
+      </if>
+      <if test="attach != null" >
+        attach,
+      </if>
+      <if test="thirdSkuBn != null" >
+        third_sku_bn,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="fskuId != null" >
+        #{fskuId,jdbcType=BIGINT},
+      </if>
+      <if test="wareId != null" >
+        #{wareId,jdbcType=BIGINT},
+      </if>
+      <if test="wareName != null" >
+        #{wareName,jdbcType=VARCHAR},
+      </if>
+      <if test="providerId != null" >
+        #{providerId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="special1 != null" >
+        #{special1,jdbcType=VARCHAR},
+      </if>
+      <if test="special2 != null" >
+        #{special2,jdbcType=VARCHAR},
+      </if>
+      <if test="special3 != null" >
+        #{special3,jdbcType=VARCHAR},
+      </if>
+      <if test="special4 != null" >
+        #{special4,jdbcType=VARCHAR},
+      </if>
+      <if test="special5 != null" >
+        #{special5,jdbcType=VARCHAR},
+      </if>
+      <if test="isMain != null" >
+        #{isMain,jdbcType=BIGINT},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=BIGINT},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null" >
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="skuCode != null" >
+        #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="propId != null" >
+        #{propId,jdbcType=BIGINT},
+      </if>
+      <if test="propCode != null" >
+        #{propCode,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="mainProductNo != null" >
+        #{mainProductNo,jdbcType=VARCHAR},
+      </if>
+      <if test="attach != null" >
+        #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdSkuBn != null" >
+        #{thirdSkuBn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qding.bigdata.ds.model.DIMSKU" >
+    update dim_sku
+    <set >
+      <if test="fskuId != null" >
+        fsku_id = #{fskuId,jdbcType=BIGINT},
+      </if>
+      <if test="wareId != null" >
+        ware_id = #{wareId,jdbcType=BIGINT},
+      </if>
+      <if test="wareName != null" >
+        ware_name = #{wareName,jdbcType=VARCHAR},
+      </if>
+      <if test="providerId != null" >
+        provider_id = #{providerId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null" >
+        shop_id = #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="special1 != null" >
+        special1 = #{special1,jdbcType=VARCHAR},
+      </if>
+      <if test="special2 != null" >
+        special2 = #{special2,jdbcType=VARCHAR},
+      </if>
+      <if test="special3 != null" >
+        special3 = #{special3,jdbcType=VARCHAR},
+      </if>
+      <if test="special4 != null" >
+        special4 = #{special4,jdbcType=VARCHAR},
+      </if>
+      <if test="special5 != null" >
+        special5 = #{special5,jdbcType=VARCHAR},
+      </if>
+      <if test="isMain != null" >
+        is_main = #{isMain,jdbcType=BIGINT},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=BIGINT},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null" >
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="skuCode != null" >
+        sku_code = #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="propId != null" >
+        prop_id = #{propId,jdbcType=BIGINT},
+      </if>
+      <if test="propCode != null" >
+        prop_code = #{propCode,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="mainProductNo != null" >
+        main_product_no = #{mainProductNo,jdbcType=VARCHAR},
+      </if>
+      <if test="attach != null" >
+        attach = #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdSkuBn != null" >
+        third_sku_bn = #{thirdSkuBn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qding.bigdata.ds.model.DIMSKU" >
+    update dim_sku
+    set fsku_id = #{fskuId,jdbcType=BIGINT},
+      ware_id = #{wareId,jdbcType=BIGINT},
+      ware_name = #{wareName,jdbcType=VARCHAR},
+      provider_id = #{providerId,jdbcType=BIGINT},
+      shop_id = #{shopId,jdbcType=VARCHAR},
+      special1 = #{special1,jdbcType=VARCHAR},
+      special2 = #{special2,jdbcType=VARCHAR},
+      special3 = #{special3,jdbcType=VARCHAR},
+      special4 = #{special4,jdbcType=VARCHAR},
+      special5 = #{special5,jdbcType=VARCHAR},
+      is_main = #{isMain,jdbcType=BIGINT},
+      is_del = #{isDel,jdbcType=BIGINT},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      sku_code = #{skuCode,jdbcType=VARCHAR},
+      prop_id = #{propId,jdbcType=BIGINT},
+      prop_code = #{propCode,jdbcType=VARCHAR},
+      version = #{version,jdbcType=INTEGER},
+      main_product_no = #{mainProductNo,jdbcType=VARCHAR},
+      attach = #{attach,jdbcType=VARCHAR},
+      third_sku_bn = #{thirdSkuBn,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="listByIDs" resultMap="BaseResultMap" parameterType="String">
+    select
+    <include refid="Base_Column_List" />
+    from databus.dim_sku
+    where id in (${ids})
+  </select>
+  <select id="matchSKUIDOrWareName" resultMap="BaseResultMap" parameterType="String">
+    select
+    id,ware_name
+    from databus.dim_sku
+    where
+    <if test='isMatch != null and isMatch == false'>
+      id in (${searchKey})
+    </if>
+    <if test='isMatch == null or isMatch == true'>
+      ware_name like CONCAT('%',#{searchKey},'%')
+      <if test="flag == true">
+        OR id=#{searchKey}
+      </if>
+    </if>
+  </select>
+  <select id="matchSKUIDOrWareNameCount" resultType="java.lang.Integer" parameterType="String">
+    select
+    count(*)
+    from databus.dim_sku
+    where
+    <if test='isMatch != null and isMatch == false'>
+      id in (${searchKey})
+    </if>
+    <if test='isMatch == null or isMatch == true'>
+      ware_name like CONCAT('%',#{searchKey},'%')
+      <if test="flag == true">
+        OR id=#{searchKey}
+      </if>
+    </if>
+  </select>
+</mapper>

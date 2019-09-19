@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.ModuleDao">
+	<resultMap id="BaseResultMap" type="Module">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="module_name" property="moduleName" jdbcType="VARCHAR" />
+		<result column="module_url" property="moduleUrl" jdbcType="VARCHAR" />
+		<result column="module_level" property="level" jdbcType="INTEGER" />
+		<result column="sort_NO" property="sortNo" jdbcType="INTEGER" />
+		<result column="pid" property="pid" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="base_column_list">
+		id, module_name, module_url, module_level, sort_NO, pid
+	</sql>
+	<sql id="where_condition">
+		<trim prefix=" where " suffixOverrides="and">
+			<if test="id != null">
+				id = #{id} and
+			</if>
+			<if test="moduleName != null">
+				module_name = #{moduleName} and
+			</if>
+			<if test="moduleUrl != null">
+				module_url = #{moduleUrl} and
+			</if>
+			<if test="level != null">
+				module_level = #{level} and
+			</if>
+			<if test="sortNo != null">
+				sort_NO = #{sortNo} and
+			</if>
+			<if test="pid != null">
+				pid = #{pid} and
+			</if>
+		</trim>
+	</sql>
+	<sql id="limitAndOrderBy">
+		<choose>
+    <when test="sortAndDesc != null">
+   	order by ${sortAndDesc}
+    </when>
+    <otherwise>
+    	order by  module_level asc ,sort_no asc
+    </otherwise>
+</choose>
+		
+		
+		
+		
+		
+		
+		limit  #{pageCount} offset #{offset} 
+	</sql>
+	<select id="list" resultMap="BaseResultMap" parameterType="Module">
+		select
+		<include refid="base_column_list" />
+		from ds_module
+		<include refid="where_condition" />
+		<include refid="limitAndOrderBy" />
+	</select>
+	<select id="count" resultType="Integer" parameterType="Module">
+		select count(1)
+		from ds_module
+		<include refid="where_condition" />
+	</select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="Module">
+		select
+		<include refid="base_column_list" />
+		from ds_module
+		where id=#{id} limit 1
+	</select>
+	<insert id="save" parameterType="Module">
+		insert into ds_module
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="moduleName != null">
+				module_name,
+			</if>
+			<if test="moduleUrl != null">
+				module_url,
+			</if>
+			<if test="level != null">
+				module_level,
+			</if>
+			<if test="sortNo != null">
+				sort_NO,
+			</if>
+			<if test="pid != null">
+				pid,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="moduleName != null">
+				#{moduleName},
+			</if>
+			<if test="moduleUrl != null">
+				#{moduleUrl},
+			</if>
+			<if test="level != null">
+				#{level},
+			</if>
+			<if test="sortNo != null">
+				#{sortNo},
+			</if>
+			<if test="pid != null">
+				#{pid},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateById" parameterType="Module">
+		update ds_module
+		<set>
+			<if test="moduleName != null">
+				module_name = #{moduleName},
+			</if>
+			<if test="moduleUrl != null">
+				module_url = #{moduleUrl},
+			</if>
+			<if test="level != null">
+				module_level = #{level},
+			</if>
+			<if test="sortNo != null">
+				sort_NO = #{sortNo},
+			</if>
+			<if test="pid != null">
+				pid = #{pid},
+			</if>
+			<if test="updateTime != null">
+				update_time=#{updateTime},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<delete id="delete" parameterType="Module">
+		delete from ds_module
+		<include refid="where_condition" />
+	</delete>
+	<select id="listByIDs" resultMap="BaseResultMap" parameterType="String">
+		select
+		<include refid="base_column_list" />
+		from ds_module
+		where id in (${ids})
+	</select>
+</mapper>

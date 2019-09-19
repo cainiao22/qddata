@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.GCTFunnelDao" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.GCTFunnel" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="codes" property="codes" jdbcType="VARCHAR" />
+    <result column="productId" property="productId" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.qding.bigdata.ds.model.GCTFunnel" >
+    insert into ds_gct_funnel (id, name, codes,productId
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{codes,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.GCTFunnel" >
+    insert into ds_gct_funnel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="codes != null" >
+        codes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="codes != null" >
+        #{codes,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="query" resultMap="BaseResultMap">
+    select * from ds_gct_funnel
+    <where>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR} and
+      </if>
+      <if test="codes != null" >
+        codes = #{codes,jdbcType=VARCHAR} and
+      </if>
+      <if test="productId != null" >
+        productId = #{productId,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+
+  <insert id="update" parameterType="com.qding.bigdata.ds.model.GCTFunnel" >
+    update ds_gct_funnel
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="codes != null" >
+        codes = #{codes,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        productId = #{productId,jdbcType=INTEGER}
+      </if>
+      where id = #{id,jdbcType=INTEGER}
+    </set>
+  </insert>
+</mapper>

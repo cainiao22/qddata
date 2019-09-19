@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.EtlJobQueueDao">
+	<resultMap id="BaseResultMap" type="EtlJobQueue">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="table_name" property="tableName" jdbcType="VARCHAR" />
+			<result column="etljob_id" property="etlJobId" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="schedule_time" property="scheduleTime" jdbcType="TIMESTAMP" />
+		<result column="status" property="statusText" jdbcType="VARCHAR" />
+		<result column="jobtype" property="jobType" jdbcType="VARCHAR" />
+		<result column="sql" property="sql" jdbcType="VARCHAR" />
+		<result column="job_unique_id" property="jobUniqueId" jdbcType="VARCHAR" />
+		
+		
+	</resultMap>
+	<resultMap id="EtlJobExecuteLogMap" type="EtlJobExecuteLog">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="queue_id" property="queueId" jdbcType="VARCHAR" />
+			<result column="etl_log" property="etlLog" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		
+		
+	</resultMap>
+	<sql id="base_column_list"> *
+	</sql>
+	<sql id="where_condition">
+		<trim prefix=" where " suffixOverrides="and">
+			<if test="id != null">
+				id = #{id} and
+			</if>
+			<if test="etlJobId != null">
+				etljob_id = #{etlJobId} and
+			</if>
+		
+		 
+		</trim>
+	</sql>
+	<sql id="limitAndOrderBy">
+		<if test="sortAndDesc != null">
+			order by ${sortAndDesc}
+		</if>
+		limit  #{pageCount} offset #{offset} 
+	</sql>
+	<select id="list" resultMap="BaseResultMap" parameterType="EtlJobQueue">
+		select
+		<include refid="base_column_list" />
+		from ds_etljob_queue
+		<include refid="where_condition" />
+		<include refid="limitAndOrderBy" />
+	</select>
+	<select id="count" resultType="Integer" parameterType="EtlJobQueue">
+		select count(1)
+		from ds_etljob_queue
+		<include refid="where_condition" />
+	</select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="EtlJobQueue">
+		select
+		<include refid="base_column_list" />
+		from ds_etljob_queue
+		where id=#{id} limit 1
+	</select>
+<select id="listExecuteLog" resultMap="EtlJobExecuteLogMap" parameterType="EtlJobQueue">
+	SELECT id, queue_id, create_time, etl_log
+  FROM ds_etljob_execute_log where queue_id=#{id} order by create_time
+
+	</select>
+	
+
+</mapper>

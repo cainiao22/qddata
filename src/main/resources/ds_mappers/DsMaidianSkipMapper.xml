@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qding.bigdata.ds.dao.DsMaidianSkipMapper">
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.DsMaidianSkip">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="action" jdbcType="VARCHAR" property="action" />
+    <result column="page_id" jdbcType="BIGINT" property="pageId" />
+    <result column="page_name" jdbcType="VARCHAR" property="pageName" />
+    <result column="page_code" jdbcType="VARCHAR" property="pageCode" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="sk_no" jdbcType="INTEGER" property="skNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, product_id, action, page_id, page_code, page_name, status, sk_no
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ds_maidian_skip
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ds_maidian_skip
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qding.bigdata.ds.model.DsMaidianSkip">
+    insert into ds_maidian_skip (product_id, action,
+      page_id,page_code,page_name,status,sk_no
+      )
+    values (#{productId,jdbcType=BIGINT},#{action,jdbcType=VARCHAR},
+      #{pageId,jdbcType=BIGINT},#{pageCode,jdbcType=VARCHAR},#{pageName,jdbcType=VARCHAR},#{status,jdbcType=INTEGER}, #{skNo,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.DsMaidianSkip">
+    insert into ds_maidian_skip
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="action != null">
+        action,
+      </if>
+      <if test="pageId != null">
+        page_id,
+      </if>
+      <if test="pageCode != null">
+        page_code,
+      </if>
+      <if test="pageName != null">
+        page_name,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="skNo != null">
+        sk_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="action != null">
+        #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="pageId != null">
+        #{pageId,jdbcType=BIGINT},
+      </if>
+      <if test="pageCode != null">
+        #{pageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pageName != null">
+        #{pageName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="skNo != null">
+        #{skNo,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qding.bigdata.ds.model.DsMaidianSkip">
+    update ds_maidian_skip
+    <set>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="action != null">
+        action = #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="pageId != null">
+        page_id = #{pageId,jdbcType=BIGINT},
+      </if>
+      <if test="pageCode != null">
+        page_code=#{pageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pageName != null">
+        page_name=#{pageName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="skNo != null">
+        sk_no = #{skNo,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qding.bigdata.ds.model.DsMaidianSkip">
+    update ds_maidian_skip
+    set product_id = #{productId,jdbcType=BIGINT},
+      action = #{action,jdbcType=VARCHAR},
+      page_id = #{pageId,jdbcType=BIGINT},
+      page_code=#{pageCode,jdbcType=VARCHAR},
+       page_name=#{pageName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      sk_no = #{skNo,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="query" parameterType="com.qding.bigdata.ds.model.DsMaidianSkip" resultMap="BaseResultMap">
+    SELECT * FROM ds_maidian_skip a
+    <where>
+      <if test="productId != null">
+        and a.product_id = #{productId,jdbcType=BIGINT}
+      </if>
+      <if test="action != null">
+        and a.action = #{action,jdbcType=VARCHAR}
+      </if>
+      <if test="pageId != null">
+        and a.page_id = #{pageId,jdbcType=BIGINT}
+      </if>
+      <if test="pageCode != null">
+        and a.page_code = #{pageCode,jdbcType=BIGINT}
+      </if>
+      <if test="pageName != null">
+        and a.page_name = #{pageName,jdbcType=BIGINT}
+      </if>
+      <if test="status != null">
+        and a.status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="skNo != null">
+        and a.sk_no = #{skNo,jdbcType=INTEGER}
+      </if>
+    </where>
+    ORDER by a.id DESC
+  </select>
+  <delete id="deleteAll">
+    DELETE FROM ds_maidian_skip
+  </delete>
+</mapper>

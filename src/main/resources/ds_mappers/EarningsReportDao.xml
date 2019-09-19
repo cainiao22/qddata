@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.EarningsReportDao" >
+
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.EarningsReport" >
+    <result column="id" property="id" />
+    <result column="create_time" property="createData" />
+    <result column="type" property="type" />
+    <result column="update_time" property="updateTime" />
+    <result column="upname" property="upname" />
+    <result column="url" property="url" />
+  </resultMap>
+
+    <sql id="Base_Column_List">
+        id, create_time, type, update_time, upname, url
+    </sql>
+
+  <select id="queryImgInfo" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+      SELECT <include refid="Base_Column_List"/> FROM ds_monthly_img
+      WHERE 1 = 1
+      <if test="createData != null and  createData != ''">
+        AND  create_time = #{ createData }
+      </if>
+      <if test="type != -1">
+        AND  type = #{ type }
+      </if>
+    limit ${currentPage},${pageSize}
+  </select>
+
+      <select id="queryCount" parameterType="java.util.HashMap" resultType="int">
+          SELECT count(id) FROM ds_monthly_img
+          WHERE 1 = 1
+          <if test="createData != null and  createData != ''">
+            AND  create_time = #{ createData }
+          </if>
+          <if test="type != -1">
+            AND  type = #{ type }
+          </if>
+      </select>
+
+      <delete id="deleteImgInfoById" parameterType="java.lang.String">
+        DELETE FROM  ds_monthly_img WHERE id = #{id}
+      </delete>
+
+    <insert id="insertEarningsReportInfo" parameterType="com.qding.bigdata.ds.model.EarningsReport">
+       INSERT INTO ds_monthly_img (id, type, upname, create_time, update_time, url)
+       VALUES (#{id},#{type},#{upname},#{createData},#{updateTime},#{url})
+    </insert>
+
+    <select id="queryMonthlyImgInfo" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT url FROM  ds_monthly_img WHERE
+        1=1
+        <if test="date != null and date != ''">
+            AND  create_time = #{ date }
+        </if>
+        <if test="type != -1">
+            AND  type = #{ type }
+        </if>
+    </select>
+
+    <select id="queryThisRowInfoById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM  ds_monthly_img WHERE id = #{id}
+    </select>
+
+    <update id="updateEarningsReportInfoById" parameterType="com.qding.bigdata.ds.model.EarningsReport">
+       UPDATE  ds_monthly_img
+        <set>
+            <if test="createData != null and  createData != ''">
+                create_time = #{createData},
+            </if>
+            <if test="type != -1">
+                type = #{type},
+            </if>
+            <if test="updateTime != null">
+                update_time=#{updateTime},
+            </if>
+            <if test="upname != null">
+                upname=#{upname},
+            </if>
+            <if test="url != null and url != ''">
+                url=#{url},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+</mapper>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.GCTOverallV2Dao" >
+  <select id="getRegAnalysis" resultType="java.util.HashMap" parameterType="com.qding.bigdata.ds.model.GCTOverallV2Param">
+    SELECT hour as key,sum(ding_reg_new) as value
+    FROM "${esIndex}"
+    <where>
+      <include refid="condition" />
+      and ding_reg_new='1'
+      group by hour order by hour
+    </where>
+  </select>
+
+  <select id="getActiveAnalysis" resultType="java.util.HashMap" parameterType="com.qding.bigdata.ds.model.GCTOverallV2Param">
+    SELECT hour as key,count(distinct ui) as value
+    FROM "${esIndex}"
+    <where>
+      <include refid="condition" />
+      group by hour order by hour
+    </where>
+  </select>
+
+  <select id="getStartupAnalysis" resultType="java.util.HashMap" parameterType="com.qding.bigdata.ds.model.GCTOverallV2Param">
+    SELECT hour as key,sum(startup_times) as value
+    FROM "${esIndex}"
+    <where>
+      <include refid="condition" />
+      group by hour order by hour
+    </where>
+  </select>
+
+  <select id="getPreStartupAnalysis" resultType="java.util.HashMap" parameterType="com.qding.bigdata.ds.model.GCTOverallV2Param">
+    SELECT hour as key,sum(startup_times)/count(distinct ui) as value
+    FROM "${esIndex}"
+    <where>
+      <include refid="condition" />
+      group by hour order by hour
+    </where>
+  </select>
+
+  <select id="getPreVisitAnalysis" resultType="java.util.HashMap" parameterType="com.qding.bigdata.ds.model.GCTOverallV2Param">
+    SELECT hour as key,sum(app_visit_time)/count(distinct ui) as value
+    FROM "${esIndex}"
+    <where>
+      <include refid="condition" />
+      group by hour order by hour
+    </where>
+  </select>
+
+  <select id="getTableAnalysis" resultType="java.util.HashMap" parameterType="com.qding.bigdata.ds.model.GCTOverallV2Param">
+    SELECT hour as key,sum(ding_reg_new) as reg_new,count(distinct ui) as active,sum(startup_times) as start_up,sum(startup_times)/count(distinct ui) as per_start_up,
+    sum(app_visit_time)/count(distinct ui) as per_visit
+    FROM "${esIndex}"
+    <where>
+      <include refid="condition" />
+      group by hour  order by hour
+    </where>
+  </select>
+
+
+  <select id="getRegAnalysisCur" resultType="java.util.HashMap" parameterType="com.qding.bigdata.ds.model.GCTOverallV2Param">
+    SELECT day as key,sum(ding_reg_new) as value
+    FROM "${esIndex}"
+    <where>
+      <include refid="condition" />
+      and ding_reg_new='1'
+      group by day  order by day
+    </where>
+  </select>
+  <select id="getActiveAnalysisCur" resultType="java.util.HashMap" parameterType="com.qding.bigdata.ds.model.GCTOverallV2Param">
+    SELECT day as key,count(distinct ui) as value
+    FROM "${esIndex}"
+    <where>
+      <include refid="condition" />
+    </where>
+    group by day  order by day
+  </select>
+
+  <select id="getStartupAnalysisCur" resultType="java.util.HashMap" parameterType="com.qding.bigdata.ds.model.GCTOverallV2Param">
+    SELECT day as key,sum(startup_times) as value
+    FROM "${esIndex}"
+    <where>
+      <include refid="condition" />
+    </where>
+    group by day  order by day
+  </select>
+
+  <select id="getPreStartupAnalysisCur" resultType="java.util.HashMap" parameterType="com.qding.bigdata.ds.model.GCTOverallV2Param">
+    SELECT day as key,sum(startup_times)/count(distinct ui) as value
+    FROM "${esIndex}"
+    <where>
+      <include refid="condition" />
+    </where>
+    group by day  order by day
+  </select>
+
+  <select id="getPreVisitAnalysisCur" resultType="java.util.HashMap" parameterType="com.qding.bigdata.ds.model.GCTOverallV2Param">
+    SELECT day as key,sum(app_visit_time)/count(distinct ui) as value
+    FROM "${esIndex}"
+    <where>
+      <include refid="condition" />
+    </where>
+    group by day  order by day
+  </select>
+
+  <select id="getTableAnalysisCur" resultType="java.util.HashMap" parameterType="com.qding.bigdata.ds.model.GCTOverallV2Param">
+    SELECT day as key,sum(ding_reg_new) as reg_new,count(distinct ui) as active,sum(startup_times) as start_up,sum(startup_times)/count(distinct ui) as per_start_up,
+    sum(app_visit_time)/count(distinct ui) as per_visit
+    FROM "${esIndex}"
+    <where>
+      <include refid="condition" />
+    </where>
+    group by day  order by day
+  </select>
+
+
+
+  <select id="getBaseRealTimeAnalysisOverview" resultType="java.util.HashMap" parameterType="com.qding.bigdata.ds.model.GCTOverallV2Param">
+    select sum(ding_reg_new) as reg_new, count(distinct ui) as active, sum(startup_times) as start_up
+    from "${esIndex}"
+    <where>
+      <include refid="condition" />
+    </where>
+  </select>
+
+  <select id="getPageRealTimeAnalysisOverview" resultType="java.util.HashMap" parameterType="com.qding.bigdata.ds.model.GCTOverallV2Param">
+    select sum(page_visit_num) as page_visit_time
+    from "${esIndex}"
+    <where>
+      <include refid="condition" />
+    </where>
+  </select>
+
+  <select id="getEventRealTimeAnalysisOverview" resultType="java.util.HashMap" parameterType="com.qding.bigdata.ds.model.GCTOverallV2Param">
+    select sum(visit_count) as event_visit_time
+    from "${esIndex}"
+    <where>
+      <include refid="condition" />
+    </where>
+  </select>
+
+  <select id="getBaseRealTimeTableAnalysis" resultType="java.util.HashMap" parameterType="com.qding.bigdata.ds.model.GCTOverallV2Param">
+    select hour, sum(ding_reg_new) as reg_new, count(distinct ui) as active, sum(startup_times) as start_up
+    from "${esIndex}"
+    <where>
+      <include refid="condition" />
+    </where>
+    group by hour  order by hour
+  </select>
+
+  <select id="getPageRealTimeTableAnalysis" resultType="java.util.HashMap" parameterType="com.qding.bigdata.ds.model.GCTOverallV2Param">
+    select hour, sum(page_visit_num) as page_visit_time
+    from "${esIndex}"
+    <where>
+      <include refid="condition" />
+    </where>
+    group by hour  order by hour
+  </select>
+
+  <select id="getEventRealTimeTableAnalysis" resultType="java.util.HashMap" parameterType="com.qding.bigdata.ds.model.GCTOverallV2Param">
+    select hour, sum(visit_count) as event_visit_time
+    from "${esIndex}"
+    <where>
+      <include refid="condition" />
+    </where>
+    group by hour  order by hour
+  </select>
+
+  <sql id="condition">
+    1=1
+    <if test="businessType != null and  businessType !='' ">
+      and business_type=#{businessType}
+    </if>
+    <if test="month != null and  month !=''">
+      and month=#{month}
+    </if>
+    <if test="day != null and  day !=''">
+      and day=#{day}
+    </if>
+    <if test="deviceType != null and deviceType != '' and deviceType != 'all'">
+      and source=#{deviceType}
+    </if>
+    <if test="version != null and version != '' and version != 'all'">
+      and av=#{version}
+    </if>
+    <if test="QRYcompanyId != null and QRYcompanyId != '' and QRYcompanyId != 'all'">
+      and qry_company_id=#{QRYcompanyId}
+    </if>
+    <if test="companyId != null and companyId != '' and companyId != 'all'">
+      and company_id=#{companyId}
+    </if>
+    and company_id !='-1' and source!='others' and av is not null
+  </sql>
+
+</mapper>

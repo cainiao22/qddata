@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.SystemWebAccessDao">
+
+    <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.SystemWebAccess">
+        <result column="date" property="date" />
+        <result column="user" property="user" />
+        <result column="user_name" property="userName" />
+        <result column="source" property="source" />
+        <result column="pv" property="pv" />
+        <result column="" property="dayNumber" />
+    </resultMap>
+
+    <select id="listBySource" resultMap="BaseResultMap" parameterType="com.qding.bigdata.ds.model.CountData">
+       select user,user_name,sum(pv) AS pv,COUNT(*) AS dayNumber from system_web_access
+        WHERE  date BETWEEN #{startTime} AND #{endTime}
+            <if test="source != null and source !='' ">
+               AND source=#{source}
+            </if>
+        GROUP BY user,user_name
+    </select>
+
+    <select id="listAll" resultMap="BaseResultMap" parameterType="com.qding.bigdata.ds.model.CountData">
+        select * from system_web_access
+        WHERE  date BETWEEN #{startTime} AND #{endTime}
+        <if test="source != null and source !='' ">
+            AND source=#{source}
+        </if>
+        ORDER BY date DESC
+    </select>
+</mapper>

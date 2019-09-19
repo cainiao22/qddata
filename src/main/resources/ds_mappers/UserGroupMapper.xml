@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.UserGroupDao">
+	<resultMap id="BaseResultMap" type="UserGroup">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="conditions" property="conditions" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="conditions" property="conditions" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="conditions" property="conditions" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="is_share" property="isShare" jdbcType="INTEGER" />
+		<result column="mod_model" property="modModel" jdbcType="INTEGER" />
+		<result column="create_User" property="createUser" jdbcType="VARCHAR" />
+		<result column="update_User" property="updateUser" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="base_column_list"> id, name, conditions, description,
+		create_time, update_time,status,is_share,mod_model,CREATE_user, update_user
+	</sql>
+	<sql id="where_condition">
+		<trim prefix=" where " suffixOverrides="and">
+			<if test="id != null and id != ''">
+				id = #{id} and
+			</if>
+			<if test="name != null and name != ''">
+				name = #{name} and
+			</if>
+			<if test="conditions != null and conditions != ''">
+				conditions = #{conditions} and
+			</if>
+			<if test="description != null and description != ''">
+				description = #{description} and
+			</if>
+			<if test="status != null">
+				status = #{status} and
+			</if>
+			<if test="isShare != null">
+				is_share = #{isShare} and
+			</if>
+			<if test="modModel != null">
+				mod_model = #{modModel} and
+			</if>
+			<if test="createUser != null and createUser != ''">
+				 create_user = #{createUser} and
+			</if>
+			<if test="keyword != null and keyword != ''">
+				 (name LIKE '%${keyword}%' or conditions LIKE '%${keyword}%') and
+			</if>
+		</trim>
+	</sql>
+	<sql id="limitAndOrderBy">
+		<if test="sortAndDesc != null">
+			order by ${sortAndDesc}
+		</if>
+		limit  #{pageCount} offset #{offset} 
+	</sql>
+	<select id="count" resultType="Integer" parameterType="UserGroup">
+		select count(1)
+		from ds_user_group
+		<include refid="where_condition" />
+	</select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="UserGroup">
+		select
+		<include refid="base_column_list" />
+		from ds_user_group
+		where id=#{id} limit 1
+	</select>
+
+	<insert id="save" parameterType="UserGroup">
+		insert into ds_user_group
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="conditions != null">
+				conditions,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="createUser != null">
+				create_user,
+			</if>
+			<if test="updateUser != null">
+				update_user,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="isShare != null">
+				is_share,
+			</if>
+			<if test="modModel != null">
+				mod_model,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="conditions != null">
+				#{conditions},
+			</if>
+			<if test="description != null">
+				#{description},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="createUser != null">
+				#{createUser},
+			</if>
+			<if test="updateUser != null">
+				#{updateUser},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="isShare != null">
+				#{isShare},
+			</if>
+			<if test="modModel != null">
+				#{modModel},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateById" parameterType="UserGroup">
+		update ds_user_group
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="conditions != null">
+				conditions = #{conditions},
+			</if>
+			<if test="description != null">
+				description = #{description},
+			</if>
+			<if test="updateUser != null">
+				update_user = #{updateUser},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="isShare != null">
+				is_share = #{isShare},
+			</if>
+			<if test="modModel != null">
+				mod_model = #{modModel},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<delete id="delete" parameterType="UserGroup">
+		delete from ds_user_group
+		<include refid="where_condition" />
+	</delete>
+	<select id="listByIDs" resultMap="BaseResultMap" parameterType="String">
+		select
+		<include refid="base_column_list" />
+		from ds_user_group
+		where id in (${ids})
+	</select>
+	
+	<!-- 获取用户群组 -->
+	<select id="getUserGroups" resultMap="BaseResultMap" parameterType="UserGroup">
+		select
+		<include refid="base_column_list" />
+		from ds_user_group
+		where status=0
+		<if test="createUser != null">
+				and (create_user = #{createUser}  and is_share=1) or  is_share=0
+		</if>
+		<if test="createUser == null">
+				and is_share=0
+		</if>
+		order by  create_time desc
+	</select>
+
+	<select id="list" resultMap="BaseResultMap" parameterType="UserGroup">
+		select
+		<include refid="base_column_list" />
+		from ds_user_group
+		where status=0
+		<if test="createUser != null and createUser != ''">
+			and create_user = #{createUser}
+		</if>
+		<if test="keyword != null and keyword != ''">
+			and (name LIKE '%${keyword}%' or conditions LIKE '%${keyword}%')
+		</if>
+		order by  create_time desc
+		<choose>
+			<when test="page != null">
+				limit #{pageCount} offset #{offset}
+			</when>
+		</choose>
+	</select>
+</mapper>

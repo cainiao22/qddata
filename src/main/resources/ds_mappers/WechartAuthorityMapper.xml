@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.WechartAuthorityDao" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.WechartAuthority" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="authority_flag" property="authorityFlag" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, authority_flag, user_name, real_name, open_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ds_wechart_authority
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ds_wechart_authority
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qding.bigdata.ds.model.WechartAuthority" >
+    insert into ds_wechart_authority (id, authority_flag, user_name, 
+      real_name, open_id)
+    values (#{id,jdbcType=BIGINT}, #{authorityFlag,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{realName,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.WechartAuthority" >
+    insert into ds_wechart_authority
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="authorityFlag != null" >
+        authority_flag,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="authorityFlag != null" >
+        #{authorityFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qding.bigdata.ds.model.WechartAuthority" >
+    update ds_wechart_authority
+    <set >
+      <if test="authorityFlag != null" >
+        authority_flag = #{authorityFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qding.bigdata.ds.model.WechartAuthority" >
+    update ds_wechart_authority
+    set authority_flag = #{authorityFlag,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      open_id = #{openId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getWechartAuthority" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from ds_wechart_authority
+    where open_id = #{openId} AND authority_flag = #{authorityFlag}
+  </select>
+</mapper>

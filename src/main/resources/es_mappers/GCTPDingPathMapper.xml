@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.GCTPDingPathMapper">
+
+
+    <select id="queryUserTrail" resultType="java.util.Map">
+        select id,time, name from gct_p_ding_path
+
+        <where>
+            <include refid="condition"/>
+        </where>
+        order by time desc
+
+    </select>
+    <sql id="condition">
+        <if test="userId != null and userId != ''">
+            and ui=#{userId}
+        </if>
+        <if test="type != null and type != ''">
+            and type=#{type}
+        </if>
+        <if test="startTime != null">
+            and time&gt;=#{startTime}
+        </if>
+        <if test="endTime != null">
+            and time&lt;=#{endTime}
+        </if>
+           AND name != '' AND name is not null
+    </sql>
+</mapper>

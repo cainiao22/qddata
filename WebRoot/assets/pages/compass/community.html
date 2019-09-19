@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="format-detection" content="telephone=no,email=no,address=no">
+  <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="format-detection" content="email=no">
+  <title>罗盘</title>
+  <link rel="stylesheet" type="text/css" href="common/css/base.css">
+  <link rel="stylesheet" type="text/css" href="css/loading.css">
+  <link href="common/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link rel="stylesheet" type="text/css" href="css/compass.css">
+</head>
+
+<body style="background-color: #eee;">
+
+<div class="mainBody">
+    <div class="twoLevelHeadPanel">
+          <div class="baseInfo"><span class="twoLevelTime"></span><span class="twoLevelArea"></span></div>
+          <div class="businessTitle"><div id="busTitle" class="title" style="border: 0;padding: 0"></div></div>
+          <div class="business text-info">
+              <span class="value text-left">业务指标</span>
+              <span class="value flex-layout target_val"><span>数值</span><span class="text-right">环比</span></span>
+          </div>
+          <div id="topData"></div>
+    </div>
+    <!--搜索框-->
+    <div class="searchBox">
+        <label class="searchIcon"></label>
+        <input placeholder="搜索物业公司、社区名称" class="sbox">
+        <span class="search" onclick="search()">搜索</span>
+    </div>
+
+    <div class="listWarp">
+        <div class="listPanel">
+            <div class="item flex-div2 commText"><div class="tabValue">序号</div><div class="tabValue">物业公司</div><div class="tabValue">社区名称</div></div>
+            <div id="communityData"></div>
+        </div>
+    </div>
+</div>
+
+<div class="loading">
+    <div class="card"><span class="throbber-loader">Loading&#8230;</span></div>
+</div>
+
+  <div class="nomore"></div>
+
+<div class="gohomeIcon" onclick="gohome()"></div>
+
+  <script src="common/js/global.js"></script>
+  <script src="common/js/jquery-3.2.1.js"></script>
+  <script src="common/js/common.js"></script>
+  <script src="common/bootstrap/js/bootstrap.min.js"></script>
+  <script src="common/js/echarts.js"></script>
+  <script src="js/base.js"></script>
+  <script src="js/areaCompass.js"></script>
+  <script>
+      $(".commText").hide();
+      getPropertyList();
+
+      //页面滚到底部异步加载下一页数据
+      $(window).scroll(function () {
+          //已经滚动到上面的页面高度
+          var scrollTop = parseFloat($(this).scrollTop()),
+              //页面高度
+              scrollHeight = $(document).height(),
+              //浏览器窗口高度
+              windowHeight = parseFloat($(this).height());
+          if (scrollTop + windowHeight >= scrollHeight) {
+              getPropertyList();
+          }
+      });
+
+      gotoProjectPage();
+  </script>
+
+</body>
+</html>

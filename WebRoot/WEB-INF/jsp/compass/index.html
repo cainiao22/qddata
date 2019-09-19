@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no,email=no,address=no">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+
+  <title>罗盘</title>
+  <link rel="stylesheet" type="text/css" href="common/css/base.css">
+  <link rel="stylesheet" type="text/css" href="css/loading.css">
+  <link href="common/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="common/bootstrap/css/bootstrap-datepicker.min.css" rel="stylesheet" media="screen">
+  <link rel="stylesheet" type="text/css" href="css/shijian.css">
+  <link rel="stylesheet" type="text/css" href="css/compass.css">
+</head>
+
+<body>
+	<div class="mainBody">
+		<header>
+			<div class="tabHead">
+				<div class="calendar active" style="border-right: 1px solid #FFFFFF;">日</div>
+				<div class="calendar" style="border-right: 1px solid #FFFFFF;">月</div>
+				<div class="calendar" style="border-right: 1px solid #FFFFFF;">年</div>
+				<div class="areaPanel" onclick="clickArea()">区域</div>
+			</div>
+		</header>
+
+		<section>
+			<div class="timeItem">
+				<div class="prev">前一日</div>
+				<div class="time">
+          <input type="text" id="date" readonly onchange="showDate();">
+          <input type="text" id="month" readonly style="display: none">
+          <input type="text" id="year" readonly style="display: none">
+          <p></p>
+        </div>
+				<div class="next" onclick="clickNext(this)">后一日</div>
+				<div class="area" data-type="8888">全国</div>
+			</div>
+		</section>
+		<div class="main">
+			<div class="tableGroup">
+        <div class="loading">
+            <div class="card"><span class="throbber-loader">Loading&#8230;</span></div>
+        </div>
+				<table class="table">
+					<thead>
+						<tr>
+							<td>维度</td>
+							<td>业务指标</td>
+							<td>数值</td>
+							<td>环比</td>
+						</tr>
+					</thead>
+					<tbody id="dateList">
+					    <!--1-->
+						<tr class="qy_qiye_num">
+							<td rowspan="2">签约情况</td>
+							<td>签约企业数量</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="qy_guidang_shequ">
+							<td>合同归档社区数量</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<!--2-->
+						<tr class="wyy_todo_project_num">
+							<td rowspan="4">物业云</td>
+							<td>待实施项目</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="wyy_doing_project_num">
+							<td>实施中项目</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="wyy_done_project_num">
+							<td>已上线完成项目</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="wyy_cancel_project_num">
+							<td>取消或暂停项</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<!--3-->
+						<tr class="pduan_bind_mem">
+							<td rowspan="3">P端使用情况</td>
+							<td>P端绑定员工数</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="pduan_act_mem">
+							<td>P端活跃员工数</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="pduan_atc_lv">
+							<td>P端活跃员工占比</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<!--4-->
+						<tr class="gg_shequ_num">
+							<td rowspan="3">公告</td>
+							<td>发公告社区数量</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="gg_shequ_zhanbi">
+							<td>发公告社区占比</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="gg_shequ_avg">
+							<td>社区发公告平均数量</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<!--5-->
+						<tr class="mj_shequ_num">
+							<td rowspan="4">门禁</td>
+							<td>安装门禁社区数</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="mj_total_num">
+							<td>门禁安装总量</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="mj_nopass_num">
+							<td>30天无人同行门禁数量</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="mj_use_rate">
+							<td>门禁使用率</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<!--6-->
+						<tr class="bs_total_num">
+							<td rowspan="3">报事</td>
+							<td>报事总量</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="bs_yezhu_num">
+							<td>业主报事量</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="bs_wuye_num">
+							<td>物业报事量</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<!--7-->
+						<tr class="jf_shequ_rate">
+							<td rowspan="3">缴费</td>
+							<td>开通缴费功能的项目占比</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="jf_online_times">
+							<td>在线缴费次数</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="jf_online_jine">
+							<td>在线缴费金额</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<!--8-->
+						<tr class="bind_task_hushu">
+							<td rowspan="6">绑定及活跃情况</td>
+							<td>任务-绑定户数</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="bind_new_inc">
+							<td>新增注册人数</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="bind_act_num">
+							<td>活跃人数</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="bind_new_hushu">
+							<td>新增绑定户数</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="bind_task_rate">
+							<td>绑定任务完成占比</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr class="bind_time_rate">
+							<td>时间进度比</td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+      <div class="errorTips"></div>
+		</div>
+	</div>
+
+  <div class="areaDiv" id="selectList" style="background-color: #eee;"></div>
+
+  <!--公共弹窗 toast提示-->
+  <div class="pubMask"></div>
+  <div class="pubPopup">
+    <div class="popCon"></div>
+  </div>
+
+  <div id="yearPanel"></div>
+  <div id="monthPanel"></div>
+  <script src="common/js/global.js"></script>
+  <script src="common/js/jquery-3.2.1.js"></script>
+  <script src="common/js/common.js"></script>
+  <script type="text/javascript" src="common/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="common/bootstrap/js/bootstrap-datepicker.min.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="common/bootstrap/js/bootstrap-datepicker.zh-CN.min.js"></script>
+
+  <script src="js/jquer_shijian.js"></script>
+  <script src="js/compass.js"></script>
+
+  <script type="text/javascript">
+    $('#date').datepicker({
+      language:  'zh-CN',
+      format:"yyyy-mm-dd",    //格式化日期
+//      weekStart: 1,
+//      todayBtn:  1,
+      autoclose: 1,       //选择完日期后，弹出框自动关闭
+      todayHighlight: 1
+//      todayButton:false,  //关闭选择今天按钮
+//      startView: 2,       //打开弹出框时，显示到什么格式,2代表日，3代表月
+//      minView: 2
+    });
+
+    shijianHandle("#month",true,true,"2017");
+    shijianHandle("#year",true,false,"2017");
+  </script>
+
+</body>
+</html>

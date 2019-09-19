@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.GCTBaseV2Dao">
+    <!--<resultMap id="dingMap" type="java.util.HashMap">
+        <result column="ding" jdbcType="INTEGER" javaType="java.lang.String"/>
+    </resultMap>-->
+    <select id="getTopActiveCompany" resultType="java.util.HashMap">
+        SELECT company_id as key,count(distinct ui) as value
+        FROM "gct_base.${param.startDateStr}"
+        <where>
+            <include refid="condition"/>
+            group by company_id
+        </where>
+    </select>
+    <select id="getTopActiveVersion" resultType="java.util.HashMap">
+        SELECT av as key,count(distinct ui) as value
+        FROM "gct_base.${param.startDateStr}"
+        <where>
+            <include refid="condition"/>
+            group by av
+        </where>
+    </select>
+    <select id="getTopActivePhoneType" resultType="java.util.HashMap">
+        SELECT dm as key,count(distinct ui) as value
+        FROM "gct_base.${param.startDateStr}"
+        <where>
+            <include refid="condition"/>
+            group by dm
+        </where>
+    </select>
+    <select id="getAnalysisOverviewByCompany" resultType="java.util.Map">
+        select company_id as key,
+        <choose>
+            <when test="action == 'start_up'">
+                sum(startup_times) as value
+            </when>
+            <when test="action == 'reg_new'">
+                sum(ding_reg_new) as value
+            </when>
+            <when test="action == 'active'">
+                count(distinct ui) as value
+            </when>
+        </choose>
+        FROM "gct_base.${param.startDateStr}"
+        <where>
+            <include refid="condition"/>
+        </where>
+        group by company_id
+    </select>
+    <select id="getAnalysisOverviewByQyrCompany" resultType="java.lang.Long">
+        select
+        <choose>
+            <when test="param.action == 'start_up'">
+                sum(startup_times) as value
+            </when>
+            <when test="param.action == 'reg_new'">
+                sum(ding_reg_new) as value
+            </when>
+            <when test="param.action == 'active'">
+                count(distinct ui) as value
+            </when>
+        </choose>
+        FROM "gct_base.${param.startDateStr}"
+        <where>
+            <include refid="condition"/>
+        </where>
+    </select>
+    <select id="getActiveInfoTableAnalysis" resultType="java.util.Map">
+        select hour,
+        sum(ding_reg_new) as active_user_count, sum(ding_reg_new) / count(distinct ui) as active_user_rate
+        FROM "gct_base.${param.startDateStr}"
+        <where>
+            <include refid="condition"/>
+        </where>
+        group by hour
+    </select>
+    <select id="getActiveUserCount" resultType="java.util.Map">
+        select hour,
+        count(distinct ui) as active_user_count
+        FROM "gct_base.${param.startDateStr}"
+        <where>
+            <include refid="condition"/>
+        </where>
+        group by hour order by hour
+    </select>
+    <select id="getActiveUserCountOverView" resultType="java.util.Map">
+        select
+        count(distinct ui) as active_user_count
+        FROM "gct_base.${param.startDateStr}"
+        <where>
+            <include refid="condition"/>
+        </where>
+    </select>
+    <select id="getActiveInfoTableAnalysisOverView" resultType="java.util.Map">
+        select
+        sum(ding_reg_new) as active_user_count, sum(ding_reg_new) / count(distinct ui) as active_user_rate
+        FROM "gct_base.${param.startDateStr}"
+        <where>
+            <include refid="condition"/>
+        </where>
+    </select>
+    <select id="getRegNewUserCount" resultType="java.util.Map">
+        select hour,
+        sum(ding_reg_new) as ding_reg_new
+        FROM "gct_base.${param.startDateStr}"
+        <where>
+            <include refid="condition"/>
+        </where>
+        group by hour order by hour
+    </select>
+    <select id="getRegNewUserCountOverView" resultType="java.util.Map">
+        select
+        sum(ding_reg_new) as ding_reg_new
+        FROM "gct_base.${param.startDateStr}"
+        <where>
+            <include refid="condition"/>
+        </where>
+    </select>
+
+    <sql id="condition">
+        1=1
+        <if test="param.businessType != null and  param.businessType !='' ">
+            and business_type=#{param.businessType}
+        </if>
+        <if test="param.month != null and  param.month !=''">
+            and month=#{param.month}
+        </if>
+        <if test="param.day != null and  param.day !=''">
+            and day=#{param.day}
+        </if>
+        <if test="param.deviceType != null and param.deviceType != '' and param.deviceType != 'all'">
+            and source=#{param.deviceType}
+        </if>
+        <if test="param.version != null and param.version != '' and param.version != 'all'">
+            and av=#{param.version}
+        </if>
+        <if test="param.QRYcompanyId != null and param.QRYcompanyId != '' and param.QRYcompanyId != 'all'">
+            and qry_company_id like '%${param.QRYcompanyId}%'
+        </if>
+        <if test="param.companyId != null and param.companyId != '' and param.companyId != 'all'">
+            and company_id=#{param.companyId}
+        </if>
+        and company_id !='-1' and source!='others' and av is not null
+    </sql>
+
+</mapper>

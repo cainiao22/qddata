@@ -1,0 +1,160 @@
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>报告</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+/* CSS Document */
+body {
+	font: " normal 11px auto " Trebuchet MS
+		", Verdana, Arial, Helvetica, sans-serif";
+	color: #4f6b72;
+	background: #E6EAE9;
+}
+
+a {
+	color: #c75f3e;
+}
+
+#mytable {
+	padding: 0;
+	margin: 0;
+}
+
+caption {
+	padding: 0 0 5px 0;
+	font: italic 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	text-align: right;
+}
+
+th {
+	font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #4f6b72;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	text-align: left;
+	padding: 6px 6px 6px 12px;
+	background: #CAE8EA no-repeat;
+}
+
+th.nobg {
+	background: none;
+}
+
+td {
+	background: #fff;
+	font-size: 12px;
+	padding: 6px 6px 6px 12px;
+	color: #4f6b72;
+	text-align: center;
+}
+
+td.alt {
+	background: #F5FAFA;
+	color: #797268;
+}
+
+th.spec {
+	background: #fff no-repeat;
+	font: bold 12px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+}
+
+th.specalt {
+	background: #f5fafa no-repeat;
+	font: bold 12px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #797268;
+}
+
+tr.stock td {
+	color: #000000;
+	background-color: #EAF2D3;
+}
+
+tr.error td {
+	color: #000000;
+	background-color: #FF0000;
+}
+
+tr.data1 td {
+	color: #000000;
+	text-align: left;
+	background-color: rgb(250, 245, 220);
+}
+
+tr.data2 td {
+	color: #000000;
+	text-align: left;
+	background-color: rgb(242, 248, 237);
+	font-size: 12px
+}
+
+tr.data3 td {
+	text-align: left;
+	background-color: rgb(237, 242, 248);
+	font: bold 12px;
+	font-size: 12px color:#4682B4;
+}
+
+tr.uv td {
+	color: #000000;
+	background-color: #A7C942;
+}
+
+/*---------for IE 5.x bug*/
+html>body td {
+	font-size: 12px;
+	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif
+}
+
+body, td, th { /*--  font-family: 宋体, Arial ;*/
+	font-family: "Trebuchet MS", Verdana, Arial, Helvetica,
+		sans-serif font-size : 12px;
+}
+</style>
+</head>
+<body>
+	<table id="mytable" width=1280 cellspacing="0"
+		style="border-collapse: collapse; table-layout: auto;" border=1
+		bordercolor="#4682B4"
+		summary="The technical specifications of the ApplePowerMac G5 series">
+		<caption></caption>
+
+		<tr>
+			<th scope="col" colspan=6
+				style="text-align: center; background-color: #4682B4; font-size: 11px; color: white">广告主余额补偿记录(${date})</th>
+		</tr>
+		<tr class="data3">
+			<td scope="col" rowspan=1 width="50px"
+				style="text-align: center; font-size: 11px; color: #4682B4;">序号</td>
+			<td scope="col" rowspan=1 width="50px"
+				style="text-align: center; font-size: 11px; color: #4682B4;">ID</td>
+			<td scope="col" rowspan=1 width="200px"
+				style="text-align: center; font-size: 11px; color: #4682B4;">名称</td>
+			<td scope="col" rowspan=1 width="150px"
+				style="text-align: center; font-size: 11px; color: #4682B4;">昨日实时消耗</td>
+
+			<td scope="col" rowspan=1 width="150px"
+				style="text-align: center; font-size: 11px; color: #4682B4;">昨日日志消耗</td>
+			<td scope="col" rowspan=1 width="150px"
+				style="text-align: center; font-size: 11px; color: #4682B4;">补偿额度</br>(昨日实时消耗-昨日日志消耗)
+			</td>
+		</tr>
+
+		#set($cnt=0) #foreach( $adv in $advertiserList) #set($cnt=$cnt+1)
+		<tr class="data1">
+
+			<td scope="col" style="text-align: right; font-size: 11px">$cnt</td>
+			<td scope="col" style="text-align: right; font-size: 11px">$adv.advid</td>
+			<td scope="col" style="text-align: right; font-size: 11px">$adv.name</td>
+			<td scope="col" style="text-align: right; font-size: 11px">$adv.onlineAmount</td>
+			<td scope="col" style="text-align: right; font-size: 11px">$adv.offlineAmount</td>
+			<td scope="col" style="text-align: right; font-size: 11px">$adv.gap</td>
+		</tr>
+		#end
+	</table>
+</body>
+</html>

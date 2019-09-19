@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.DIMLiveClassifyDao" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.DIMLiveClassify" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="article_num" property="articleNum" jdbcType="BIGINT" />
+    <result column="real_revert_num" property="realRevertNum" jdbcType="BIGINT" />
+    <result column="revert_num" property="revertNum" jdbcType="BIGINT" />
+    <result column="real_collect_num" property="realCollectNum" jdbcType="BIGINT" />
+    <result column="collect_num" property="collectNum" jdbcType="BIGINT" />
+    <result column="real_read_num" property="realReadNum" jdbcType="BIGINT" />
+    <result column="read_num" property="readNum" jdbcType="BIGINT" />
+    <result column="real_like_num" property="realLikeNum" jdbcType="BIGINT" />
+    <result column="like_num" property="likeNum" jdbcType="BIGINT" />
+    <result column="real_comment_num" property="realCommentNum" jdbcType="BIGINT" />
+    <result column="comment_num" property="commentNum" jdbcType="BIGINT" />
+    <result column="creat_at" property="creatAt" jdbcType="BIGINT" />
+    <result column="creat_by" property="creatBy" jdbcType="VARCHAR" />
+    <result column="update_at" property="updateAt" jdbcType="BIGINT" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="is_del" property="isDel" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, article_num, real_revert_num, revert_num, real_collect_num, collect_num, 
+    real_read_num, read_num, real_like_num, like_num, real_comment_num, comment_num, 
+    creat_at, creat_by, update_at, update_by, is_del
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from dim_live_classify
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from dim_live_classify
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qding.bigdata.ds.model.DIMLiveClassify" >
+    insert into dim_live_classify (id, name, article_num, 
+      real_revert_num, revert_num, real_collect_num, 
+      collect_num, real_read_num, read_num, 
+      real_like_num, like_num, real_comment_num, 
+      comment_num, creat_at, creat_by, 
+      update_at, update_by, is_del)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{articleNum,jdbcType=BIGINT}, 
+      #{realRevertNum,jdbcType=BIGINT}, #{revertNum,jdbcType=BIGINT}, #{realCollectNum,jdbcType=BIGINT}, 
+      #{collectNum,jdbcType=BIGINT}, #{realReadNum,jdbcType=BIGINT}, #{readNum,jdbcType=BIGINT}, 
+      #{realLikeNum,jdbcType=BIGINT}, #{likeNum,jdbcType=BIGINT}, #{realCommentNum,jdbcType=BIGINT}, 
+      #{commentNum,jdbcType=BIGINT}, #{creatAt,jdbcType=BIGINT}, #{creatBy,jdbcType=VARCHAR}, 
+      #{updateAt,jdbcType=BIGINT}, #{updateBy,jdbcType=VARCHAR}, #{isDel,jdbcType=BIT}, 
+      #{subscribeNum,jdbcType=BIGINT}, #{realSubscribeNum,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.DIMLiveClassify" >
+    insert into dim_live_classify
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="articleNum != null" >
+        article_num,
+      </if>
+      <if test="realRevertNum != null" >
+        real_revert_num,
+      </if>
+      <if test="revertNum != null" >
+        revert_num,
+      </if>
+      <if test="realCollectNum != null" >
+        real_collect_num,
+      </if>
+      <if test="collectNum != null" >
+        collect_num,
+      </if>
+      <if test="realReadNum != null" >
+        real_read_num,
+      </if>
+      <if test="readNum != null" >
+        read_num,
+      </if>
+      <if test="realLikeNum != null" >
+        real_like_num,
+      </if>
+      <if test="likeNum != null" >
+        like_num,
+      </if>
+      <if test="realCommentNum != null" >
+        real_comment_num,
+      </if>
+      <if test="commentNum != null" >
+        comment_num,
+      </if>
+      <if test="creatAt != null" >
+        creat_at,
+      </if>
+      <if test="creatBy != null" >
+        creat_by,
+      </if>
+      <if test="updateAt != null" >
+        update_at,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="articleNum != null" >
+        #{articleNum,jdbcType=BIGINT},
+      </if>
+      <if test="realRevertNum != null" >
+        #{realRevertNum,jdbcType=BIGINT},
+      </if>
+      <if test="revertNum != null" >
+        #{revertNum,jdbcType=BIGINT},
+      </if>
+      <if test="realCollectNum != null" >
+        #{realCollectNum,jdbcType=BIGINT},
+      </if>
+      <if test="collectNum != null" >
+        #{collectNum,jdbcType=BIGINT},
+      </if>
+      <if test="realReadNum != null" >
+        #{realReadNum,jdbcType=BIGINT},
+      </if>
+      <if test="readNum != null" >
+        #{readNum,jdbcType=BIGINT},
+      </if>
+      <if test="realLikeNum != null" >
+        #{realLikeNum,jdbcType=BIGINT},
+      </if>
+      <if test="likeNum != null" >
+        #{likeNum,jdbcType=BIGINT},
+      </if>
+      <if test="realCommentNum != null" >
+        #{realCommentNum,jdbcType=BIGINT},
+      </if>
+      <if test="commentNum != null" >
+        #{commentNum,jdbcType=BIGINT},
+      </if>
+      <if test="creatAt != null" >
+        #{creatAt,jdbcType=BIGINT},
+      </if>
+      <if test="creatBy != null" >
+        #{creatBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null" >
+        #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=BIT},
+      </if>
+      <if test="subscribeNum != null" >
+        #{subscribeNum,jdbcType=BIGINT},
+      </if>
+      <if test="realSubscribeNum != null" >
+        #{realSubscribeNum,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qding.bigdata.ds.model.DIMLiveClassify" >
+    update dim_live_classify
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="articleNum != null" >
+        article_num = #{articleNum,jdbcType=BIGINT},
+      </if>
+      <if test="realRevertNum != null" >
+        real_revert_num = #{realRevertNum,jdbcType=BIGINT},
+      </if>
+      <if test="revertNum != null" >
+        revert_num = #{revertNum,jdbcType=BIGINT},
+      </if>
+      <if test="realCollectNum != null" >
+        real_collect_num = #{realCollectNum,jdbcType=BIGINT},
+      </if>
+      <if test="collectNum != null" >
+        collect_num = #{collectNum,jdbcType=BIGINT},
+      </if>
+      <if test="realReadNum != null" >
+        real_read_num = #{realReadNum,jdbcType=BIGINT},
+      </if>
+      <if test="readNum != null" >
+        read_num = #{readNum,jdbcType=BIGINT},
+      </if>
+      <if test="realLikeNum != null" >
+        real_like_num = #{realLikeNum,jdbcType=BIGINT},
+      </if>
+      <if test="likeNum != null" >
+        like_num = #{likeNum,jdbcType=BIGINT},
+      </if>
+      <if test="realCommentNum != null" >
+        real_comment_num = #{realCommentNum,jdbcType=BIGINT},
+      </if>
+      <if test="commentNum != null" >
+        comment_num = #{commentNum,jdbcType=BIGINT},
+      </if>
+      <if test="creatAt != null" >
+        creat_at = #{creatAt,jdbcType=BIGINT},
+      </if>
+      <if test="creatBy != null" >
+        creat_by = #{creatBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null" >
+        update_at = #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qding.bigdata.ds.model.DIMLiveClassify" >
+    update dim_live_classify
+    set name = #{name,jdbcType=VARCHAR},
+      article_num = #{articleNum,jdbcType=BIGINT},
+      real_revert_num = #{realRevertNum,jdbcType=BIGINT},
+      revert_num = #{revertNum,jdbcType=BIGINT},
+      real_collect_num = #{realCollectNum,jdbcType=BIGINT},
+      collect_num = #{collectNum,jdbcType=BIGINT},
+      real_read_num = #{realReadNum,jdbcType=BIGINT},
+      read_num = #{readNum,jdbcType=BIGINT},
+      real_like_num = #{realLikeNum,jdbcType=BIGINT},
+      like_num = #{likeNum,jdbcType=BIGINT},
+      real_comment_num = #{realCommentNum,jdbcType=BIGINT},
+      comment_num = #{commentNum,jdbcType=BIGINT},
+      creat_at = #{creatAt,jdbcType=BIGINT},
+      creat_by = #{creatBy,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      is_del = #{isDel,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="listByIDs" resultMap="BaseResultMap" parameterType="String">
+    select
+    <include refid="Base_Column_List" />
+    from databus.dim_live_classify
+    where id in (${ids})
+  </select>
+  <select id="matchClassifIDOrName" resultMap="BaseResultMap" parameterType="String">
+    select
+    id,name
+    from databus.dim_live_classify
+    where
+    <if test='isMatch != null and isMatch == false'>
+      id in (${searchKey})
+    </if>
+    <if test='isMatch == null or isMatch == true'>
+      name like CONCAT('%',#{searchKey},'%')
+      <if test="flag == true">
+        OR id=#{searchKey}
+      </if>
+    </if>
+  </select>
+  <select id="matchClassifIDOrNameCount" resultType="java.lang.Integer" parameterType="String">
+    select
+    count(*)
+    from databus.dim_live_classify
+    where
+    <if test='isMatch != null and isMatch == false'>
+      id in (${searchKey})
+    </if>
+    <if test='isMatch == null or isMatch == true'>
+      name like CONCAT('%',#{searchKey},'%')
+      <if test="flag == true">
+        OR id=#{searchKey}
+      </if>
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.MetaTableDao">
+	<resultMap id="BaseResultMap" type="MetaTable">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="alias" property="alias" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="owner" property="owner" jdbcType="VARCHAR" />
+		<result column="enable_etl" property="enableEtl" jdbcType="INTEGER" />
+		<result column="etljob_type" property="etlJobType" jdbcType="VARCHAR" />
+		<result column="etljob_sql" property="etlJobSql" jdbcType="VARCHAR" />
+		<result column="etljob_schedule_hour" property="etlJobScheduleHour" jdbcType="INTEGER" />
+		<result column="etljob_schedule_minute" property="etlJobScheduleMinute" jdbcType="INTEGER" />
+		<result column="priority" property="priority" jdbcType="INTEGER" />
+		<result column="query_enable" property="queryEnable" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="base_column_list"> *
+	</sql>
+	<sql id="where_condition">
+		<trim prefix=" where " suffixOverrides="and">
+			<if test="id != null">
+				id = #{id} and
+			</if>
+			<if test="keyword != null">
+				(name like '%${keyword}%' or alias like '%${keyword}%' or description
+				like '%${keyword}%' ) and
+			</if>
+			<if test="type != null and type!=''">
+				type = #{type} and
+			</if>
+			<if test="owner != null and owner!=''">
+				owner = #{owner} and
+			</if>
+			<if test="queryEnable != null ">
+				query_enable = #{queryEnable} and
+			</if>
+
+		</trim>
+	</sql>
+	<sql id="limitAndOrderBy">
+		<if test="sortAndDesc != null">
+			order by ${sortAndDesc}
+		</if>
+		limit #{pageCount} offset #{offset}
+	</sql>
+	<select id="list" resultMap="BaseResultMap" parameterType="MetaTable">
+		select
+		<include refid="base_column_list" />
+		from ds_meta_table
+		<include refid="where_condition" />
+		<include refid="limitAndOrderBy" />
+	</select>
+	<select id="count" resultType="Integer" parameterType="MetaTable">
+		select count(1)
+		from ds_meta_table
+		<include refid="where_condition" />
+	</select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="MetaTable">
+		select
+		<include refid="base_column_list" />
+		from ds_meta_table
+		where id=#{id} limit 1
+	</select>
+
+	<insert id="save" parameterType="MetaTable">
+		insert into ds_meta_table
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="alias != null">
+				alias,
+			</if>
+			<if test="type != null ">
+				type,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="owner != null">
+				owner,
+			</if>
+			<if test="enableEtl != null">
+				enable_etl,
+			</if>
+			<if test="etlJobType != null">
+				etljob_type,
+			</if>
+			<if test="etlJobSql != null">
+				etljob_sql,
+			</if>
+			<if test="etlJobScheduleHour != null">
+				etljob_schedule_hour,
+			</if>
+			<if test="etlJobScheduleMinute != null">
+				etljob_schedule_minute,
+			</if>
+			<if test="priority != null">
+				priority
+			</if>
+			<if test="queryEnable != null">
+				query_enable
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="alias != null">
+				#{alias},
+			</if>
+			<if test="type != null ">
+				#{type},
+			</if>
+			<if test="description != null">
+				#{description},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="owner != null">
+				#{owner},
+			</if>
+
+			<if test="enableEtl != null">
+				#{enableEtl},
+			</if>
+			<if test="etlJobType != null">
+				#{etlJobType},
+			</if>
+			<if test="etlJobSql != null">
+				#{etlJobSql},
+			</if>
+			
+			<if test="etlJobScheduleHour != null">
+				#{etlJobScheduleHour},
+			</if>
+			<if test="etlJobScheduleMinute != null">
+				#{etlJobScheduleMinute},
+			</if>
+			<if test="priority != null">
+				#{priority},
+			</if>
+			<if test="queryEnable != null">
+				#{queryEnable},
+			</if>
+			
+		</trim>
+	</insert>
+	<update id="updateById" parameterType="MetaTable">
+		update ds_meta_table
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="alias != null">
+				alias = #{alias},
+			</if>
+			<if test="type != null ">
+				type = #{type},
+			</if>
+			<if test="description != null">
+				description = #{description},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="owner != null">
+				owner = #{owner},
+			</if>
+
+			<if test="enableEtl != null">
+				enable_etl= #{enableEtl},
+			</if>
+			<if test="etlJobType != null">
+				etljob_type= #{etlJobType},
+				</if>
+				<if test="etlJobSql != null">
+					etljob_sql=#{etlJobSql},
+				</if>
+				
+				<if test="etlJobScheduleHour != null">
+				etljob_schedule_hour=#{etlJobScheduleHour},
+			</if>
+			<if test="etlJobScheduleMinute != null">
+				etljob_schedule_minute=#{etlJobScheduleMinute},
+			</if>
+			<if test="priority != null">
+				priority=#{priority},
+			</if>
+			<if test="queryEnable != null">
+				query_enable=#{queryEnable},
+			</if>
+			
+		</set>
+		where id = #{id}
+	</update>
+	<delete id="delete" parameterType="MetaTable">
+		delete from ds_meta_table
+		<include refid="where_condition" />
+	</delete>
+	<select id="listByIDs" resultMap="BaseResultMap" parameterType="String">
+		select
+		<include refid="base_column_list" />
+		from ds_meta_table
+		where id in (${ids})
+	</select>
+</mapper>

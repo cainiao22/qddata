@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans    
+           http://www.springframework.org/schema/beans/spring-beans-4.3.xsd   
+           http://www.springframework.org/schema/context    
+           http://www.springframework.org/schema/context/spring-context-4.3.xsd
+           http://www.springframework.org/schema/tx   
+      	   http://www.springframework.org/schema/tx/spring-tx-4.3.xsd   
+       	   http://www.springframework.org/schema/aop   
+      	   http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+      	   http://www.springframework.org/schema/task 
+      	   http://www.springframework.org/schema/task/spring-task-4.3.xsd
+      	   http://www.springframework.org/schema/mvc
+      	   http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+
+
+<!-- 	<context:annotation-config />  -->
+	<!-- 扫描指定package下所有带有如@controller,@services,@resource,并把所注释的注册为Spring Beans -->
+	<context:component-scan base-package="com.qding.bigdata.ds">
+	 <context:exclude-filter type="annotation"  
+            expression="org.springframework.stereotype.Controller" />  
+	 </context:component-scan>
+	<!-- 声明spring对@AspectJ的支持 -->
+	<aop:aspectj-autoproxy />
+	<tx:annotation-driven transaction-manager="dstransactionManager"/>
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:config.properties" />
+	</bean>
+	 <bean id="dsJdbcSource"  class="org.apache.commons.dbcp.BasicDataSource"  destroy-method="close">          
+    <property name="driverClassName" value="${ds.db.driver}" />         
+    <property name="url">
+    <value><![CDATA[jdbc:${ds.db.jdbctype}://${ds.db.host}:${ds.db.port}/${ds.db.dbname}?useUnicode=true&characterEncoding=utf-8]]></value>
+    </property>
+    <property name="username" value="${ds.db.username}" />         
+    <property name="password" value="${ds.db.password}" />      
+     <property name="testOnBorrow" value="true" />        
+       <property name="testWhileIdle" value="true" />     
+         <!-- 连接池启动时的初始值 -->  
+  <property name="initialSize" value="1" />  
+  <!-- 连接池的最大值 -->  
+  <property name="maxActive" value="10" />  
+  <!-- 最大空闲值.当经过一个高峰时间后，连接池可以慢慢将已经用不到的连接慢慢释放一部分，一直减少到maxIdle为止 -->  
+  <property name="maxIdle" value="3" />  
+  <!-- 最小空闲值.当空闲的连接数少于阀值时，连接池就会预申请去一些连接，以免洪峰来时来不及申请 -->  
+  <property name="minIdle" value="1" />  
+  <property name="removeAbandonedTimeout" value="120" />  
+  <property name="removeAbandoned" value="true" />  
+  <property name="timeBetweenEvictionRunsMillis" value="3600000" />  
+  <property name="minEvictableIdleTimeMillis" value="3600000" />    
+  <property name="validationQuery" value="select 1" />    
+</bean>   
+<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+       <property name="dataSource" ref="dsJdbcSource"/>  
+   </bean>
+
+	<bean id="dssqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dsJdbcSource" />
+		<property name="typeAliasesPackage" value="com.qding.bigdata.ds.model" />
+		<property name="mapperLocations" value="classpath:ds_mappers/*.xml" />
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+	</bean>
+
+
+	<bean id="postgreJdbcSource"  class="org.apache.commons.dbcp.BasicDataSource"  destroy-method="close">
+		<property name="driverClassName" value="${dw.db.driver}" />
+		<property name="url">
+			<value><![CDATA[jdbc:${dw.db.jdbctype}://${dw.db.host}:${dw.db.port}/${dw.db.dbname}?currentSchema=ds]]></value>
+		</property>
+		<property name="username" value="${dw.db.username}" />
+		<property name="password" value="${dw.db.password}" />
+		<property name="testOnBorrow" value="true" />
+		<property name="testWhileIdle" value="true" />
+		<!-- 连接池启动时的初始值 -->
+		<property name="initialSize" value="1" />
+		<!-- 连接池的最大值 -->
+		<property name="maxActive" value="5" />
+		<!-- 最大空闲值.当经过一个高峰时间后，连接池可以慢慢将已经用不到的连接慢慢释放一部分，一直减少到maxIdle为止 -->
+		<property name="maxIdle" value="3" />
+		<!-- 最小空闲值.当空闲的连接数少于阀值时，连接池就会预申请去一些连接，以免洪峰来时来不及申请 -->
+		<property name="minIdle" value="1" />
+		<property name="removeAbandonedTimeout" value="120" />
+		<property name="removeAbandoned" value="true" />
+		<!-- #运行判断连接超时任务的时间间隔，单位为毫秒，默认为-1，即不执行任务。 -->
+		<property name="timeBetweenEvictionRunsMillis" value="600000" />
+		<!-- #连接的超时时间，默认为半小时。 -->
+		<property name="minEvictableIdleTimeMillis" value="600000" />
+	</bean>
+	<!-- <bean id="esJdbcSource"  class="org.apache.commons.dbcp.BasicDataSource"  destroy-method="close"> -->
+	<bean id="esJdbcSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+     <property name="driverClassName" value="${es.db.driver}" />
+		<property name="url">
+			<value><![CDATA[jdbc:${es.db.jdbctype}://${es.db.host}:${es.db.port}]]></value>
+		</property>
+	</bean>
+
+	<bean id="postgreSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="postgreJdbcSource" />
+		<property name="typeAliasesPackage" value="com.qding.bigdata.ds.model" />
+		<property name="mapperLocations" value="classpath:dw_mappers/*.xml" />
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+	</bean>
+
+	<bean id="sqlSessionExecutor" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+		<constructor-arg index="0" ref="postgreSqlSessionFactory"/>
+	</bean>
+	<bean id="executorESJdbcTemplate" class=" org.springframework.jdbc.core.JdbcTemplate" scope="prototype">
+		<property name="dataSource" ref="esJdbcSource" />
+	</bean>
+ 
+	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="dssqlSessionFactory"></property>
+		<property name="basePackage" value="com.qding.bigdata.ds.dao" />
+
+	</bean>
+
+	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="schdSqlSessionFactory"></property>
+		<property name="basePackage" value="com.qding.bigdata.ds.scheduler.dao" />
+
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="postgreSqlSessionFactory"></property>
+		<property name="basePackage" value="com.qding.bigdata.ds.dao" />
+	</bean>
+
+
+	<task:executor id="executor" pool-size="5" />
+	<task:scheduler id="scheduler" pool-size="10" />
+	<!-- <bean id="senderImpl" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
+		<property name="host" value="" /> <property name="username" value="" /> <property 
+		name="password" value="" /> <property name="defaultEncoding" value="UTF-8" 
+		/> </bean> -->
+	<bean id="velocityEngine"
+		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+		<property name="resourceLoaderPath" value="classpath:templates" />
+		<property name="preferFileSystemAccess" value="true" />
+		<property name="velocityProperties">
+			<props>
+				<prop key="input.encoding">UTF-8</prop>
+				<prop key="output.encoding">UTF-8</prop>
+				<prop key="runtime.references.strict">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	 <bean id="schdJdbcSource"  class="org.apache.commons.dbcp.BasicDataSource"  destroy-method="close">          
+    <property name="driverClassName" value="${schd.db.driver}" />         
+    <property name="url">
+    <value><![CDATA[jdbc:${schd.db.jdbctype}://${schd.db.host}:${schd.db.port}/${schd.db.dbname}?useUnicode=true&characterEncoding=utf-8]]></value>
+    </property>
+    <property name="username" value="${schd.db.username}" />         
+    <property name="password" value="${schd.db.password}" />      
+     <property name="testOnBorrow" value="true" />        
+       <property name="testWhileIdle" value="true" />     
+         <!-- 连接池启动时的初始值 -->  
+  <property name="initialSize" value="1" />  
+  <!-- 连接池的最大值 -->  
+  <property name="maxActive" value="10" />  
+  <!-- 最大空闲值.当经过一个高峰时间后，连接池可以慢慢将已经用不到的连接慢慢释放一部分，一直减少到maxIdle为止 -->  
+  <property name="maxIdle" value="3" />  
+  <!-- 最小空闲值.当空闲的连接数少于阀值时，连接池就会预申请去一些连接，以免洪峰来时来不及申请 -->  
+  <property name="minIdle" value="1" />  
+  <property name="removeAbandonedTimeout" value="120" />  
+  <property name="removeAbandoned" value="true" />  
+  <property name="timeBetweenEvictionRunsMillis" value="3600000" />  
+  <property name="minEvictableIdleTimeMillis" value="3600000" />    
+  <property name="validationQuery" value="select 1" />    
+</bean>
+	<import resource="spring-redis-cluster.xml"/>
+	<!--<import resource="spring-redis.xml"/>-->
+	<import resource="spring-cache.xml"/>
+	<import resource="spring-redis-track.xml"/>
+	<import resource="spring-dubbox.xml"/>
+	<import resource="spring-mysql.xml" />
+	<import resource="spring-es.xml" />
+
+<bean id="quartzScheduler" lazy-init="false" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="dataSource" ref="schdJdbcSource" />
+		<property name="autoStartup" value="false" />			<!--自动启动 -->
+		<property name="startupDelay" value="5" />				<!--延时启动，应用启动成功后在启动 -->
+		<property name="overwriteExistingJobs" value="true" />	<!--覆盖DB中JOB：true、以数据库中已经存在的为准：false -->
+		<property name="applicationContextSchedulerContextKey"  value="applicationContextKey" />
+		<property name="configLocation" value="classpath:quartz.properties"/>
+	</bean>
+
+	<bean id="multipartResolver"
+		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- set the max upload size100MB -->
+		<property name="maxUploadSize">
+			<value>104857600</value>
+		</property>
+		<property name="maxInMemorySize">
+			<value>4096</value>
+		</property>
+	</bean>
+
+
+	<!--oracle数据库连接配置-->
+		<bean id="oracleJdbcSource"  class="org.apache.commons.dbcp.BasicDataSource"  destroy-method="close">
+            <property name="driverClassName" value="${ps.db.driver}" />
+            <property name="url">
+                <value><![CDATA[jdbc:${ps.db.jdbctype}:thin:@${ps.db.host}:${ps.db.port}:${ps.db.dbname}]]></value>
+            </property>
+            <property name="username" value="${ps.db.username}" />
+            <property name="password" value="${ps.db.password}" />
+        </bean>
+	<!--oracle表扫描-->
+	<bean id="oracleSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="oracleJdbcSource" />
+		<property name="mapperLocations" value="classpath:ps_mappers/*.xml" />
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+	</bean>
+
+	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+		<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+            <property name="basePackage" value="com.qding.bigdata.ds.ps" />
+            <property name="sqlSessionFactoryBeanName" value="oracleSqlSessionFactory"></property>
+        </bean>
+	<!--oracle 依赖注入-->
+	<!--(事务管理)transaction manager, use JtaTransactionManager for global tx-->
+	<bean id="transactionManager1" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="oracleJdbcSource"/>
+	</bean>
+
+	<bean id="dstransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dsJdbcSource"/>
+	</bean>
+
+	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+	<tx:annotation-driven transaction-manager="transactionManager1"/>
+
+	<import resource="spring-dynamic-datasource.xml"/>
+</beans>

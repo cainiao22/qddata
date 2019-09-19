@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.SchemeDao">
+	<resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.SchemeInfo">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="dbname" property="dbName" jdbcType="VARCHAR" />
+		<result column="tablename" property="tableName" jdbcType="VARCHAR" />
+		<result column="alias" property="alias" jdbcType="VARCHAR" />
+		<result column="owner" property="owner" jdbcType="VARCHAR" />
+		<result column="update_type" property="updateType" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="message" property="message" jdbcType="VARCHAR" />
+		<result column="user" property="user" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="task_id" property="taskId" jdbcType="VARCHAR" />
+		<result column="sync_data_status" property="syncDataStatus" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="updateStatus" parameterType="String" >
+		UPDATE  ds_syn_scheme_record set sync_data_status=#{0}  where id = #{1}
+	</select>
+
+	<insert id="insert" parameterType="com.qding.bigdata.ds.model.SchemeInfo" >
+		INSERT INTO ds_syn_scheme_record
+	(id, dbname, tablename,alias, `user`, `password`, update_type, ip, status, message, owner,create_time, update_time)
+		values (#{id,jdbcType=VARCHAR}, #{dbName,jdbcType=VARCHAR}, #{tableName,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR},
+                #{user,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{update_type,jdbcType=INTEGER},#{ip,jdbcType=VARCHAR},
+                #{status,jdbcType=INTEGER}, #{message,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+
+
+
+	<select id="queryById" resultMap="BaseResultMap" parameterType="String">
+		select *
+		from ds_syn_scheme_record
+		where id=#{id} limit 1
+	</select>
+
+	<update id="updateById" parameterType="SchemeInfo">
+		update ds_syn_scheme_record
+		<set>
+			<if test="dbName != null">
+				dbname = #{dbName},
+			</if>
+			<if test="tableName != null">
+				tablename = #{tableName},
+			</if>
+			<if test="user != null">
+				`user` = #{user},
+			</if>
+			<if test="password != null">
+				password = #{password},
+			</if>
+			<if test="updateType != null">
+				update_type = #{updateType},
+			</if>
+			<if test="ip != null">
+				ip = #{ip},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="message != null">
+				message = #{message},
+			</if>
+			<if test="updateTime != null">
+				update_time=#{updateTime},
+			</if>
+
+			<if test="owner != null">
+				owner=#{owner},
+			</if>
+			<if test="alias != null">
+				alias=#{alias},
+			</if>
+			<if test="taskId != null">
+				task_id=#{taskId},
+			</if>
+			<if test="syncDataStatus != null">
+				sync_data_status=#{syncDataStatus},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<sql id="where_condition">
+		<trim prefix=" where " suffixOverrides="and">
+			<if test="id != null">
+				id = #{id} and
+			</if>
+			<if test="keyword != null and keyword !=''">
+				(tablename like '%${keyword}%' or alias like '%${keyword}%') and
+			</if>
+			<if test="tableName != null">
+				tablename = #{tableName} and
+			</if>
+			<if test="dbName != null">
+				dbname = #{dbName} and
+			</if>
+			<if test="owner != null and owner !=''" >
+				owner = #{owner} and
+			</if>
+		</trim>
+	</sql>
+	<sql id="limitAndOrderBy">
+		<if test="sortAndDesc != null">
+			order by ${sortAndDesc}
+		</if>
+		limit  #{pageCount} offset #{offset}
+	</sql>
+
+
+
+	<select id="list" resultMap="BaseResultMap" parameterType="SchemeInfo">
+		select  *
+		from ds_syn_scheme_record
+		<include refid="where_condition" />
+		<include refid="limitAndOrderBy" />
+	</select>
+	<select id="count" resultType="Integer" parameterType="SchemeInfo">
+		select count(1)
+		from ds_syn_scheme_record
+		<include refid="where_condition" />
+	</select>
+	<insert id="save" parameterType="SchemeInfo">
+
+		insert into ds_syn_scheme_record
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="dbName != null">
+				dbname,
+			</if>
+			<if test="tableName != null">
+				`tablename`,
+			</if>
+			<if test="user != null">
+				`user`,
+			</if>
+			<if test="password != null">
+				`password`,
+			</if>
+			<if test="updateType != null">
+				update_type,
+			</if>
+			<if test="ip != null">
+				ip,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="message != null">
+				message,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="owner != null">
+				owner,
+			</if>
+			<if test="alias != null">
+				alias,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="dbName != null">
+			 #{dbName},
+			</if>
+			<if test="tableName != null">
+				 #{tableName},
+			</if>
+			<if test="user != null">
+				 #{user},
+			</if>
+			<if test="password != null">
+				 #{password},
+			</if>
+			<if test="updateType != null">
+				#{updateType},
+			</if>
+			<if test="ip != null">
+				 #{ip},
+			</if>
+			<if test="status != null">
+				 #{status},
+			</if>
+			<if test="message != null">
+				 #{message},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="owner != null">
+				#{owner},
+			</if>
+			<if test="alias != null">
+				#{alias},
+			</if>
+		</trim>
+	</insert>
+
+</mapper>

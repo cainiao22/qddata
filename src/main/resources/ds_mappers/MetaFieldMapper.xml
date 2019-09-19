@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.MetaFieldDao">
+	<resultMap id="BaseResultMap" type="MetaField">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="alias" property="alias" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="measure_id" property="measureId" jdbcType="VARCHAR" />
+		<result column="meta_table_id" property="tableId" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="source_tables" property="sourceTables" jdbcType="TIMESTAMP" />
+		<result column="is_date" property="isDate" jdbcType="INTEGER" />
+		<result column="is_dim" property="isDim" jdbcType="INTEGER" />
+		<result column="is_filter" property="isFilter" jdbcType="INTEGER" />
+		<result column="is_metric" property="isMetric" jdbcType="INTEGER" />
+		<result column="is_virtual" property="isVirtual" jdbcType="INTEGER" />
+		<result column="data_type" property="dataType" jdbcType="INTEGER" />
+		
+		
+	 
+	</resultMap>
+	<resultMap id="BaseResultMap2" type="MetaField">
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="base_column_list">*
+	</sql>
+	<sql id="where_condition">
+		<trim prefix=" where " suffixOverrides="and">
+			<if test="id != null">
+				id = #{id} and
+			</if>
+			<if test="name != null">
+				name = #{name} and
+			</if>
+			<if test="keyword != null">
+			(name like '%${keyword}%'  or  alias like '%${keyword}%'   or  description like '%${keyword}%'  ) and
+			</if>
+			<if test="type != null and type!=''">
+				type = #{type} and
+			</if>
+			<if test="tableId != null  and tableId !=''">
+				meta_table_id = #{tableId} and
+			</if>
+			<if test="measureId != null  and measureId !=''">
+				measure_id = #{measureId} and
+			</if>
+		 	<if test="isDate != null ">
+			is_date = #{isDate} and
+			</if>
+		 	<if test="isDim != null ">
+			is_dim = #{isDim} and
+			</if>
+		 	<if test="isFilter != null ">
+				is_filter = #{isFilter} and
+			</if>
+		 	<if test="isMetric != null ">
+				is_metric = #{isMetric} and
+			</if>
+		 	<if test="isVirtual != null ">
+				is_virtual = #{isVirtual} and
+			</if>
+		 	<if test="dataType != null ">
+				data_type = #{dataType} and
+			</if>
+		 
+		 
+		</trim>
+	</sql>
+	<sql id="limitAndOrderBy">
+		<if test="sortAndDesc != null">
+			order by ${sortAndDesc}
+		</if>
+		limit  #{pageCount} offset #{offset} 
+	</sql>
+	<select id="list" resultMap="BaseResultMap" parameterType="MetaField">
+		select
+		<include refid="base_column_list" />
+		from ds_meta_field
+		<include refid="where_condition" />
+		<include refid="limitAndOrderBy" />
+	</select>
+	<select id="count" resultType="Integer" parameterType="MetaField">
+		select count(1)
+		from ds_meta_field
+		<include refid="where_condition" />
+	</select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="MetaField">
+		select
+		<include refid="base_column_list" />
+		from ds_meta_field
+		where id=#{id} limit 1
+	</select>
+
+	<insert id="save" parameterType="MetaField">
+		insert into ds_meta_field
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="alias != null">
+				alias,
+			</if>
+			<if test="type != null ">
+				type,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="tableId != null">
+				meta_table_id,
+			</if>
+			<if test="measureId != null">
+				measure_id,
+			</if>
+			<if test="sourceTables != null">
+				source_tables,
+			</if>
+			<if test="isDate != null">
+				is_date,
+			</if>
+			
+		 	<if test="isDim != null ">
+			is_dim,
+			</if>
+		 	<if test="isFilter != null ">
+				is_filter,
+			</if>
+		 	<if test="isMetric != null ">
+				is_metric,
+			</if>
+		 	<if test="isVirtual != null ">
+				is_virtual ,
+			</if>
+		 	<if test="dataType != null ">
+				data_type,
+			</if>
+			
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="alias != null">
+				#{alias},
+			</if>
+			<if test="type != null ">
+				#{type},
+			</if>
+			<if test="description != null">
+				#{description},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+				<if test="tableId != null">
+				#{tableId},
+			</if>
+			<if test="measureId != null">
+			#{measureId},
+			</if>
+		<if test="sourceTables != null">
+				#{sourceTables},
+			</if>
+			<if test="isDate != null">
+				#{isDate},
+			</if>
+			
+		 
+		 	<if test="isDim != null ">
+				#{isDim},
+			</if>
+		 	<if test="isFilter != null ">
+	  #{isFilter}  
+			</if>
+		 	<if test="isMetric != null ">
+	  #{isMetric}  
+			</if>
+		 	<if test="isVirtual != null ">
+	  #{isVirtual}  
+			</if>
+		 	<if test="dataType != null ">
+		  #{dataType} 
+			</if>
+		</trim>
+	</insert>
+	<update id="updateById" parameterType="MetaField">
+		update ds_meta_field
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="alias != null">
+				alias = #{alias},
+			</if>
+			<if test="type != null ">
+				type = #{type},
+			</if>
+			<if test="description != null">
+				description = #{description},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			
+				<if test="tableId != null">
+					meta_table_id = #{tableId},
+			</if>
+			<if test="measureId != null">
+		measure_id = #{measureId},
+			</if>
+				<if test="sourceTables != null">
+			source_tables=#{sourceTables},
+			</if>
+			<if test="isDate != null">
+				is_date=#{isDate},
+			</if>
+			
+				<if test="isDim != null ">
+			is_dim = #{isDim}  ,
+			</if>
+		 	<if test="isFilter != null ">
+				is_filter = #{isFilter}  ,
+			</if>
+		 	<if test="isMetric != null ">
+				is_metric = #{isMetric}  ,
+			</if>
+		 	<if test="isVirtual != null ">
+				is_virtual = #{isVirtual}  ,
+			</if>
+		 	<if test="dataType != null ">
+				data_type = #{dataType}  ,
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<delete id="delete" parameterType="MetaField">
+		delete from ds_meta_field
+		<include refid="where_condition" />
+	</delete>
+	<select id="listByIDs" resultMap="BaseResultMap" parameterType="String">
+		select
+		<include refid="base_column_list" />
+		from ds_meta_field
+		where id in (${ids})
+	</select>
+	<select id="getFiledInfo" resultMap="BaseResultMap2" parameterType="MetaTable">
+	
+SELECT  A.attname AS "name", T.typname AS type, d.description
+FROM pg_class C, pg_type T, pg_namespace n, pg_attribute A
+				LEFT JOIN pg_description d ON d.objsubid = A.attnum
+					AND d.objoid = A.attrelid
+WHERE C.relname =#{name}
+	AND n.nspname = lower(#{type})
+	AND A.attnum > 0
+	AND A.attrelid = C.oid
+	AND A.atttypid = T.oid
+	AND n.oid = C.relnamespace
+ORDER BY A.attnum desc
+	</select>
+</mapper>

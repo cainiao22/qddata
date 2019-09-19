@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.PortraitDictionariesDao">
+<!--  <cache
+         eviction="LRU"
+         size="10240"
+         readOnly="false"
+      />     -->
+
+	<resultMap id="BaseResultMap" type="PortraitDictionaries">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="example_id" property="example_id" jdbcType="VARCHAR" />
+		<result column="example_name" property="example_name" jdbcType="VARCHAR" />
+		<result column="source" property="source" jdbcType="VARCHAR" />
+		<result column="sortno" property="sortno" jdbcType="INTEGER" />
+
+
+	</resultMap>
+
+
+
+	<sql id="base_column_list">
+		id, example_id, example_name, source, sortno
+	</sql>
+	<sql id="where_condition">
+		<trim prefix=" where " suffixOverrides="and">
+			<if test="id != null">
+				id = #{id} and
+			</if>
+			<if test="example_name != null">
+				example_name = #{example_name} and
+			</if>
+			<if test="example_id != null">
+				example_id = #{example_id} and
+			</if>
+			<if test="source != null">
+				source = #{source} and
+			</if>
+		</trim>
+	</sql>
+	<sql id="limitAndOrderBy">
+		<if test="sortAndDesc != null">
+			order by sortno
+		</if>
+		limit  #{pageCount} offset #{offset}
+	</sql>
+ <select id="list" resultMap="BaseResultMap" parameterType="PortraitDictionaries">
+		select
+		<include refid="base_column_list" />
+		from ds_portrait_dictionaries
+		<include refid="where_condition" />
+		<include refid="limitAndOrderBy" />
+	</select>
+
+	<select id="count" resultType="Integer" parameterType="PortraitDictionaries">
+		select count(1)
+		from ds_portrait_dictionaries
+		<include refid="where_condition" />
+	</select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="PortraitDictionaries">
+		select
+		<include refid="base_column_list" />
+		from ds_portrait_dictionaries
+		where id=#{id} limit 1
+	</select>
+	<insert id="save" parameterType="Module">
+		insert into ds_portrait_dictionaries
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="example_id != null">
+				example_id,
+			</if>
+			<if test="example_name != null">
+				example_name,
+			</if>
+			<if test="source != null">
+				source,
+			</if>
+			<if test="sortno != null">
+				sortno,
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="example_id != null">
+				#{example_id},
+			</if>
+			<if test="example_name != null">
+				#{example_name},
+			</if>
+			<if test="source != null">
+				#{source},
+			</if>
+			<if test="sortno != null">
+				#{sortno},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateById" parameterType="Module">
+		update ds_portrait_dictionaries
+		<set>
+			<if test="example_id != null">
+				example_id = #{example_id},
+			</if>
+			<if test="example_name != null">
+				example_name = #{example_name},
+			</if>
+			<if test="source != null">
+				source = #{source},
+			</if>
+			<if test="sortno != null">
+				sortno = #{sortno},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<delete id="delete" parameterType="Module">
+		delete from ds_portrait_dictionaries
+		<include refid="where_condition" />
+	</delete>
+	<select id="listByIDs" resultMap="BaseResultMap" parameterType="String">
+		select
+		<include refid="base_column_list" />
+		from ds_portrait_dictionaries
+		where id in (${ids})
+	</select>
+	<select id="listByTags" resultMap="BaseResultMap" parameterType="String">
+		select
+		<include refid="base_column_list" />
+		from ds_portrait_dictionaries
+		where example_id in (${example_id})
+	</select>
+
+
+</mapper>

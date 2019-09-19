@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.UserRoleLevelDao">
+	<resultMap id="BaseResultMap" type="UserRoleLevel">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="role_level_id" property="roleLevelId" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="base_column_list">
+		id, role_level_id, user_id
+	</sql>
+	<sql id="where_condition">
+		<trim prefix=" where " suffixOverrides="and">
+			<if test="id != null">
+				id = #{id} and
+			</if>
+			<if test="roleLevelId != null">
+				role_level_id = #{roleLevelId} and
+			</if>
+			<if test="userId != null">
+				user_id = #{userId} and
+			</if>
+		</trim>
+	</sql>
+	<sql id="limitAndOrderBy">
+		<if test="sortAndDesc != null">
+			order by ${sortAndDesc}
+		</if>
+		limit  #{pageCount} offset #{offset} 
+	</sql>
+	<select id="list" resultMap="BaseResultMap" parameterType="UserRoleLevel">
+		select
+		<include refid="base_column_list" />
+		from ds_userrole
+		<include refid="where_condition" />
+		<include refid="limitAndOrderBy" />
+	</select>
+	<select id="count" resultType="Integer" parameterType="UserRoleLevel">
+		select count(1)
+		from ds_userrole
+		<include refid="where_condition" />
+	</select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="UserRoleLevel">
+		select
+		<include refid="base_column_list" />
+		from ds_userrole
+		where id=#{id} limit 1
+	</select>
+	<insert id="save" parameterType="UserRoleLevel">
+		insert into ds_userrole
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="roleLevelId != null">
+				role_level_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="roleLevelId != null">
+				#{roleLevelId},
+			</if>
+			<if test="userId != null">
+				#{userId},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateById" parameterType="UserRoleLevel">
+		update ds_userrole
+		<set>
+			<if test="roleLevelId != null">
+				role_level_id = #{roleLevelId},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<delete id="delete" parameterType="UserRoleLevel">
+		delete from ds_userrole
+		<include refid="where_condition" />
+	</delete>
+	<select id="listByIDs" resultMap="BaseResultMap" parameterType="String">
+		select
+		<include refid="base_column_list" />
+		from ds_userrole
+		where id in (${ids})
+	</select>
+</mapper>

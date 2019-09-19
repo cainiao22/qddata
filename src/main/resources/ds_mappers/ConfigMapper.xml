@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.ConfigDao" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.Config" >
+    <result column="id" property="id" jdbcType="CHAR" />
+    <result column="config_type" property="configType" jdbcType="VARCHAR" />
+    <result column="config_key" property="configKey" jdbcType="VARCHAR" />
+    <result column="config_parent" property="configParent" jdbcType="VARCHAR" />
+    <result column="config_value" property="configValue" jdbcType="VARCHAR" />
+    <result column="config_order" property="configOrder" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="save" parameterType="com.qding.bigdata.ds.model.Config" >
+    insert into ds_config (id, config_type, config_key,
+      config_parent, config_value, config_order, 
+      create_time, update_time, description)
+    values (#{id,jdbcType=CHAR}, #{configType,jdbcType=VARCHAR}, #{configKey,jdbcType=VARCHAR}, 
+      #{configParent,jdbcType=VARCHAR}, #{configValue,jdbcType=VARCHAR}, #{configOrder,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.Config" >
+    insert into ds_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="configType != null" >
+        config_type,
+      </if>
+      <if test="configKey != null" >
+        config_key,
+      </if>
+      <if test="configParent != null" >
+        config_parent,
+      </if>
+      <if test="configValue != null" >
+        config_value,
+      </if>
+      <if test="configOrder != null" >
+        config_order,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="configType != null" >
+        #{configType,jdbcType=VARCHAR},
+      </if>
+      <if test="configKey != null" >
+        #{configKey,jdbcType=VARCHAR},
+      </if>
+      <if test="configParent != null" >
+        #{configParent,jdbcType=VARCHAR},
+      </if>
+      <if test="configValue != null" >
+        #{configValue,jdbcType=VARCHAR},
+      </if>
+      <if test="configOrder != null" >
+        #{configOrder,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="getConfigByKey" resultMap="BaseResultMap">
+    SELECT * FROM ds_config WHERE config_key=#{key} and config_type=#{type}
+  </select>
+  <select id="list" resultMap="BaseResultMap">
+    SELECT * from ds_config
+    <where>
+      <if test="id != null" >
+        and id=#{id}
+      </if>
+      <if test="configType != null and configType != ''" >
+        and config_type like '%${configType}%'
+      </if>
+      <if test="configKey != null and configKey != ''" >
+        and config_key like '%${configKey}%'
+      </if>
+      <if test="configParent != null and configParent != ''" >
+        and config_parent#{configParent}
+      </if>
+      <if test="configValue != null and configValue != ''" >
+        and config_value=#{configValue}
+      </if>
+    </where>
+    ORDER by config_order
+    <choose>
+      <when test="page != null">
+        limit #{pageCount} offset #{offset}
+      </when>
+    </choose>
+  </select>
+
+  <select id="count" resultType="java.lang.Integer">
+  SELECT coalesce(count(*),0) from ds_config
+  <where>
+    <if test="id != null" >
+      and id#{id}
+    </if>
+    <if test="configType != null and configType != ''" >
+      and config_type like '%${configType}%'
+    </if>
+    <if test="configKey != null and configKey != ''" >
+      and config_key like '%${configKey}%'
+    </if>
+    <if test="configParent != null and configParent != ''" >
+      and config_parent#{configParent}
+    </if>
+    <if test="configValue != null and configValue != ''" >
+      and config_value=#{configValue}
+    </if>
+  </where>
+  </select>
+  <select id="getById" parameterType="com.qding.bigdata.ds.model.Config" resultMap="BaseResultMap">
+    SELECT * from ds_config WHERE id=#{id}
+  </select>
+  <update id="updateById" parameterType="com.qding.bigdata.ds.model.Config">
+    UPDATE ds_config SET config_type=#{configType},
+    config_key=#{configKey},
+    config_parent=#{configParent},
+    config_value=#{configValue},
+    config_order=#{configOrder},
+    description=#{description}
+    WHERE id=#{id}
+  </update>
+  <delete id="delete" parameterType="com.qding.bigdata.ds.model.Config">
+    DELETE FROM ds_config WHERE id=#{id}
+  </delete>
+  <select id="getConfigByType" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT * FROM ds_config WHERE config_type=#{type} ORDER by config_order
+  </select>
+</mapper>

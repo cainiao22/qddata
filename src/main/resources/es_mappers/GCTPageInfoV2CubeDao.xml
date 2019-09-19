@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.GCTPageInfoCubeV2Dao" >
+
+  <select id="getPageAnalysis" resultType="java.util.Map">
+      SELECT date_value as key,
+    <choose>
+      <when test="param.action == 'pv'">
+        sum(page_visit_count) as value
+      </when>
+      <when test="param.action == 'uv'">
+        sum(act_user_num) as value
+      </when>
+      <when test="param.action == 'pr_pv_time'">
+        sum(page_times_long)/sum(page_visit_count) as value
+      </when>
+      <when test="param.action == 'pr_uv_time'">
+        sum(page_times_long)/sum(act_user_num) as value
+      </when>
+      <when test="param.action == 'table'">
+        sum(act_user_num) as uv,sum(page_visit_count) pv,sum(page_times_long)/sum(page_visit_count) as
+        pr_uv_time,sum(page_times_long)/sum(act_user_num) as pr_pv_time
+      </when>
+    </choose>
+      <include refid="table"/>
+      <where>
+        <include refid="condition" />
+      group by date_value order by date_value
+      </where>
+  </select>
+
+  <sql id="condition">
+    1=1
+    <if test="param.businessType != null and  param.businessType ='1' ">
+      <if test="param.pageId !='' and param.pageId != null">
+        and pi=#{param.pageId}
+      </if>
+      <if test="param.dateType !='' and param.dateType != null">
+        and date_type=#{param.dateType}
+      </if>
+      <if test="param.dateType == 'month'">
+        <if test="param.startDate != null">
+          and date_value &gt;= #{param.startMonthStr}
+        </if>
+        <if test="param.endDate != null">
+          and date_value &lt;= #{param.endMonthStr}
+        </if>
+      </if>
+      <if test="param.dateType == 'day'">
+        <if test="param.startDate != null">
+          and date_value &gt;= #{param.startDateStr}
+        </if>
+        <if test="param.endDate != null">
+          and date_value &lt;=  #{param.endDateStr}
+        </if>
+      </if>
+      <if test="param.deviceType != null and param.deviceType != ''">
+        and system_name=#{param.deviceType}
+      </if>
+      <if test="param.version != null and param.version != ''">
+        and application_version=#{param.version}
+      </if>
+      <if test="param.QRYcompanyId != null and param.QRYcompanyId != ''">
+        and binary_code like '%${param.QRYcompanyId}%'
+      </if>
+      <if test="param.companyId != null and param.companyId != ''">
+        and company_id=#{param.companyId}
+      </if>
+    </if>
+  </sql>
+
+  <sql id="table">
+    <if test="param.businessType != null and  param.businessType =='1'.toString() ">
+     from  "gct_p_ding_page_info_cube"
+    </if>
+    <if test="param.businessType != null and  param.businessType =='0'.toString() ">
+     from  "gct_p_ding_page_info_cube"
+    </if>
+  </sql>
+
+</mapper>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.LabelPreferenceResultV2Dao" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.LabelPreferenceResultV2" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="preference_type" property="preferenceType" jdbcType="VARCHAR" />
+    <result column="member_type" property="memberType" jdbcType="VARCHAR" />
+    <result column="preference_id" property="preferenceId" jdbcType="VARCHAR" />
+    <result column="total_score" property="totalScore" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="person_num" property="personNum" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, preference_type, member_type, preference_id, total_score, sort, person_num
+  </sql>
+  <sql id="where_condition">
+    <trim prefix=" where " suffixOverrides="and">
+      <if test="t.id != null">
+        id = #{t.id} and
+      </if>
+      <if test="t.preferenceType != null">
+        preference_type = #{t.preferenceType} and
+      </if>
+      <if test="t.memberType != null">
+        member_type = #{t.memberType} and
+      </if>
+      <if test="t.preferenceId != null">
+        preference_id = #{t.preferenceId} and
+      </if>
+      <if test="t.totalScore != null">
+        total_score = #{t.totalScore} and
+      </if>
+      <if test="t.sort != null">
+        sort = #{t.sort} and
+      </if>
+      <if test="t.personNum != null">
+        person_num = #{t.personNum} and
+      </if>
+    </trim>
+  </sql>
+  <sql id="limitAndOrderBy">
+    <if test="sortAndDesc != null">
+      order by ${sortAndDesc}
+    </if>
+    <if test="pageCount != null and offset!=null">
+      limit  #{pageCount} offset #{offset}
+    </if>
+
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from databus.label_preference_result_v2
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from databus.label_preference_result_v2
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qding.bigdata.ds.model.LabelPreferenceResultV2" >
+    insert into databus.label_preference_result_v2 (id, preference_type, member_type, 
+      preference_id, total_score, sort, 
+      person_num)
+    values (#{id,jdbcType=INTEGER}, #{preferenceType,jdbcType=VARCHAR}, #{memberType,jdbcType=VARCHAR}, 
+      #{preferenceId,jdbcType=VARCHAR}, #{totalScore,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}, 
+      #{personNum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.LabelPreferenceResultV2" >
+    insert into databus.label_preference_result_v2
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="preferenceType != null" >
+        preference_type,
+      </if>
+      <if test="memberType != null" >
+        member_type,
+      </if>
+      <if test="preferenceId != null" >
+        preference_id,
+      </if>
+      <if test="totalScore != null" >
+        total_score,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="personNum != null" >
+        person_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="preferenceType != null" >
+        #{preferenceType,jdbcType=VARCHAR},
+      </if>
+      <if test="memberType != null" >
+        #{memberType,jdbcType=VARCHAR},
+      </if>
+      <if test="preferenceId != null" >
+        #{preferenceId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalScore != null" >
+        #{totalScore,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=VARCHAR},
+      </if>
+      <if test="personNum != null" >
+        #{personNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qding.bigdata.ds.model.LabelPreferenceResultV2" >
+    update databus.label_preference_result_v2
+    <set >
+      <if test="preferenceType != null" >
+        preference_type = #{preferenceType,jdbcType=VARCHAR},
+      </if>
+      <if test="memberType != null" >
+        member_type = #{memberType,jdbcType=VARCHAR},
+      </if>
+      <if test="preferenceId != null" >
+        preference_id = #{preferenceId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalScore != null" >
+        total_score = #{totalScore,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+      <if test="personNum != null" >
+        person_num = #{personNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qding.bigdata.ds.model.LabelPreferenceResultV2" >
+    update databus.label_preference_result_v2
+    set preference_type = #{preferenceType,jdbcType=VARCHAR},
+      member_type = #{memberType,jdbcType=VARCHAR},
+      preference_id = #{preferenceId,jdbcType=VARCHAR},
+      total_score = #{totalScore,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR},
+      person_num = #{personNum,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="list" resultMap="BaseResultMap" parameterType="com.qding.bigdata.ds.model.LabelPreferenceResultV2">
+    select
+    <include refid="Base_Column_List" />
+    from databus.label_preference_result_v2
+    <include refid="where_condition" />
+    <include refid="limitAndOrderBy" />
+  </select>
+</mapper>

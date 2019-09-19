@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.CsmRisksDao" >
+
+    <resultMap id="BaseResultMap" type="CsmRisks">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="client_level" property="client_level" jdbcType="VARCHAR" />
+        <result column="client_name" property="client_name" jdbcType="VARCHAR" />
+        <result column="site" property="site" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="manager" property="manager" jdbcType="VARCHAR" />
+        <result column="risk_description" property="risk_description" jdbcType="VARCHAR" />
+        <result column="propose_time" property="propose_time" jdbcType="VARCHAR" />
+        <result column="programme" property="programme" jdbcType="VARCHAR" />
+        <result column="end_time" property="end_time" jdbcType="VARCHAR" />
+        <result column="csm_status" property="csm_status" jdbcType="VARCHAR" />
+        <result column="adviser" property="adviser" jdbcType="VARCHAR" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="save" parameterType="CsmRisks">
+        INSERT INTO ds_jiashicang_csm_risks(id,client_level,client_name,site,city,manager,risk_description,propose_time,programme,end_time,csm_status,adviser,remarks)
+        VALUES (#{id},#{client_level},#{client_name},#{site},#{city},#{manager},#{risk_description},#{propose_time},#{programme},#{end_time},#{csm_status},#{adviser},#{remarks})
+    </insert>
+
+    <select id="list" resultMap="BaseResultMap" parameterType="CsmRisks">
+        select
+        id,client_level,client_name,site,city,manager,risk_description,propose_time,programme,end_time,csm_status,adviser,remarks
+        from ds_jiashicang_csm_risks
+    </select>
+    <delete id="delete" parameterType="CsmRisks">
+        delete from ds_jiashicang_csm_risks
+    </delete>
+</mapper>

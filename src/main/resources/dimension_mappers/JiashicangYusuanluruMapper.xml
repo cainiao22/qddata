@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.JiashicangYusuanluruDao" >
+
+    <resultMap id="BaseResultMap" type="JiashicangYusuanluru">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="year" property="year" jdbcType="VARCHAR" />
+        <result column="dt" property="dt" jdbcType="VARCHAR" />
+        <result column="yewuxian_name" property="yewuxian_name" jdbcType="VARCHAR" />
+        <result column="yewuxian_id" property="yewuxian_id" jdbcType="VARCHAR" />
+        <result column="dim_name" property="dim_name" jdbcType="VARCHAR" />
+        <result column="dim_type" property="dim_type" jdbcType="VARCHAR" />
+        <result column="person_name" property="person_name" jdbcType="VARCHAR" />
+        <result column="all_shouru" property="all_shouru" jdbcType="VARCHAR" />
+        <result column="all_lirun" property="all_lirun" jdbcType="VARCHAR" />
+        <result column="all_chuhuo" property="all_chuhuo" jdbcType="VARCHAR" />
+        <result column="all_huikuan" property="all_huikuan" jdbcType="VARCHAR" />
+        <result column="week1_shouru" property="week1_shouru" jdbcType="VARCHAR" />
+        <result column="week1_lirun" property="week1_lirun" jdbcType="VARCHAR" />
+        <result column="week1_chuhuo" property="week1_chuhuo" jdbcType="VARCHAR" />
+        <result column="week1_huikuan" property="week1_huikuan" jdbcType="VARCHAR" />
+        <result column="week2_shouru" property="week2_shouru" jdbcType="VARCHAR" />
+        <result column="week2_lirun" property="week2_lirun" jdbcType="VARCHAR" />
+        <result column="week2_chuhuo" property="week2_chuhuo" jdbcType="VARCHAR" />
+        <result column="week2_huikuan" property="week2_huikuan" jdbcType="VARCHAR" />
+        <result column="week3_shouru" property="week3_shouru" jdbcType="VARCHAR" />
+        <result column="week3_lirun" property="week3_lirun" jdbcType="VARCHAR" />
+        <result column="week3_chuhuo" property="week3_chuhuo" jdbcType="VARCHAR" />
+        <result column="week3_huikuan" property="week3_huikuan" jdbcType="VARCHAR" />
+        <result column="week4_shouru" property="week4_shouru" jdbcType="VARCHAR" />
+        <result column="week4_lirun" property="week4_lirun" jdbcType="VARCHAR" />
+        <result column="week4_chuhuo" property="week4_chuhuo" jdbcType="VARCHAR" />
+        <result column="week4_huikuan" property="week4_huikuan" jdbcType="VARCHAR" />
+        <result column="week5_shouru" property="week5_shouru" jdbcType="VARCHAR" />
+        <result column="week5_lirun" property="week5_lirun" jdbcType="VARCHAR" />
+        <result column="week5_chuhuo" property="week5_chuhuo" jdbcType="VARCHAR" />
+        <result column="week5_huikuan" property="week5_huikuan" jdbcType="VARCHAR" />
+        <result column="week6_shouru" property="week6_shouru" jdbcType="VARCHAR" />
+        <result column="week6_lirun" property="week6_lirun" jdbcType="VARCHAR" />
+        <result column="week6_chuhuo" property="week6_chuhuo" jdbcType="VARCHAR" />
+        <result column="week6_huikuan" property="week6_huikuan" jdbcType="VARCHAR" />
+        <result column="sortno" property="sortno" jdbcType="INTEGER" />
+    </resultMap>
+
+    <insert id="save" parameterType="JiashicangYusuanluru">
+        INSERT INTO ds_star_vein_plan_luru(id,year,dt,yewuxian_name,yewuxian_id,dim_name, dim_type,person_name,all_shouru, all_lirun,all_chuhuo, all_huikuan,
+        week1_shouru, week1_lirun,week1_chuhuo, week1_huikuan,week2_shouru, week2_lirun,week2_chuhuo, week2_huikuan,week3_shouru, week3_lirun,week3_chuhuo, week3_huikuan,
+        week4_shouru, week4_lirun,week4_chuhuo, week4_huikuan,week5_shouru, week5_lirun,week5_chuhuo, week5_huikuan,week6_shouru, week6_lirun,week6_chuhuo, week6_huikuan,sortno)
+        VALUES (#{id},#{year},#{dt},#{yewuxian_name},#{yewuxian_id},#{dim_name},#{dim_type},#{person_name},#{all_shouru},#{all_lirun},#{all_chuhuo},#{all_huikuan},
+        #{week1_shouru},#{week1_lirun},#{week1_chuhuo},#{week1_huikuan},#{week2_shouru},#{week2_lirun},#{week2_chuhuo},#{week2_huikuan},#{week3_shouru},#{week3_lirun},#{week3_chuhuo},#{week3_huikuan},
+        #{week4_shouru},#{week4_lirun},#{week4_chuhuo},#{week4_huikuan},#{week5_shouru},#{week5_lirun},#{week5_chuhuo},#{week5_huikuan},#{week6_shouru},#{week6_lirun},#{week6_chuhuo},#{week6_huikuan},#{sortno})
+    </insert>
+
+    <select id="list" resultMap="BaseResultMap" parameterType="JiashicangYusuanluru">
+        select
+        id,year,dt,yewuxian_name,yewuxian_id,dim_name, dim_type,person_name,all_shouru, all_lirun,all_chuhuo, all_huikuan,
+        week1_shouru, week1_lirun,week1_chuhuo, week1_huikuan,week2_shouru, week2_lirun,week2_chuhuo, week2_huikuan,week3_shouru, week3_lirun,week3_chuhuo, week3_huikuan,
+        week4_shouru, week4_lirun,week4_chuhuo, week4_huikuan,week5_shouru, week5_lirun,week5_chuhuo, week5_huikuan,week6_shouru, week6_lirun,week6_chuhuo, week6_huikuan,sortno
+        from ds_star_vein_plan_luru
+        <where>
+            <if test="dt != null" >
+                dt = #{dt}
+            </if>
+        </where>
+        ORDER BY sortno ASC
+    </select>
+    <delete id="delete" parameterType="JiashicangYusuanluru">
+        delete from ds_star_vein_plan_luru
+        where  dt = #{dt}
+    </delete>
+</mapper>

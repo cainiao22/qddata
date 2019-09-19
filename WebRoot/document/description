@@ -1,0 +1,15 @@
+WebRoot下面
+
+assets 防止整个项目的开源的组件，公用的css js imgs
+assets\css	公用的css文件
+assets\font	公用的字体文件
+assets\js	公用的js文件
+assets\plugins 公用插件
+
+img
+根据以及目录名二级目录....名字放置
+例如 ： 数据中中心>社区日报
+		WebRoot/img/datacenter/communityReport.../xxx.png
+
+js和css同上规则
+

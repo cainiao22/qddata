@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.GCTPagePathDao" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.GCTPagePath" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="date_type" property="dateType" jdbcType="VARCHAR" />
+    <result column="device_type" property="deviceType" jdbcType="VARCHAR" />
+    <result column="pi" property="pi" jdbcType="VARCHAR" />
+    <result column="pi_name" property="piName" jdbcType="VARCHAR" />
+    <result column="rpi" property="rpi" jdbcType="VARCHAR" />
+    <result column="rpi_name" property="rpiName" jdbcType="VARCHAR" />
+    <result column="uv" property="uv" jdbcType="VARCHAR" />
+    <result column="dt" property="dt" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultNode" type="com.qding.bigdata.ds.model.GCTPagePath" >
+    <result column="pi" property="pi" jdbcType="VARCHAR" />
+    <result column="pi_name" property="piName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, date_type, device_type, pi,pi_name, rpi,rpi_name,uv, dt
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ads_gct_page_path
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ads_gct_page_path
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qding.bigdata.ds.model.GCTPagePath" >
+    insert into ads_gct_page_path (id, date_type, device_type, 
+      pi, rpi, uv, dt
+      )
+    values (#{id,jdbcType=INTEGER}, #{dateType,jdbcType=VARCHAR}, #{deviceType,jdbcType=VARCHAR}, 
+      #{pi,jdbcType=VARCHAR}, #{rpi,jdbcType=VARCHAR}, #{uv,jdbcType=VARCHAR}, #{dt,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.GCTPagePath" >
+    insert into ads_gct_page_path
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dateType != null" >
+        date_type,
+      </if>
+      <if test="deviceType != null" >
+        device_type,
+      </if>
+      <if test="pi != null" >
+        pi,
+      </if>
+      <if test="rpi != null" >
+        rpi,
+      </if>
+      <if test="uv != null" >
+        uv,
+      </if>
+      <if test="dt != null" >
+        dt,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="dateType != null" >
+        #{dateType,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null" >
+        #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="pi != null" >
+        #{pi,jdbcType=VARCHAR},
+      </if>
+      <if test="rpi != null" >
+        #{rpi,jdbcType=VARCHAR},
+      </if>
+      <if test="uv != null" >
+        #{uv,jdbcType=VARCHAR},
+      </if>
+      <if test="dt != null" >
+        #{dt,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qding.bigdata.ds.model.GCTPagePath" >
+    update ads_gct_page_path
+    <set >
+      <if test="dateType != null" >
+        date_type = #{dateType,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null" >
+        device_type = #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="pi != null" >
+        pi = #{pi,jdbcType=VARCHAR},
+      </if>
+      <if test="rpi != null" >
+        rpi = #{rpi,jdbcType=VARCHAR},
+      </if>
+      <if test="uv != null" >
+        uv = #{uv,jdbcType=VARCHAR},
+      </if>
+      <if test="dt != null" >
+        dt = #{dt,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qding.bigdata.ds.model.GCTPagePath" >
+    update ads_gct_page_path
+    set date_type = #{dateType,jdbcType=VARCHAR},
+      device_type = #{deviceType,jdbcType=VARCHAR},
+      pi = #{pi,jdbcType=VARCHAR},
+      rpi = #{rpi,jdbcType=VARCHAR},
+      uv = #{uv,jdbcType=VARCHAR},
+      dt = #{dt,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getAllNode" resultMap="ResultNode" parameterType="com.qding.bigdata.ds.model.GuancetaiPagePathParam" >
+    select pi,pi_name from databus.ads_gct_page_path
+    where
+    <if test="dateType != null" >
+      date_type = #{dateType,jdbcType=VARCHAR}
+    </if>
+    <if test="deviceType != null" >
+      and device_type = #{deviceType,jdbcType=VARCHAR}
+    </if>
+    <if test="pi != null" >
+      and pi = #{pi,jdbcType=VARCHAR}
+    </if>
+    <if test="rpi != null" >
+      and rpi = #{rpi,jdbcType=VARCHAR}
+    </if>
+    <if test="dt != null" >
+      and dt = #{dt,jdbcType=VARCHAR}
+    </if>
+    union
+    select rpi,rpi_name from databus.ads_gct_page_path
+    where
+    <if test="dateType != null" >
+      date_type = #{dateType,jdbcType=VARCHAR}
+    </if>
+    <if test="deviceType != null" >
+      and device_type = #{deviceType,jdbcType=VARCHAR}
+    </if>
+    <if test="pi != null" >
+      and pi = #{pi,jdbcType=VARCHAR}
+    </if>
+    <if test="rpi != null" >
+      and rpi = #{rpi,jdbcType=VARCHAR}
+    </if>
+    <if test="dt != null" >
+      and dt = #{dt,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="getPagePath" resultMap="BaseResultMap" parameterType="com.qding.bigdata.ds.model.GuancetaiPagePathParam" >
+    select
+    <include refid="Base_Column_List" />
+    from databus.ads_gct_page_path
+    where
+    <if test="dateType != null" >
+      date_type = #{dateType,jdbcType=VARCHAR}
+    </if>
+    <if test="deviceType != null" >
+      and device_type = #{deviceType,jdbcType=VARCHAR}
+    </if>
+    <if test="pi != null" >
+      and pi = #{pi,jdbcType=VARCHAR}
+    </if>
+    <if test="rpi != null" >
+      and rpi = #{rpi,jdbcType=VARCHAR}
+    </if>
+    <if test="dt != null" >
+      and dt = #{dt,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

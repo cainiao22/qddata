@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qding.bigdata.ds.dao.LpRoleDao">
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.LpRole">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="module_name" jdbcType="VARCHAR" property="moduleName" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, role_name, module_name, description
+  </sql>
+  <!--依据主键查询一条角色信息-->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lp_role
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <!--依据主键删除一个角色-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lp_role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <!--插入一条角色数据 字段均需有值-->
+  <insert id="insert" parameterType="com.qding.bigdata.ds.model.LpRole">
+    insert into lp_role (id, role_name, module_name, 
+      description)
+    values (#{id,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, #{moduleName,jdbcType=VARCHAR},
+      #{description,jdbcType=VARCHAR})
+  </insert>
+  <!--插入一条角色数据-->
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.LpRole">
+    insert into lp_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="roleName != null">
+        role_name,
+      </if>
+      <if test="moduleName != null">
+        module_name,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleName != null">
+        #{moduleName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!--依据主键更新不为null字段-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.qding.bigdata.ds.model.LpRole">
+    update lp_role
+    <set>
+      <if test="roleName != null">
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleName != null">
+        module_name = #{moduleName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!--依据主键更新单条角色全部字段-->
+  <update id="updateByPrimaryKey" parameterType="com.qding.bigdata.ds.model.LpRole">
+    update lp_role
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      module_name = #{moduleName,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!--查询全部角色-->
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+     <include refid="Base_Column_List" />
+    from lp_role
+  </select>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="com.qding.bigdata.ds.model.LpRole">
+    select
+    <include refid="Base_Column_List" />
+    from lp_role
+    <where>
+      role_name = #{roleName}
+      <if test="moduleName != null">
+        AND module_name = #{moduleName}
+      </if>
+    </where>
+    limit 1
+  </select>
+
+</mapper>

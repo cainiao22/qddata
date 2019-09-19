@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.SalesOpportunitiesDao" >
+
+    <resultMap id="BaseResultMap" type="SalesOpportunities">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="dt" property="dt" jdbcType="VARCHAR" />
+        <result column="dimDepart" property="dimDepart" jdbcType="VARCHAR" />
+        <result column="opportunityName" property="opportunityName" jdbcType="VARCHAR" />
+        <result column="ownerId" property="ownerId" jdbcType="VARCHAR" />
+        <result column="accountId" property="accountId" jdbcType="VARCHAR" />
+        <result column="money" property="money" jdbcType="VARCHAR" />
+        <result column="customItem188__c" property="customItem188__c" jdbcType="VARCHAR" />
+        <result column="closeDate" property="closeDate" jdbcType="VARCHAR" />
+        <result column="saleStageId" property="saleStageId" jdbcType="VARCHAR" />
+        <result column="createdAt" property="createdAt" jdbcType="VARCHAR" />
+        <result column="updatedAt" property="updatedAt" jdbcType="VARCHAR" />
+        <result column="comment" property="comment" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="save" parameterType="SalesOpportunities">
+        INSERT INTO ds_star_vein_crm_opportunity(id,dt,dimDepart,opportunityName,ownerId,accountId,money,customItem188__c,closeDate,saleStageId,createdAt,updatedAt,comment)
+        VALUES (#{id},#{dt},#{dimDepart},#{opportunityName},#{ownerId},#{accountId},#{money},#{customItem188__c},#{closeDate},#{saleStageId},#{createdAt},#{updatedAt},#{comment})
+    </insert>
+
+    <delete id="delete" parameterType="SalesOpportunities">
+        delete from ds_star_vein_crm_opportunity
+        where  dt = #{dt}
+    </delete>
+
+</mapper>

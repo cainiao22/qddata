@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.StarVeinSalesTargetImportDao" >
+
+    <resultMap id="BaseResultMap" type="StarVeinSalesTargetImport">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="year" property="year" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="persion" property="persion" jdbcType="VARCHAR" />
+        <result column="Jan" property="Jan" jdbcType="VARCHAR" />
+        <result column="Feb" property="Feb" jdbcType="VARCHAR" />
+        <result column="Mar" property="Mar" jdbcType="VARCHAR" />
+        <result column="April" property="April" jdbcType="VARCHAR" />
+        <result column="May" property="May" jdbcType="VARCHAR" />
+        <result column="June" property="June" jdbcType="VARCHAR" />
+        <result column="Jule" property="Jule" jdbcType="VARCHAR" />
+        <result column="Aug" property="Aug" jdbcType="VARCHAR" />
+        <result column="Sept" property="Sept" jdbcType="VARCHAR" />
+        <result column="Oct" property="Oct" jdbcType="VARCHAR" />
+        <result column="Nov" property="Nov" jdbcType="VARCHAR" />
+        <result column="12_month" property="Dec" jdbcType="VARCHAR" />
+        <result column="sortno" property="sortno" jdbcType="INTEGER" />
+    </resultMap>
+
+    <insert id="save" parameterType="StarVeinSalesTargetImport">
+        INSERT INTO qding_xingmai.xingmai_sales_target_import(id,year,city,persion,Jan,Feb,Mar,April,May,June,Jule,Aug,Sept,Oct,Nov,12_month,sortno)
+        VALUES (#{id},#{year},#{city},#{persion},#{Jan},#{Feb},#{Mar},#{April},#{May},#{June},#{Jule},#{Aug},#{Sept},#{Oct},#{Nov},#{Dec},#{sortno})
+    </insert>
+
+    <select id="list" resultMap="BaseResultMap" parameterType="StarVeinSalesTargetImport">
+        select
+        id,year,city,persion,Jan,Feb,Mar,April,May,June,Jule,Aug,Sept,Oct,Nov,12_month,sortno
+        from qding_xingmai.xingmai_sales_target_import
+        <where>
+        <if test="year != null" >
+            year = #{year}
+        </if>
+        </where>
+        ORDER BY sortno
+    </select>
+    <delete id="delete" parameterType="StarVeinSalesTargetImport">
+        delete from qding_xingmai.xingmai_sales_target_import
+        where  year = #{year}
+    </delete>
+</mapper>

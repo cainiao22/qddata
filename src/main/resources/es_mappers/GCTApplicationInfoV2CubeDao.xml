@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.GCTApplicationInfoV2CubeDao" >
+  <select id="getRegAnalysis" resultType="java.util.Map">
+    SELECT date_value as key,sum(reg_new_num) as value
+    <include refid="table"/>
+    <where>
+      <include refid="condition" />
+      group by date_value order by date_value
+    </where>
+  </select>
+  <select id="getActiveAnalysis" resultType="java.util.Map">
+    SELECT date_value as key,sum(act_user_num) as value
+    <include refid="table"/>
+    <where>
+      <include refid="condition" />
+      group by date_value order by date_value
+    </where>
+  </select>
+  <select id="getStartupAnalysis" resultType="java.util.Map">
+    SELECT date_value as key,sum(start_app_num) as value
+    <include refid="table"/>
+    <where>
+      <include refid="condition" />
+      group by date_value order by date_value
+    </where>
+  </select>
+  <select id="getPreStartupAnalysis" resultType="java.util.Map">
+    SELECT date_value as key,sum(start_app_num)/sum(act_user_num)  value
+    <include refid="table"/>
+    <where>
+      <include refid="condition" />
+      group by date_value order by date_value
+    </where>
+  </select>
+  <select id="getPreVisitAnalysis" resultType="java.util.Map">
+    SELECT date_value as key,sum(app_times_long)/sum(act_user_num) as  value
+    <include refid="table"/>
+    <where>
+      <include refid="condition" />
+      group by date_value  order by date_value
+    </where>
+  </select>
+
+  <select id="getTableAnalysis" resultType="java.util.Map">
+    SELECT date_value as key,sum(reg_new_num) as reg_new,sum(act_user_num) as active,sum(start_app_num) as start_up,sum(start_app_num)/sum(act_user_num) as per_start_up,
+    sum(app_times_long)/sum(act_user_num) as per_visit
+    <include refid="table"/>
+    <where>
+      <include refid="condition" />
+      group by date_value order by date_value
+    </where>
+  </select>
+
+  <sql id="condition">
+    1=1
+    <if test="param.businessType != null and  param.businessType ='1' ">
+      <if test="param.dateType !='' and param.dateType != null">
+        and date_type=#{param.dateType}
+      </if>
+      <if test="param.dateType == 'month'">
+        <if test="param.startDate != null">
+          and date_value &gt;= #{param.startMonthStr}
+        </if>
+        <if test="param.endDate != null">
+          and date_value &lt;= #{param.endMonthStr}
+        </if>
+      </if>
+      <if test="param.dateType == 'day'">
+        <if test="param.startDate != null">
+          and date_value &gt;= #{param.startDateStr}
+        </if>
+        <if test="param.endDate != null">
+          and date_value &lt;=  #{param.endDateStr}
+        </if>
+      </if>
+      <if test="param.deviceType != null and param.deviceType != ''">
+        and system_name=#{param.deviceType}
+      </if>
+      <if test="param.version != null and param.version != ''">
+        and application_version=#{param.version}
+      </if>
+      <if test="param.QRYcompanyId != null and param.QRYcompanyId != ''">
+        and binary_code like '%${param.QRYcompanyId}%'
+      </if>
+      <if test="param.companyId != null and param.companyId != ''">
+        and company_id=#{param.companyId}
+      </if>
+    </if>
+  </sql>
+
+  <sql id="table">
+    <if test="param.businessType != null and  param.businessType =='1'.toString() ">
+     from  "gct_p_ding_application_info_cube"
+    </if>
+    <if test="param.businessType != null and  param.businessType =='0'.toString() ">
+     from  "gct_p_ding_application_info_cube"
+    </if>
+  </sql>
+
+</mapper>

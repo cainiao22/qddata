@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.StarVeinCityPlanDao" >
+
+    <resultMap id="BaseResultMap" type="StarVeinCityPlan">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="year" property="year" jdbcType="VARCHAR" />
+        <result column="dt" property="dt" jdbcType="VARCHAR" />
+        <result column="region_name" property="region_name" jdbcType="VARCHAR" />
+        <result column="region_id" property="region_id" jdbcType="VARCHAR" />
+        <result column="yewuxian_name" property="yewuxian_name" jdbcType="VARCHAR" />
+        <result column="yewuxian_id" property="yewuxian_id" jdbcType="VARCHAR" />
+        <result column="all_shouru" property="all_shouru" jdbcType="VARCHAR" />
+        <result column="all_lirun" property="all_lirun" jdbcType="VARCHAR" />
+        <result column="all_chuhuo" property="all_chuhuo" jdbcType="VARCHAR" />
+        <result column="all_huikuan" property="all_huikuan" jdbcType="VARCHAR" />
+        <result column="all_gsv" property="all_gsv" jdbcType="VARCHAR" />
+        <result column="sortno" property="sortno" jdbcType="INTEGER" />
+    </resultMap>
+
+    <insert id="save" parameterType="StarVeinCityPlan">
+        INSERT INTO ds_star_vein_city_plan(id,year,dt,region_name,region_id,yewuxian_name,yewuxian_id,all_shouru,all_lirun,all_chuhuo,all_huikuan,all_gsv,sortno)
+        VALUES (#{id},#{year},#{dt},#{region_name},#{region_id},#{yewuxian_name},#{yewuxian_id},#{all_shouru},#{all_lirun},#{all_chuhuo},#{all_huikuan},#{all_gsv},#{sortno})
+    </insert>
+
+    <select id="list" resultMap="BaseResultMap" parameterType="StarVeinCityPlan">
+        select
+        id,year,dt,region_name,region_id,yewuxian_name,yewuxian_id,all_shouru,all_lirun,all_chuhuo,all_huikuan,all_gsv,sortno
+        from ds_star_vein_city_plan
+        <where>
+            <if test="dt != null" >
+                dt = #{dt}
+            </if>
+        </where>
+        ORDER BY sortno ASC
+    </select>
+    <delete id="delete" parameterType="StarVeinCityPlan">
+        delete from ds_star_vein_city_plan
+        where  dt = #{dt}
+    </delete>
+</mapper>

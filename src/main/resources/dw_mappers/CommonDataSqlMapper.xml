@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.CommonDataSqlDao" >
+  <select id="execute" parameterType="java.lang.String" resultType="java.util.LinkedHashMap">
+    ${sql}
+  </select>
+  <select id="executeCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+    ${sql}
+  </select>
+</mapper>

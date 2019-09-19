@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.GCTPageV2Dao">
+    <select id="getTopVisitPage" resultType="java.util.HashMap">
+        SELECT pageid, page_name as key,sum(page_visit_num) as value
+        FROM "gct_page.${param.startDateStr}"
+        <where>
+            <include refid="condition"/>
+            group by pageid, page_name
+        </where>
+    </select>
+
+    <select id="getPageAnalysis" resultType="java.util.Map" parameterType="com.qding.bigdata.ds.model.GCTPageV2Param">
+        select hour as key,
+        <choose>
+            <when test="param.action == 'pv'">
+                count(*) as   value
+            </when>
+            <when test="param.action == 'uv'">
+                count(distinct ui) as  value
+            </when>
+            <when test="param.action == 'pr_pv_time'">
+                sum(page_visit_time)/count(*) as value
+            </when>
+            <when test="param.action == 'pr_uv_time'">
+                sum(page_visit_time)/count(distinct ui) as value
+            </when>
+            <when test="param.action == 'table'">
+                count(distinct ui) as uv,count(*) as pv,sum(page_visit_time)/count(distinct ui) as
+                pr_uv_time,sum(page_visit_time)/count(*) as pr_pv_time
+            </when>
+        </choose>
+        FROM "gct_page.${param.startDateStr}"
+        <where>
+            <include refid="condition"/>
+            group by hour order by hour
+        </where>
+    </select>
+
+    <select id="getPageAnalysisCur" resultType="java.util.Map" parameterType="com.qding.bigdata.ds.model.GCTPageV2Param">
+        select day as key,
+        <choose>
+            <when test="param.action == 'pv'">
+                count(*) as   value
+            </when>
+            <when test="param.action == 'uv'">
+                count(distinct ui) as  value
+            </when>
+            <when test="param.action == 'pr_pv_time'">
+                sum(page_visit_time)/count(*) as value
+            </when>
+            <when test="param.action == 'pr_uv_time'">
+                sum(page_visit_time)/count(distinct ui) as value
+            </when>
+            <when test="param.action == 'table'">
+                count(distinct ui) as uv,count(*) as pv,sum(page_visit_time)/count(distinct ui) as
+                pr_uv_time,sum(page_visit_time)/count(*) as pr_pv_time
+            </when>
+        </choose>
+        FROM "gct_page.${param.endDateStr}"
+        <where>
+            <include refid="condition"/>
+            group by day order by day
+        </where>
+    </select>
+
+    <select id="getAnalysisOverviewByCompany" resultType="java.util.Map">
+        select company_id as key, sum(page_visit_num) as value
+        FROM "gct_page.${param.startDateStr}"
+        <where>
+            <include refid="condition" />
+        </where>
+        group by company_id
+    </select>
+    <select id="getAnalysisOverviewByQyrCompany" resultType="java.lang.Long">
+        select sum(page_visit_num) as page_visit_time
+        FROM "gct_page.${param.startDateStr}"
+        <where>
+            <include refid="condition" />
+        </where>
+    </select>
+
+    <sql id="condition">
+        1=1
+        <if test="param.businessType != null and  param.businessType !='' ">
+            and business_type=#{param.businessType}
+        </if>
+        <if test="param.month != null and  param.month !=''">
+            and month=#{param.month}
+        </if>
+        <if test="param.day != null and  param.day !=''">
+            and day=#{param.day}
+        </if>
+        <if test="param.deviceType != null and param.deviceType != '' and param.deviceType != 'all'">
+            and source=#{param.deviceType}
+        </if>
+        <if test="param.version != null and param.version != '' and param.version != 'all'">
+            and av=#{param.version}
+        </if>
+        <if test="param.QRYcompanyId != null and param.QRYcompanyId != '' and param.QRYcompanyId != 'all'">
+            and qry_company_id like '%${param.QRYcompanyId}%'
+        </if>
+        <if test="param.companyId != null and param.companyId != '' and param.companyId != 'all'">
+            and company_id=#{param.companyId}
+        </if>
+        <if test="param.pageId != null and param.pageId != '' and param.pageId != 'all'">
+            and pageid=#{param.pageId}
+        </if>
+        and company_id !='-1' and source!='others' and av is not null
+    </sql>
+
+</mapper>

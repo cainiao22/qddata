@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.StarVeinSalesWlwLhgyDao" >
+
+    <resultMap id="BaseResultMap" type="StarVeinSalesWlwLhgy">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="project_name" property="project_name" jdbcType="VARCHAR" />
+        <result column="config_status" property="config_status" jdbcType="VARCHAR" />
+        <result column="plan_amount" property="plan_amount" jdbcType="VARCHAR" />
+        <result column="main_product" property="main_product" jdbcType="VARCHAR" />
+        <result column="project_stage" property="project_stage" jdbcType="VARCHAR" />
+        <result column="plan_date" property="plan_date" jdbcType="VARCHAR" />
+        <result column="shipment_info" property="shipment_info" jdbcType="VARCHAR" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="save" parameterType="StarVeinSalesWlwLhgy">
+        INSERT INTO ds_star_vein_sales_wlw_lhgy(id,city,project_name,config_status,plan_amount,main_product,project_stage,plan_date,shipment_info,remarks)
+        VALUES (#{id},#{city},#{project_name},#{config_status},#{plan_amount},#{main_product},#{project_stage},#{plan_date},#{shipment_info},#{remarks})
+    </insert>
+
+    <select id="list" resultMap="BaseResultMap" parameterType="StarVeinSalesWlwLhgy">
+        select
+        id,city,project_name,config_status,plan_amount,main_product,project_stage,plan_date,shipment_info,remarks
+        from ds_star_vein_sales_wlw_lhgy
+    </select>
+    <delete id="delete" parameterType="StarVeinSalesWlwLhgy">
+        delete from ds_star_vein_sales_wlw_lhgy
+    </delete>
+</mapper>

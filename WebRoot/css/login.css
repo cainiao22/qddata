@@ -1,0 +1,198 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+body, html {
+	padding: 0px;
+	margin: 0px;
+}
+
+html {
+	
+}
+
+img {
+	vertical-align: middle;
+	border: medium none;
+}
+
+body {
+	font: 12px/1.4 Verdana, Arial, Helvetica, sans-serif;
+	word-break: break-all;
+	width: 100%;
+}
+
+li {
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+ul {
+	padding: 0px;
+	margin: 0px;
+}
+
+input, textarea, select {
+	vertical-align: middle;
+}
+
+form {
+	margin: 0px;
+	padding: 0px;
+}
+
+a:link, a:visited {
+	text-decoration: none;
+	color: rgb(80, 80, 80);
+}
+
+a:hover {
+	color: rgb(239, 134, 19);
+	text-decoration: none;
+}
+
+.top {
+	height: 88px;
+}
+
+.logo {
+	float: left;
+	width: 400px;
+	padding: 10px 0px;
+	position: relative;
+}
+
+.logoline {
+	float: left;
+	height: 55px;
+	border-right: 1px solid rgb(0, 0, 0);
+	position: absolute;
+	top: 10px;
+	left: 212px;
+}
+
+.logotitle {
+	font-family: "微软雅黑";
+	font-size: 18px;
+	position: absolute;
+	top: 45px;
+	left: 220px;
+}
+
+#s_footer {
+	width: 950px;
+	margin: 15px auto;
+	padding: 0px;
+	text-align: center;
+	height: 50px;
+	line-height: 200%;
+	clear: both;
+}
+
+#s_footer a {
+	text-decoration: none;
+}
+
+#main {
+	width: 950px;
+	margin: 0px auto;
+}
+
+.main_body {
+	width: 950px;
+	margin: 0px auto;
+	height: 100%;
+	background: none repeat scroll 0% 0% rgb(228, 242, 255);
+	border-bottom: 1px solid rgb(204, 204, 204);
+	overflow: hidden;
+}
+
+.zi_red {
+	color: rgb(233, 47, 69);
+}
+
+.link1 a:link, .link1 a:visited {
+	color: rgb(0, 51, 153);
+	text-decoration: none;
+}
+
+.link1 a:hover, .link1 a:active, .link1 a:focus {
+	text-decoration: underline;
+}
+
+.login {
+	width: 360px;
+	background: none repeat scroll 0% 0% rgb(245, 249, 253);
+	border: 1px solid rgb(156, 198, 234);
+	margin: 50px auto 100px;
+}
+
+.logo_blue {
+	width: 360px;
+	height: 26px;
+	background: url('../img/loginbg.gif') repeat-x scroll 0% 0% transparent;
+	border-bottom: 1px solid rgb(156, 198, 234);
+	color: rgb(255, 255, 255);
+	font-size: 14px;
+	font-weight: bold;
+	padding-top: 12px;
+}
+
+.logo_blue img {
+	float: left;
+	margin: 0px 0px 0px 5px;
+}
+
+.logintable {
+	clear: both;
+	width: 330px;
+	margin: 20px 0px 0px 20px;
+}
+
+.logintable ul {
+	clear: both;
+}
+
+.logintable ul li {
+	float: left;
+	height: 25px;
+	line-height: 25px;
+}
+
+.logintable ul li img {
+	float: left;
+	margin-right: 10px;
+	margin-top: 2px;
+}
+
+.logint_l {
+	width: 60px;
+}
+
+.logint_r {
+	width: 150px;
+	padding-left: 60px;
+}
+
+.logininput_l {
+	width: 155px;
+	height: 20px;
+	line-height: 20px;
+	padding: 2px 0px 0px 2px;
+	margin-right: 10px;
+}
+
+.logininput_m {
+	width: 90px;
+	height: 20px;
+	line-height: 20px;
+	padding: 2px 0px 0px 2px;
+	margin-right: 10px;
+}
+
+.btnenter {
+	clear: both;
+	padding: 0px 0px 10px 135px;
+}

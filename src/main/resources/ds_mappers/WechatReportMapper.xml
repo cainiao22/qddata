@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.WechatReportDao" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.WechatReport" >
+    <result column="dt" property="dt" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="openId" property="openId" jdbcType="VARCHAR" />
+    <result column="sendStatus" property="sendStatus" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <select id="query" parameterType="com.qding.bigdata.ds.model.WechatReport" resultMap="BaseResultMap">
+    SELECT ds_config.config_key as openId, ds_config.config_value as mobile,ds_jobnotify.dt as dt
+
+    FROM ds_config
+    <if test="sendStatus == 'SUCCESS'">
+     right JOIN
+    </if>
+    <if test="sendStatus != 'SUCCESS'">
+      LEFT JOIN
+    </if>
+    ds_jobnotify
+
+    on
+      ds_jobnotify.job=CONCAT('wechat_report_',ds_config.config_key)
+
+      and ds_jobnotify.job like 'wechat_report_%'
+
+      and ds_jobnotify.dt=#{dt}
+
+    WHERE
+
+    ds_config.config_type='wechat_report_openId'
+
+    <if test="mobile != '' and mobile != null">
+      AND ds_config.config_value=#{mobile}
+    </if>
+
+    <if test="sendStatus == 'FAILED'">
+      and CONCAT('wechat_report_',ds_config.config_key) not IN (SELECT job from ds_jobnotify
+
+      WHERE
+
+      job LIKE 'wechat_report_%'
+
+      AND ds_jobnotify.dt=#{dt}
+      )
+    </if>
+
+    LIMIT #{pageCount} OFFSET #{offset}
+  </select>
+  <select id="queryCount" parameterType="com.qding.bigdata.ds.model.WechatReport" resultType="Integer">
+    SELECT coalesce(count(1), 0)
+
+    FROM ds_config
+    <if test="sendStatus == 'SUCCESS'">
+      right JOIN
+    </if>
+    <if test="sendStatus != 'SUCCESS'">
+      LEFT JOIN
+    </if>
+    ds_jobnotify
+
+    on
+    ds_jobnotify.job=CONCAT('wechat_report_',ds_config.config_key)
+
+    and ds_jobnotify.job like 'wechat_report_%'
+
+    and ds_jobnotify.dt=#{dt}
+
+    WHERE
+
+    ds_config.config_type='wechat_report_openId'
+
+    <if test="sendStatus == 'FAILED'">
+      and CONCAT('wechat_report_',ds_config.config_key) not IN (SELECT job from ds_jobnotify
+
+      WHERE
+
+      job LIKE 'wechat_report_%'
+
+      AND ds_jobnotify.dt=#{dt}
+      )
+    </if>
+  </select>
+</mapper>

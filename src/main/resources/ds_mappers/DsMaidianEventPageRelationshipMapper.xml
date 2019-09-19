@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.DsMaidianEventPageRelationshipMapper" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.DsMaidianEventPageRelationship" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="event_code" property="eventCode" jdbcType="CHAR" />
+    <result column="event_name" property="eventName" jdbcType="CHAR" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="page_code" property="pageCode" jdbcType="CHAR" />
+    <result column="page_name" property="pageName" jdbcType="CHAR" />
+    <result column="area_code" property="areaCode" jdbcType="CHAR" />
+    <result column="area_name" property="areaName" jdbcType="CHAR" />
+    <result column="position_id" property="positionId" jdbcType="CHAR" />
+    <result column="position_name" property="positionName" jdbcType="CHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, event_code, event_name, page_code, page_name, area_code, area_name, position_id, 
+    position_name, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ds_maidian_event_page_relationship
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ds_maidian_event_page_relationship
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qding.bigdata.ds.model.DsMaidianEventPageRelationship" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into ds_maidian_event_page_relationship (id, event_code, event_name, 
+      page_code, page_name, area_code, 
+      area_name, position_id, position_name, 
+      status)
+    values (#{id,jdbcType=BIGINT}, #{eventCode,jdbcType=CHAR}, #{eventName,jdbcType=CHAR}, 
+      #{pageCode,jdbcType=CHAR}, #{pageName,jdbcType=CHAR}, #{areaCode,jdbcType=CHAR}, 
+      #{areaName,jdbcType=CHAR}, #{positionId,jdbcType=CHAR}, #{positionName,jdbcType=CHAR}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.DsMaidianEventPageRelationship" >
+    insert into ds_maidian_event_page_relationship
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="eventCode != null" >
+        event_code,
+      </if>
+      <if test="eventName != null" >
+        event_name,
+      </if>
+      <if test="pageCode != null" >
+        page_code,
+      </if>
+      <if test="pageName != null" >
+        page_name,
+      </if>
+      <if test="areaCode != null" >
+        area_code,
+      </if>
+      <if test="areaName != null" >
+        area_name,
+      </if>
+      <if test="positionId != null" >
+        position_id,
+      </if>
+      <if test="positionName != null" >
+        position_name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="eventCode != null" >
+        #{eventCode,jdbcType=CHAR},
+      </if>
+      <if test="eventName != null" >
+        #{eventName,jdbcType=CHAR},
+      </if>
+      <if test="pageCode != null" >
+        #{pageCode,jdbcType=CHAR},
+      </if>
+      <if test="pageName != null" >
+        #{pageName,jdbcType=CHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=CHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=CHAR},
+      </if>
+      <if test="positionId != null" >
+        #{positionId,jdbcType=CHAR},
+      </if>
+      <if test="positionName != null" >
+        #{positionName,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qding.bigdata.ds.model.DsMaidianEventPageRelationship" >
+    update ds_maidian_event_page_relationship
+    <set >
+      <if test="eventCode != null" >
+        event_code = #{eventCode,jdbcType=CHAR},
+      </if>
+      <if test="eventName != null" >
+        event_name = #{eventName,jdbcType=CHAR},
+      </if>
+      <if test="pageCode != null" >
+        page_code = #{pageCode,jdbcType=CHAR},
+      </if>
+      <if test="pageName != null" >
+        page_name = #{pageName,jdbcType=CHAR},
+      </if>
+      <if test="areaCode != null" >
+        area_code = #{areaCode,jdbcType=CHAR},
+      </if>
+      <if test="areaName != null" >
+        area_name = #{areaName,jdbcType=CHAR},
+      </if>
+      <if test="positionId != null" >
+        position_id = #{positionId,jdbcType=CHAR},
+      </if>
+      <if test="positionName != null" >
+        position_name = #{positionName,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qding.bigdata.ds.model.DsMaidianEventPageRelationship" >
+    update ds_maidian_event_page_relationship
+    set event_code = #{eventCode,jdbcType=CHAR},
+      event_name = #{eventName,jdbcType=CHAR},
+      page_code = #{pageCode,jdbcType=CHAR},
+      page_name = #{pageName,jdbcType=CHAR},
+      area_code = #{areaCode,jdbcType=CHAR},
+      area_name = #{areaName,jdbcType=CHAR},
+      position_id = #{positionId,jdbcType=CHAR},
+      position_name = #{positionName,jdbcType=CHAR},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="query" parameterType="com.qding.bigdata.ds.model.DsMaidianEventPageRelationship" resultMap="BaseResultMap">
+    SELECT a.id, a.event_code, a.page_code, a.page_name, a.area_code, a.area_name, a.position_id,
+    a.position_name, a.status, b.product_id, b.name as event_name from ds_maidian_event_page_relationship a, ds_maidian_event b
+    <where>
+      a.event_code = b.code
+      <if test="eventCode != null" >
+        and a.event_code = #{eventCode,jdbcType=CHAR}
+      </if>
+      <if test="eventName != null" >
+        and b.name LIKE CONCAT('%',#{eventName,jdbcType=CHAR},'%')
+      </if>
+      <if test="pageCode != null" >
+        and a.page_code = #{pageCode,jdbcType=CHAR}
+      </if>
+      <if test="pageName != null" >
+        and a.page_name LIKE CONCAT('%',#{pageName},'%')
+      </if>
+      <if test="areaCode != null" >
+        and a.area_code = #{areaCode,jdbcType=CHAR}
+      </if>
+      <if test="areaName != null" >
+        and a.area_name = #{areaName,jdbcType=CHAR}
+      </if>
+      <if test="positionId != null" >
+        and a.position_id = #{positionId,jdbcType=CHAR}
+      </if>
+      <if test="positionName != null" >
+        and a.position_name = #{positionName,jdbcType=CHAR}
+      </if>
+      <if test="status != null" >
+        and a.status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="productId != null" >
+        and b.product_id = #{productId,jdbcType=INTEGER}
+      </if>
+    </where>
+
+    ORDER by a.id DESC
+  </select>
+  <delete id="deleteAll">
+    DELETE from ds_maidian_event_page_relationship
+  </delete>
+</mapper>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.PortraitTagDao">
+<!--  <cache
+         eviction="LRU"
+         size="10240"
+         readOnly="false"
+      />     -->
+	<resultMap id="BaseResultMap" type="PortraitTag">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="tag" property="tag" jdbcType="VARCHAR" />
+		<result column="datatype" property="dataType" jdbcType="INTEGER" />
+		<result column="level" property="level" jdbcType="INTEGER" />
+		<result column="sortNo" property="sortNo" jdbcType="INTEGER" />
+		<result column="pid" property="pid" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="example" property="example" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+	</resultMap>
+
+	<resultMap id="BaseResultMapB" type="PortraitDictionaries">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="example_id" property="example_id" jdbcType="VARCHAR" />
+		<result column="example_name" property="example_name" jdbcType="VARCHAR" />
+		<result column="source" property="source" jdbcType="VARCHAR" />
+		<result column="sortno" property="sortno" jdbcType="INTEGER" />
+
+
+	</resultMap>
+
+	<select id="getDictionaries" resultMap="BaseResultMapB" parameterType="PortraitDictionaries">
+		select
+		id,example_id,example_name,source,sortno
+		from ds_portrait_dictionaries WHERE 1=1
+
+		<if test="id != null">
+		AND id = #{id}
+		</if>
+		<if test="source != null">
+		AND source = #{source}
+		</if>
+
+	</select>
+
+
+	<sql id="base_column_list">
+		id, name, tag, datatype, sortNo, pid,level,description,example,status
+	</sql>
+	<sql id="where_condition">
+		<trim prefix=" where " suffixOverrides="and">
+			<if test="id != null">
+				id = #{id} and
+			</if>
+			<if test="tag != null">
+				tag = #{tag} and
+			</if>
+			<if test="status != null">
+				status = #{status} and
+			</if>
+		</trim>
+	</sql>
+	<sql id="limitAndOrderBy">
+		<if test="sortAndDesc != null">
+			order by sortno
+		</if>
+		limit  #{pageCount} offset #{offset}
+	</sql>
+ <select id="list" resultMap="BaseResultMap" parameterType="PortraitTag">
+		select
+		<include refid="base_column_list" />
+		from ds_portrait_tag
+		<include refid="where_condition" />
+		<include refid="limitAndOrderBy" />
+	</select>
+
+	<select id="count" resultType="Integer" parameterType="PortraitTag">
+		select count(1)
+		from ds_portrait_tag
+		<include refid="where_condition" />
+	</select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="PortraitTag">
+		select
+		<include refid="base_column_list" />
+		from ds_portrait_tag
+		where id=#{id}
+		<if test="tag != null">
+			and tag = #{tag}
+		</if>
+		limit 1
+	</select>
+	<insert id="save" parameterType="Module">
+		insert into ds_portrait_tag
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="tag != null">
+				tag,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="dataType != null">
+				datatype,
+			</if>
+			<if test="level != null">
+				level,
+			</if>
+			<if test="sortNo != null">
+				sortNo,
+			</if>
+			<if test="pid != null">
+				pid,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="example != null">
+				example,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="tag != null">
+				#{tag},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="dataType != null">
+				#{dataType},
+			</if>
+			<if test="level != null">
+				#{level},
+			</if>
+			<if test="sortNo != null">
+				#{sortNo},
+			</if>
+			<if test="pid != null">
+				#{pid},
+			</if>
+			<if test="description != null">
+				#{description},
+			</if>
+			<if test="example != null">
+				#{example},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateById" parameterType="Module">
+		update ds_portrait_tag
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="tag != null">
+				tag = #{tag},
+			</if>
+			<if test="dataType != null">
+				datatype = #{dataType},
+			</if>
+			<if test="level != null">
+				level = #{level},
+			</if>
+			<if test="sortNo != null">
+				sortNo = #{sortNo},
+			</if>
+			<if test="pid != null">
+				pid = #{pid},
+			</if>
+			<if test="description != null">
+				description = #{description},
+			</if>
+			<if test="example != null">
+				example = #{example},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<delete id="delete" parameterType="Module">
+		delete from ds_portrait_tag
+		<include refid="where_condition" />
+	</delete>
+	<select id="listByIDs" resultMap="BaseResultMap" parameterType="String">
+		select
+		<include refid="base_column_list" />
+		from ds_portrait_tag
+		where id in (${ids})
+	</select>
+	<select id="listByTags" resultMap="BaseResultMap" parameterType="String">
+		select
+		<include refid="base_column_list" />
+		from ds_portrait_tag
+		where tag in (${tags})
+	</select>
+
+
+</mapper>

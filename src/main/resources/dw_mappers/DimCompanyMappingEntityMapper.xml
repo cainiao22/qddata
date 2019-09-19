@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.DimCompanyMappingEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.DimCompanyMappingEntity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="qyr_company_binary_list" property="qyrCompanyBinaryList" jdbcType="VARCHAR" />
+    <result column="qyr_company_ten_code" property="qyrCompanyTenCode" jdbcType="INTEGER" />
+    <result column="qyr_company_name_list" property="qyrCompanyNameList" jdbcType="VARCHAR" />
+    <result column="qyr_company_ten_list" property="qyrCompanyTenList" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, company_id, company_name, qyr_company_binary_list, qyr_company_ten_code, qyr_company_name_list, 
+    qyr_company_ten_list
+  </sql>
+  <select id="findByCompanyId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dwb_dim_property_company_mapping_binary
+    where company_id = #{companyId,jdbcType=INTEGER}
+    limit 1
+  </select>
+  <select id="findAllQyrCompany" resultMap="BaseResultMap">
+    select qyr_company_binary_list,qyr_company_ten_code,qyr_company_name_list
+    from  dwb_dim_property_company_mapping_binary
+    where qyr_company_binary_list not like '%#%'
+    group by qyr_company_binary_list,qyr_company_ten_code,qyr_company_name_list
+  </select>
+</mapper>

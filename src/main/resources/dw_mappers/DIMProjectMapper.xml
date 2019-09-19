@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.DIMProjectDao" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.DIMProject" >
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="region_id" property="regionId" jdbcType="VARCHAR" />
+    <result column="region_name" property="regionName" jdbcType="VARCHAR" />
+    <result column="project_id" property="projectId" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="project_level" property="projectLevel" jdbcType="VARCHAR" />
+    <result column="building_useful" property="buildingUseful" jdbcType="VARCHAR" />
+    <result column="property_type" property="propertyType" jdbcType="VARCHAR" />
+    <result column="project_grade" property="projectGrade" jdbcType="BIGINT" />
+    <result column="fetch_time" property="fetchTime" jdbcType="VARCHAR" />
+    <result column="app_update" property="appUpdate" jdbcType="VARCHAR" />
+    <result column="gate_update" property="gateUpdate" jdbcType="VARCHAR" />
+    <result column="opration_ver" property="oprationVer" jdbcType="VARCHAR" />
+    <result column="propertyinfo_name" property="propertyinfoName" jdbcType="VARCHAR" />
+    <result column="developer_name" property="developerName" jdbcType="VARCHAR" />
+    <result column="create_at" property="createAt" jdbcType="VARCHAR" />
+    <result column="gate_type" property="gateType" jdbcType="BIGINT" />
+    <result column="is_wx" property="isWx" jdbcType="BIGINT" />
+    <result column="is_app" property="isApp" jdbcType="BIGINT" />
+    <result column="is_hk" property="isHk" jdbcType="BIGINT" />
+    <result column="is_wash" property="isWash" jdbcType="BIGINT" />
+    <result column="is_neighbour" property="isNeighbour" jdbcType="BIGINT" />
+    <result column="x" property="x" jdbcType="VARCHAR" />
+    <result column="y" property="y" jdbcType="VARCHAR" />
+    <result column="fetch_inc_num" property="fetchIncNum" jdbcType="BIGINT" />
+    <result column="fetch_room_num" property="fetchRoomNum" jdbcType="BIGINT" />
+    <result column="pro_wf_level" property="proWfLevel" jdbcType="VARCHAR" />
+    <result column="pro_pnum_level" property="proPnumLevel" jdbcType="VARCHAR" />
+    <result column="pro_value" property="proValue" jdbcType="VARCHAR" />
+    <result column="service_count" property="serviceCount" jdbcType="BIGINT" />
+    <result column="sign_date" property="signDate" jdbcType="VARCHAR" />
+    <result column="sign_houses_num" property="signHousesNum" jdbcType="BIGINT" />
+    <result column="plan_online_date" property="planOnlineDate" jdbcType="VARCHAR" />
+    <result column="jiaodi_date" property="jiaodiDate" jdbcType="VARCHAR" />
+    <result column="jiaodi_houses_num" property="jiaodiHousesNum" jdbcType="BIGINT" />
+    <result column="jiaodi_area" property="jiaodiArea" jdbcType="DECIMAL" />
+    <result column="dep_username" property="depUsername" jdbcType="VARCHAR" />
+    <result column="dep_departmentname" property="depDepartmentname" jdbcType="VARCHAR" />
+    <result column="dep_cityname" property="depCityname" jdbcType="VARCHAR" />
+    <result column="jiaojie_date" property="jiaojieDate" jdbcType="VARCHAR" />
+    <result column="is_open_fee" property="isOpenFee" jdbcType="BIGINT" />
+    <result column="is_fix" property="isFix" jdbcType="BIGINT" />
+    <result column="province_id" property="provinceId" jdbcType="VARCHAR" />
+    <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
+    <result column="propertyinfo_id" property="propertyinfoId" jdbcType="VARCHAR" />
+    <result column="service_amount" property="serviceAmount" jdbcType="VARCHAR" />
+    <result column="property_fee" property="propertyFee" jdbcType="VARCHAR" />
+    <result column="district_name" property="districtName" jdbcType="VARCHAR" />
+    <result column="operation_flag" property="operationFlag" jdbcType="BIGINT" />
+    <result column="occupancy_rate" property="occupancyRate" jdbcType="VARCHAR" />
+    <result column="jiaodi_expand_id" property="jiaodiExpandId" jdbcType="VARCHAR" />
+    <result column="jiaodi_expand_name" property="jiaodiExpandName" jdbcType="VARCHAR" />
+    <result column="jiaodi_expand_depart" property="jiaodiExpandDepart" jdbcType="VARCHAR" />
+    <result column="jiaodi_expand_city" property="jiaodiExpandCity" jdbcType="VARCHAR" />
+    <result column="property_fee_type" property="propertyFeeType" jdbcType="BIGINT" />
+    <result column="property_fee_station" property="propertyFeeStation" jdbcType="VARCHAR" />
+    <result column="unit_access_flag" property="unitAccessFlag" jdbcType="BIGINT" />
+    <result column="side_agreement" property="sideAgreement" jdbcType="BIGINT" />
+    <result column="jiaodi_ok_date" property="jiaodiOkDate" jdbcType="VARCHAR" />
+    <result column="community_environment" property="communityEnvironment" jdbcType="BIGINT" />
+    <result column="unit_door_num" property="unitDoorNum" jdbcType="BIGINT" />
+    <result column="door_num" property="doorNum" jdbcType="BIGINT" />
+    <result column="basement_door_num" property="basementDoorNum" jdbcType="BIGINT" />
+    <result column="access_control_install" property="accessControlInstall" jdbcType="BIGINT" />
+    <result column="operation_method" property="operationMethod" jdbcType="BIGINT" />
+    <result column="qd_access_num" property="qdAccessNum" jdbcType="BIGINT" />
+    <result column="person_number" property="personNumber" jdbcType="BIGINT" />
+    <result column="live_number" property="liveNumber" jdbcType="BIGINT" />
+    <result column="user_operation_date" property="userOperationDate" jdbcType="VARCHAR" />
+    <result column="district_operation_date" property="districtOperationDate" jdbcType="VARCHAR" />
+    <result column="csm_project_id" property="csmProjectId" jdbcType="VARCHAR" />
+    <result column="sync_project_id" property="syncProjectId" jdbcType="BIGINT" />
+    <result column="online_date" property="onlineDate" jdbcType="VARCHAR" />
+    <result column="stage" property="stage" jdbcType="SMALLINT" />
+    <result column="is_virtual" property="isVirtual" jdbcType="SMALLINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.qding.bigdata.ds.model.DIMProjectWithBLOBs" extends="BaseResultMap" >
+    <result column="first_room_upload_date" property="firstRoomUploadDate" jdbcType="LONGVARCHAR" />
+    <result column="first_house_num" property="firstHouseNum" jdbcType="LONGVARCHAR" />
+    <result column="first_hasphone_house_num" property="firstHasphoneHouseNum" jdbcType="LONGVARCHAR" />
+    <result column="ka_operation_project" property="kaOperationProject" jdbcType="LONGVARCHAR" />
+    <result column="pianqu_manager" property="pianquManager" jdbcType="LONGVARCHAR" />
+    <result column="pianqu_manager_depart" property="pianquManagerDepart" jdbcType="LONGVARCHAR" />
+    <result column="pianqu_manager_city" property="pianquManagerCity" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Blob_Column_List" >
+    first_room_upload_date, first_house_num, first_hasphone_house_num, ka_operation_project, 
+    pianqu_manager, pianqu_manager_depart, pianqu_manager_city
+  </sql>
+  <insert id="insert" parameterType="com.qding.bigdata.ds.model.DIMProjectWithBLOBs" >
+    insert into dim_project (uuid, region_id, region_name, 
+      project_id, project_name, project_level, 
+      building_useful, property_type, project_grade, 
+      fetch_time, app_update, gate_update, 
+      opration_ver, propertyinfo_name, developer_name, 
+      create_at, gate_type, is_wx, 
+      is_app, is_hk, is_wash, is_neighbour, 
+      x, y, fetch_inc_num, fetch_room_num, 
+      pro_wf_level, pro_pnum_level, pro_value, 
+      service_count, sign_date, sign_houses_num, 
+      plan_online_date, jiaodi_date, jiaodi_houses_num, 
+      jiaodi_area, dep_username, dep_departmentname, 
+      dep_cityname, jiaojie_date, is_open_fee, 
+      is_fix, province_id, province_name, 
+      propertyinfo_id, service_amount, property_fee, 
+      district_name, operation_flag, occupancy_rate, 
+      jiaodi_expand_id, jiaodi_expand_name, jiaodi_expand_depart, 
+      jiaodi_expand_city, property_fee_type, property_fee_station, 
+      unit_access_flag, side_agreement, jiaodi_ok_date, 
+      community_environment, unit_door_num, door_num, 
+      basement_door_num, access_control_install, operation_method, 
+      qd_access_num, person_number, live_number, 
+      user_operation_date, district_operation_date, 
+      csm_project_id, sync_project_id, online_date, 
+      stage, is_virtual, first_room_upload_date, 
+      first_house_num, first_hasphone_house_num, 
+      ka_operation_project, pianqu_manager, 
+      pianqu_manager_depart, pianqu_manager_city
+      )
+    values (#{uuid,jdbcType=VARCHAR}, #{regionId,jdbcType=VARCHAR}, #{regionName,jdbcType=VARCHAR}, 
+      #{projectId,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, #{projectLevel,jdbcType=VARCHAR}, 
+      #{buildingUseful,jdbcType=VARCHAR}, #{propertyType,jdbcType=VARCHAR}, #{projectGrade,jdbcType=BIGINT}, 
+      #{fetchTime,jdbcType=VARCHAR}, #{appUpdate,jdbcType=VARCHAR}, #{gateUpdate,jdbcType=VARCHAR}, 
+      #{oprationVer,jdbcType=VARCHAR}, #{propertyinfoName,jdbcType=VARCHAR}, #{developerName,jdbcType=VARCHAR}, 
+      #{createAt,jdbcType=VARCHAR}, #{gateType,jdbcType=BIGINT}, #{isWx,jdbcType=BIGINT}, 
+      #{isApp,jdbcType=BIGINT}, #{isHk,jdbcType=BIGINT}, #{isWash,jdbcType=BIGINT}, #{isNeighbour,jdbcType=BIGINT}, 
+      #{x,jdbcType=VARCHAR}, #{y,jdbcType=VARCHAR}, #{fetchIncNum,jdbcType=BIGINT}, #{fetchRoomNum,jdbcType=BIGINT}, 
+      #{proWfLevel,jdbcType=VARCHAR}, #{proPnumLevel,jdbcType=VARCHAR}, #{proValue,jdbcType=VARCHAR}, 
+      #{serviceCount,jdbcType=BIGINT}, #{signDate,jdbcType=VARCHAR}, #{signHousesNum,jdbcType=BIGINT}, 
+      #{planOnlineDate,jdbcType=VARCHAR}, #{jiaodiDate,jdbcType=VARCHAR}, #{jiaodiHousesNum,jdbcType=BIGINT}, 
+      #{jiaodiArea,jdbcType=DECIMAL}, #{depUsername,jdbcType=VARCHAR}, #{depDepartmentname,jdbcType=VARCHAR}, 
+      #{depCityname,jdbcType=VARCHAR}, #{jiaojieDate,jdbcType=VARCHAR}, #{isOpenFee,jdbcType=BIGINT}, 
+      #{isFix,jdbcType=BIGINT}, #{provinceId,jdbcType=VARCHAR}, #{provinceName,jdbcType=VARCHAR}, 
+      #{propertyinfoId,jdbcType=VARCHAR}, #{serviceAmount,jdbcType=VARCHAR}, #{propertyFee,jdbcType=VARCHAR}, 
+      #{districtName,jdbcType=VARCHAR}, #{operationFlag,jdbcType=BIGINT}, #{occupancyRate,jdbcType=VARCHAR}, 
+      #{jiaodiExpandId,jdbcType=VARCHAR}, #{jiaodiExpandName,jdbcType=VARCHAR}, #{jiaodiExpandDepart,jdbcType=VARCHAR}, 
+      #{jiaodiExpandCity,jdbcType=VARCHAR}, #{propertyFeeType,jdbcType=BIGINT}, #{propertyFeeStation,jdbcType=VARCHAR}, 
+      #{unitAccessFlag,jdbcType=BIGINT}, #{sideAgreement,jdbcType=BIGINT}, #{jiaodiOkDate,jdbcType=VARCHAR}, 
+      #{communityEnvironment,jdbcType=BIGINT}, #{unitDoorNum,jdbcType=BIGINT}, #{doorNum,jdbcType=BIGINT}, 
+      #{basementDoorNum,jdbcType=BIGINT}, #{accessControlInstall,jdbcType=BIGINT}, #{operationMethod,jdbcType=BIGINT}, 
+      #{qdAccessNum,jdbcType=BIGINT}, #{personNumber,jdbcType=BIGINT}, #{liveNumber,jdbcType=BIGINT}, 
+      #{userOperationDate,jdbcType=VARCHAR}, #{districtOperationDate,jdbcType=VARCHAR}, 
+      #{csmProjectId,jdbcType=VARCHAR}, #{syncProjectId,jdbcType=BIGINT}, #{onlineDate,jdbcType=VARCHAR}, 
+      #{stage,jdbcType=SMALLINT}, #{isVirtual,jdbcType=SMALLINT}, #{firstRoomUploadDate,jdbcType=LONGVARCHAR}, 
+      #{firstHouseNum,jdbcType=LONGVARCHAR}, #{firstHasphoneHouseNum,jdbcType=LONGVARCHAR}, 
+      #{kaOperationProject,jdbcType=LONGVARCHAR}, #{pianquManager,jdbcType=LONGVARCHAR}, 
+      #{pianquManagerDepart,jdbcType=LONGVARCHAR}, #{pianquManagerCity,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.DIMProjectWithBLOBs" >
+    insert into dim_project
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="regionId != null" >
+        region_id,
+      </if>
+      <if test="regionName != null" >
+        region_name,
+      </if>
+      <if test="projectId != null" >
+        project_id,
+      </if>
+      <if test="projectName != null" >
+        project_name,
+      </if>
+      <if test="projectLevel != null" >
+        project_level,
+      </if>
+      <if test="buildingUseful != null" >
+        building_useful,
+      </if>
+      <if test="propertyType != null" >
+        property_type,
+      </if>
+      <if test="projectGrade != null" >
+        project_grade,
+      </if>
+      <if test="fetchTime != null" >
+        fetch_time,
+      </if>
+      <if test="appUpdate != null" >
+        app_update,
+      </if>
+      <if test="gateUpdate != null" >
+        gate_update,
+      </if>
+      <if test="oprationVer != null" >
+        opration_ver,
+      </if>
+      <if test="propertyinfoName != null" >
+        propertyinfo_name,
+      </if>
+      <if test="developerName != null" >
+        developer_name,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="gateType != null" >
+        gate_type,
+      </if>
+      <if test="isWx != null" >
+        is_wx,
+      </if>
+      <if test="isApp != null" >
+        is_app,
+      </if>
+      <if test="isHk != null" >
+        is_hk,
+      </if>
+      <if test="isWash != null" >
+        is_wash,
+      </if>
+      <if test="isNeighbour != null" >
+        is_neighbour,
+      </if>
+      <if test="x != null" >
+        x,
+      </if>
+      <if test="y != null" >
+        y,
+      </if>
+      <if test="fetchIncNum != null" >
+        fetch_inc_num,
+      </if>
+      <if test="fetchRoomNum != null" >
+        fetch_room_num,
+      </if>
+      <if test="proWfLevel != null" >
+        pro_wf_level,
+      </if>
+      <if test="proPnumLevel != null" >
+        pro_pnum_level,
+      </if>
+      <if test="proValue != null" >
+        pro_value,
+      </if>
+      <if test="serviceCount != null" >
+        service_count,
+      </if>
+      <if test="signDate != null" >
+        sign_date,
+      </if>
+      <if test="signHousesNum != null" >
+        sign_houses_num,
+      </if>
+      <if test="planOnlineDate != null" >
+        plan_online_date,
+      </if>
+      <if test="jiaodiDate != null" >
+        jiaodi_date,
+      </if>
+      <if test="jiaodiHousesNum != null" >
+        jiaodi_houses_num,
+      </if>
+      <if test="jiaodiArea != null" >
+        jiaodi_area,
+      </if>
+      <if test="depUsername != null" >
+        dep_username,
+      </if>
+      <if test="depDepartmentname != null" >
+        dep_departmentname,
+      </if>
+      <if test="depCityname != null" >
+        dep_cityname,
+      </if>
+      <if test="jiaojieDate != null" >
+        jiaojie_date,
+      </if>
+      <if test="isOpenFee != null" >
+        is_open_fee,
+      </if>
+      <if test="isFix != null" >
+        is_fix,
+      </if>
+      <if test="provinceId != null" >
+        province_id,
+      </if>
+      <if test="provinceName != null" >
+        province_name,
+      </if>
+      <if test="propertyinfoId != null" >
+        propertyinfo_id,
+      </if>
+      <if test="serviceAmount != null" >
+        service_amount,
+      </if>
+      <if test="propertyFee != null" >
+        property_fee,
+      </if>
+      <if test="districtName != null" >
+        district_name,
+      </if>
+      <if test="operationFlag != null" >
+        operation_flag,
+      </if>
+      <if test="occupancyRate != null" >
+        occupancy_rate,
+      </if>
+      <if test="jiaodiExpandId != null" >
+        jiaodi_expand_id,
+      </if>
+      <if test="jiaodiExpandName != null" >
+        jiaodi_expand_name,
+      </if>
+      <if test="jiaodiExpandDepart != null" >
+        jiaodi_expand_depart,
+      </if>
+      <if test="jiaodiExpandCity != null" >
+        jiaodi_expand_city,
+      </if>
+      <if test="propertyFeeType != null" >
+        property_fee_type,
+      </if>
+      <if test="propertyFeeStation != null" >
+        property_fee_station,
+      </if>
+      <if test="unitAccessFlag != null" >
+        unit_access_flag,
+      </if>
+      <if test="sideAgreement != null" >
+        side_agreement,
+      </if>
+      <if test="jiaodiOkDate != null" >
+        jiaodi_ok_date,
+      </if>
+      <if test="communityEnvironment != null" >
+        community_environment,
+      </if>
+      <if test="unitDoorNum != null" >
+        unit_door_num,
+      </if>
+      <if test="doorNum != null" >
+        door_num,
+      </if>
+      <if test="basementDoorNum != null" >
+        basement_door_num,
+      </if>
+      <if test="accessControlInstall != null" >
+        access_control_install,
+      </if>
+      <if test="operationMethod != null" >
+        operation_method,
+      </if>
+      <if test="qdAccessNum != null" >
+        qd_access_num,
+      </if>
+      <if test="personNumber != null" >
+        person_number,
+      </if>
+      <if test="liveNumber != null" >
+        live_number,
+      </if>
+      <if test="userOperationDate != null" >
+        user_operation_date,
+      </if>
+      <if test="districtOperationDate != null" >
+        district_operation_date,
+      </if>
+      <if test="csmProjectId != null" >
+        csm_project_id,
+      </if>
+      <if test="syncProjectId != null" >
+        sync_project_id,
+      </if>
+      <if test="onlineDate != null" >
+        online_date,
+      </if>
+      <if test="stage != null" >
+        stage,
+      </if>
+      <if test="isVirtual != null" >
+        is_virtual,
+      </if>
+      <if test="firstRoomUploadDate != null" >
+        first_room_upload_date,
+      </if>
+      <if test="firstHouseNum != null" >
+        first_house_num,
+      </if>
+      <if test="firstHasphoneHouseNum != null" >
+        first_hasphone_house_num,
+      </if>
+      <if test="kaOperationProject != null" >
+        ka_operation_project,
+      </if>
+      <if test="pianquManager != null" >
+        pianqu_manager,
+      </if>
+      <if test="pianquManagerDepart != null" >
+        pianqu_manager_depart,
+      </if>
+      <if test="pianquManagerCity != null" >
+        pianqu_manager_city,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null" >
+        #{regionId,jdbcType=VARCHAR},
+      </if>
+      <if test="regionName != null" >
+        #{regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectLevel != null" >
+        #{projectLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingUseful != null" >
+        #{buildingUseful,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyType != null" >
+        #{propertyType,jdbcType=VARCHAR},
+      </if>
+      <if test="projectGrade != null" >
+        #{projectGrade,jdbcType=BIGINT},
+      </if>
+      <if test="fetchTime != null" >
+        #{fetchTime,jdbcType=VARCHAR},
+      </if>
+      <if test="appUpdate != null" >
+        #{appUpdate,jdbcType=VARCHAR},
+      </if>
+      <if test="gateUpdate != null" >
+        #{gateUpdate,jdbcType=VARCHAR},
+      </if>
+      <if test="oprationVer != null" >
+        #{oprationVer,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyinfoName != null" >
+        #{propertyinfoName,jdbcType=VARCHAR},
+      </if>
+      <if test="developerName != null" >
+        #{developerName,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=VARCHAR},
+      </if>
+      <if test="gateType != null" >
+        #{gateType,jdbcType=BIGINT},
+      </if>
+      <if test="isWx != null" >
+        #{isWx,jdbcType=BIGINT},
+      </if>
+      <if test="isApp != null" >
+        #{isApp,jdbcType=BIGINT},
+      </if>
+      <if test="isHk != null" >
+        #{isHk,jdbcType=BIGINT},
+      </if>
+      <if test="isWash != null" >
+        #{isWash,jdbcType=BIGINT},
+      </if>
+      <if test="isNeighbour != null" >
+        #{isNeighbour,jdbcType=BIGINT},
+      </if>
+      <if test="x != null" >
+        #{x,jdbcType=VARCHAR},
+      </if>
+      <if test="y != null" >
+        #{y,jdbcType=VARCHAR},
+      </if>
+      <if test="fetchIncNum != null" >
+        #{fetchIncNum,jdbcType=BIGINT},
+      </if>
+      <if test="fetchRoomNum != null" >
+        #{fetchRoomNum,jdbcType=BIGINT},
+      </if>
+      <if test="proWfLevel != null" >
+        #{proWfLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="proPnumLevel != null" >
+        #{proPnumLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="proValue != null" >
+        #{proValue,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCount != null" >
+        #{serviceCount,jdbcType=BIGINT},
+      </if>
+      <if test="signDate != null" >
+        #{signDate,jdbcType=VARCHAR},
+      </if>
+      <if test="signHousesNum != null" >
+        #{signHousesNum,jdbcType=BIGINT},
+      </if>
+      <if test="planOnlineDate != null" >
+        #{planOnlineDate,jdbcType=VARCHAR},
+      </if>
+      <if test="jiaodiDate != null" >
+        #{jiaodiDate,jdbcType=VARCHAR},
+      </if>
+      <if test="jiaodiHousesNum != null" >
+        #{jiaodiHousesNum,jdbcType=BIGINT},
+      </if>
+      <if test="jiaodiArea != null" >
+        #{jiaodiArea,jdbcType=DECIMAL},
+      </if>
+      <if test="depUsername != null" >
+        #{depUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="depDepartmentname != null" >
+        #{depDepartmentname,jdbcType=VARCHAR},
+      </if>
+      <if test="depCityname != null" >
+        #{depCityname,jdbcType=VARCHAR},
+      </if>
+      <if test="jiaojieDate != null" >
+        #{jiaojieDate,jdbcType=VARCHAR},
+      </if>
+      <if test="isOpenFee != null" >
+        #{isOpenFee,jdbcType=BIGINT},
+      </if>
+      <if test="isFix != null" >
+        #{isFix,jdbcType=BIGINT},
+      </if>
+      <if test="provinceId != null" >
+        #{provinceId,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyinfoId != null" >
+        #{propertyinfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceAmount != null" >
+        #{serviceAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyFee != null" >
+        #{propertyFee,jdbcType=VARCHAR},
+      </if>
+      <if test="districtName != null" >
+        #{districtName,jdbcType=VARCHAR},
+      </if>
+      <if test="operationFlag != null" >
+        #{operationFlag,jdbcType=BIGINT},
+      </if>
+      <if test="occupancyRate != null" >
+        #{occupancyRate,jdbcType=VARCHAR},
+      </if>
+      <if test="jiaodiExpandId != null" >
+        #{jiaodiExpandId,jdbcType=VARCHAR},
+      </if>
+      <if test="jiaodiExpandName != null" >
+        #{jiaodiExpandName,jdbcType=VARCHAR},
+      </if>
+      <if test="jiaodiExpandDepart != null" >
+        #{jiaodiExpandDepart,jdbcType=VARCHAR},
+      </if>
+      <if test="jiaodiExpandCity != null" >
+        #{jiaodiExpandCity,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyFeeType != null" >
+        #{propertyFeeType,jdbcType=BIGINT},
+      </if>
+      <if test="propertyFeeStation != null" >
+        #{propertyFeeStation,jdbcType=VARCHAR},
+      </if>
+      <if test="unitAccessFlag != null" >
+        #{unitAccessFlag,jdbcType=BIGINT},
+      </if>
+      <if test="sideAgreement != null" >
+        #{sideAgreement,jdbcType=BIGINT},
+      </if>
+      <if test="jiaodiOkDate != null" >
+        #{jiaodiOkDate,jdbcType=VARCHAR},
+      </if>
+      <if test="communityEnvironment != null" >
+        #{communityEnvironment,jdbcType=BIGINT},
+      </if>
+      <if test="unitDoorNum != null" >
+        #{unitDoorNum,jdbcType=BIGINT},
+      </if>
+      <if test="doorNum != null" >
+        #{doorNum,jdbcType=BIGINT},
+      </if>
+      <if test="basementDoorNum != null" >
+        #{basementDoorNum,jdbcType=BIGINT},
+      </if>
+      <if test="accessControlInstall != null" >
+        #{accessControlInstall,jdbcType=BIGINT},
+      </if>
+      <if test="operationMethod != null" >
+        #{operationMethod,jdbcType=BIGINT},
+      </if>
+      <if test="qdAccessNum != null" >
+        #{qdAccessNum,jdbcType=BIGINT},
+      </if>
+      <if test="personNumber != null" >
+        #{personNumber,jdbcType=BIGINT},
+      </if>
+      <if test="liveNumber != null" >
+        #{liveNumber,jdbcType=BIGINT},
+      </if>
+      <if test="userOperationDate != null" >
+        #{userOperationDate,jdbcType=VARCHAR},
+      </if>
+      <if test="districtOperationDate != null" >
+        #{districtOperationDate,jdbcType=VARCHAR},
+      </if>
+      <if test="csmProjectId != null" >
+        #{csmProjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="syncProjectId != null" >
+        #{syncProjectId,jdbcType=BIGINT},
+      </if>
+      <if test="onlineDate != null" >
+        #{onlineDate,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null" >
+        #{stage,jdbcType=SMALLINT},
+      </if>
+      <if test="isVirtual != null" >
+        #{isVirtual,jdbcType=SMALLINT},
+      </if>
+      <if test="firstRoomUploadDate != null" >
+        #{firstRoomUploadDate,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="firstHouseNum != null" >
+        #{firstHouseNum,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="firstHasphoneHouseNum != null" >
+        #{firstHasphoneHouseNum,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="kaOperationProject != null" >
+        #{kaOperationProject,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="pianquManager != null" >
+        #{pianquManager,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="pianquManagerDepart != null" >
+        #{pianquManagerDepart,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="pianquManagerCity != null" >
+        #{pianquManagerCity,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getCity" resultMap="BaseResultMap">
+    select region_id,region_name from databus.dim_project group by region_id order by region_id
+  </select>
+  <select id="getProperty" resultMap="BaseResultMap">
+    select propertyinfo_id,propertyinfo_name from databus.dim_project group by propertyinfo_id order by propertyinfo_id
+  </select>
+  <select id="getCommunity" resultMap="BaseResultMap" >
+     select project_id,project_name from databus.dim_project
+  </select>
+</mapper>

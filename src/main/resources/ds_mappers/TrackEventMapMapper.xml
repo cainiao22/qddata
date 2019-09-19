@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.TrackEventMapDao" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.TrackEventMap" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="event_id" property="eventId" jdbcType="VARCHAR" />
+    <result column="event_name" property="eventName" jdbcType="VARCHAR" />
+    <result column="event_type" property="eventType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, event_id, event_name, event_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from track_event_map
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from track_event_map
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qding.bigdata.ds.model.TrackEventMap" >
+    insert into track_event_map (id, event_id, event_name,
+    event_type)
+    values (#{id,jdbcType=INTEGER}, #{eventId,jdbcType=VARCHAR}, #{eventName,jdbcType=VARCHAR},
+    #{eventType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.TrackEventMap" >
+    insert into track_event_map
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="eventId != null" >
+        event_id,
+      </if>
+      <if test="eventName != null" >
+        event_name,
+      </if>
+      <if test="eventType != null" >
+        event_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="eventId != null" >
+        #{eventId,jdbcType=VARCHAR},
+      </if>
+      <if test="eventName != null" >
+        #{eventName,jdbcType=VARCHAR},
+      </if>
+      <if test="eventType != null" >
+        #{eventType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qding.bigdata.ds.model.TrackEventMap" >
+    update track_event_map
+    <set >
+      <if test="eventId != null" >
+        event_id = #{eventId,jdbcType=VARCHAR},
+      </if>
+      <if test="eventName != null" >
+        event_name = #{eventName,jdbcType=VARCHAR},
+      </if>
+      <if test="eventType != null" >
+        event_type = #{eventType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qding.bigdata.ds.model.TrackEventMap" >
+    update track_event_map
+    set event_id = #{eventId,jdbcType=VARCHAR},
+    event_name = #{eventName,jdbcType=VARCHAR},
+    event_type = #{eventType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getNameByEventId" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT event_name FROM track_event_map WHERE event_id=#{eventId}
+  </select>
+  <select id="getTrackEventMapListByType" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from track_event_map
+    where event_type = #{eventType}
+  </select>
+</mapper>

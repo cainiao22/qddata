@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.StarVeinSalesInfoDao" >
+
+    <resultMap id="BaseResultMap" type="StarVeinSalesInfo">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="dim_type" property="dim_type" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="person" property="person" jdbcType="VARCHAR" />
+        <result column="client_name" property="client_name" jdbcType="VARCHAR" />
+        <result column="plan_amount" property="plan_amount" jdbcType="VARCHAR" />
+        <result column="plan_product" property="plan_product" jdbcType="VARCHAR" />
+        <result column="project_stage" property="project_stage" jdbcType="VARCHAR" />
+        <result column="plan_date" property="plan_date" jdbcType="VARCHAR" />
+        <result column="plan_text" property="plan_text" jdbcType="VARCHAR" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="save" parameterType="StarVeinSalesInfo">
+        INSERT INTO ds_star_vein_sales_info(id,dim_type,city,person,client_name,plan_amount,plan_product,project_stage,plan_date,plan_text,remarks)
+        VALUES (#{id},#{dim_type},#{city},#{person},#{client_name},#{plan_amount},#{plan_product},#{project_stage},#{plan_date},#{plan_text},#{remarks})
+    </insert>
+
+    <select id="list" resultMap="BaseResultMap" parameterType="StarVeinSalesInfo">
+        select
+        id,dim_type,city,person,client_name,plan_amount,plan_product,project_stage,plan_date,plan_text,remarks
+        from ds_star_vein_sales_info
+        <where>
+            <if test="dim_type != null" >
+                dim_type = #{dim_type}
+            </if>
+        </where>
+    </select>
+    <delete id="delete" parameterType="StarVeinSalesInfo">
+        delete from ds_star_vein_sales_info
+        where  dim_type = #{dim_type}
+    </delete>
+</mapper>

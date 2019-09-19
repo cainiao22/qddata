@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.GCTParamV2Dao" >
+  <select id="getParamKey" resultType="java.util.Map">
+    SELECT param_value as key,pv,uv
+    <include refid="table"/>
+    <where>
+      <include refid="condition" />
+      order by date_value
+    </where>
+  </select>
+
+  <select id="getParamKeyList" resultType="java.util.Map">
+    SELECT date_value as key,pv,uv
+    <include refid="table"/>
+    <where>
+      <include refid="condition" />
+      order by date_value
+    </where>
+  </select>
+
+  <sql id="condition">
+    1=1
+    <if test="param.businessType != null and  param.businessType ='1' ">
+      <if test="param.dateType !='' and param.dateType != null">
+        and date_type=#{param.dateType}
+      </if>
+      <if test="param.index == 'page'">
+        <if test="param.pageId != null and param.pageId != ''">
+          and pi = #{param.pageId}
+        </if>
+        <if test="param.paramKey != null and param.paramKey != ''">
+          and param_key = #{param.paramKey}
+        </if>
+        <if test="param.paramValue != null and param.paramValue != ''">
+          and param_value = #{param.paramValue}
+        </if>
+      </if>
+      <if test="param.index == 'event'">
+        <if test="param.eventId != null and param.eventId != ''">
+          and ei = #{param.eventId}
+        </if>
+        <if test="param.paramKey != null and param.paramKey != ''">
+          and param_key = #{param.paramKey}
+        </if>
+        <if test="param.paramValue != null and param.paramValue != ''">
+          and param_value = #{param.paramValue}
+        </if>
+      </if>
+      <if test="param.dateType == 'month'">
+        <if test="param.startDate != null">
+          and date_value &gt;= #{param.startMonthStr}
+        </if>
+        <if test="param.endDate != null">
+          and date_value &lt;= #{param.endMonthStr}
+        </if>
+      </if>
+      <if test="param.dateType == 'day'">
+        <if test="param.startDate != null">
+          and date_value &gt;= #{param.startDateStr}
+        </if>
+        <if test="param.endDate != null">
+          and date_value &lt;=  #{param.endDateStr}
+        </if>
+      </if>
+      <if test="param.QRYcompanyId != null and param.QRYcompanyId != ''">
+        and binary_code like '%${param.QRYcompanyId}%'
+      </if>
+      <if test="param.companyId != null and param.companyId != ''">
+        and company_id=#{param.companyId}
+      </if>
+    </if>
+    and param_value != '' and param_value is not null
+  </sql>
+
+  <sql id="table">
+    <if test="param.businessType != null and  param.businessType =='1'.toString() and param.index != null">
+
+      <choose>
+        <when test="param.index == 'page'">
+          from  "gct_p_ding_page_param_cube"
+        </when>
+        <when test="param.index == 'event'">
+          from  "gct_p_ding_event_param_cube"
+        </when>
+      </choose>
+    </if>
+    <if test="param.businessType != null and  param.businessType =='0'.toString() ">
+     from
+    </if>
+  </sql>
+
+</mapper>

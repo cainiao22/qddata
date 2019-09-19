@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.CommonDataSummaryDao" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.CommonDataSummary" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="alias" property="alias" jdbcType="VARCHAR" />
+    <result column="data_source" property="dataSource" jdbcType="CHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="owner" property="owner" jdbcType="VARCHAR" />
+    <result column="cache_time" property="cacheTime" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, alias, data_source,project_name, description, create_time, update_time, owner,cache_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from ds_common_data_summary
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ds_common_data_summary
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.qding.bigdata.ds.model.CommonDataSummary" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id">
+      select LAST_INSERT_ID()
+    </selectKey>
+    insert into ds_common_data_summary (name, alias, data_source,project_name,
+    description, create_time, update_time,
+    owner, cache_time)
+    values (#{name,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, #{dataSource,jdbcType=CHAR},#{projectName,jdbcType=VARCHAR}
+    #{description,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+    #{owner,jdbcType=VARCHAR}, #{cacheTime})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.CommonDataSummary" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id">
+      select LAST_INSERT_ID()
+    </selectKey>
+    insert into ds_common_data_summary
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="alias != null" >
+        alias,
+      </if>
+      <if test="dataSource != null" >
+        data_source,
+      </if>
+      <if test="projectName != null" >
+        project_name,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="owner != null" >
+        owner,
+      </if>
+      <if test="cacheTime != null" >
+        cache_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSource != null" >
+        #{dataSource,jdbcType=CHAR},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="owner != null" >
+        #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="cacheTime != null" >
+        #{cacheTime},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qding.bigdata.ds.model.CommonDataSummary" >
+    update ds_common_data_summary
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        alias = #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSource != null" >
+        data_source = #{dataSource,jdbcType=CHAR},
+      </if>
+      <if test="projectName != null" >
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="owner != null" >
+        owner = #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="cacheTime != null" >
+        cache_Time = #{cacheTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qding.bigdata.ds.model.CommonDataSummary" >
+    update ds_common_data_summary
+    set name = #{name,jdbcType=VARCHAR},
+    alias = #{alias,jdbcType=VARCHAR},
+    data_source = #{dataSource,jdbcType=CHAR},
+    project_name = #{projectName,jdbcType=VARCHAR},
+    description = #{description,jdbcType=VARCHAR},
+    update_time = #{updateTime,jdbcType=TIMESTAMP},
+    owner = #{owner,jdbcType=VARCHAR},cache_time=#{cacheTime}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getByName" parameterType="String" resultMap="BaseResultMap">
+    SELECT * FROM ds_common_data_summary WHERE name = #{name} limit 1
+  </select>
+  <select id="query" parameterType="com.qding.bigdata.ds.model.CommonDataDetail" resultMap="BaseResultMap">
+    SELECT * FROM ds_common_data_summary
+    <where>
+      <if test="commonDataSummaryId != null">
+        id = #{commonDataSummaryId}
+      </if>
+      <if test="keyword != null  and keyword != ''">
+        and (name like '%${keyword}%' OR alias LIKE '%${keyword}%')
+      </if>
+      <if test="dataSource != null and dataSource != ''">
+        and dataSource=#{dataSource}
+      </if>
+      <if test="projectName != null and projectName != ''" >
+        and project_name = #{projectName}
+      </if>
+      <if test="owner != null and owner != ''">
+        and owner = #{owner}
+      </if>
+      <if test="name != null and name != ''">
+        and name = #{name}
+      </if>
+    </where>
+    ORDER by update_time DESC
+    <choose>
+      <when test="page != null">
+        limit #{pageCount} offset #{offset}
+      </when>
+    </choose>
+  </select>
+  <select id="queryCount" parameterType="com.qding.bigdata.ds.model.CommonDataDetail" resultType="java.lang.Integer">
+    SELECT coalesce(count(1), 0) FROM ds_common_data_summary
+    <where>
+      <if test="commonDataSummaryId != null">
+        id = #{commonDataSummaryId}
+      </if>
+      <if test="keyword != null  and keyword != ''">
+        and (name like '%${keyword}%' OR alias LIKE '%${keyword}%')
+      </if>
+      <if test="dataSource != null and dataSource != ''">
+        and dataSource=#{dataSource}
+      </if>
+      <if test="projectName != null and projectName != ''" >
+        and project_name = #{projectName}
+      </if>
+      <if test="owner != null and owner != ''">
+        and owner = #{owner}
+      </if>
+      <if test="name != null and name != ''">
+        and name = #{name}
+      </if>
+    </where>
+  </select>
+</mapper>

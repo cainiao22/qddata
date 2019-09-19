@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.DsMaidianPageMapper" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.DsMaidianPage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="CHAR" />
+    <result column="name" property="name" jdbcType="CHAR" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="business_id" property="businessId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.qding.bigdata.ds.model.DsMaidianPage" extends="BaseResultMap" >
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <resultMap id="maindianPageWithParams" type="com.qding.bigdata.ds.model.DsMaidianPage" extends="ResultMapWithBLOBs">
+    <collection property="paramList" column="id" ofType="com.qding.bigdata.ds.model.DsMaidianParam" javaType="java.util.List"  select="getParamsById">
+      <id column="id" property="id" jdbcType="BIGINT" />
+      <result column="code" property="code" jdbcType="CHAR" />
+      <result column="simple_code" property="simpleCode" jdbcType="CHAR" />
+      <result column="name" property="name" jdbcType="CHAR" />
+      <result column="product_id" property="productId" jdbcType="BIGINT" />
+      <result column="status" property="status" jdbcType="INTEGER" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, name, product_id, business_id, status
+  </sql>
+  <sql id="Blob_Column_List" >
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ds_maidian_page
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ds_maidian_page
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qding.bigdata.ds.model.DsMaidianPage" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into ds_maidian_page (code, name, product_id, business_id
+      status, remark)
+    values (#{code,jdbcType=CHAR}, #{name,jdbcType=CHAR}, #{productId,jdbcType=BIGINT}, #{businessId,jdbcType=BIGINT},
+      #{status,jdbcType=INTEGER}, #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.DsMaidianPage" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into ds_maidian_page
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="businessId != null" >
+        business_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=CHAR},
+      </if>
+      <if test="businessId != null" >
+        #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qding.bigdata.ds.model.DsMaidianPage" >
+    update ds_maidian_page
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=CHAR},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null" >
+        business_id=#{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.qding.bigdata.ds.model.DsMaidianPage" >
+    update ds_maidian_page
+    set code = #{code,jdbcType=CHAR},
+      name = #{name,jdbcType=CHAR},
+      product_id = #{productId,jdbcType=BIGINT},
+      business_id=#{businessId,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qding.bigdata.ds.model.DsMaidianPage" >
+    update ds_maidian_page
+    set code = #{code,jdbcType=CHAR},
+      name = #{name,jdbcType=CHAR},
+      product_id = #{productId,jdbcType=BIGINT},
+      business_id=#{businessId,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="query" resultMap="maindianPageWithParams">
+    SELECT * FROM ds_maidian_page a
+    <where>
+   <if test="id != null" >
+      and a.id= #{id,jdbcType=BIGINT}
+   </if>
+    <if test="code != null" >
+      and a.code = #{code,jdbcType=CHAR}
+    </if>
+    <if test="name != null" >
+      and a.name LIKE CONCAT('%',#{name,jdbcType=CHAR},'%')
+    </if>
+    <if test="productId != null" >
+      and a.product_id = #{productId,jdbcType=BIGINT}
+    </if>
+    <if test="status != null" >
+      and a.status = #{status,jdbcType=INTEGER}
+    </if>
+    <if test="remark != null" >
+      and a.remark = #{remark,jdbcType=LONGVARCHAR}
+    </if>
+      <if test="businessId != null" >
+        and a.business_id = #{businessId,jdbcType=LONGVARCHAR}
+      </if>
+  </where>
+    ORDER by a.id DESC
+  </select>
+  <select id="getParamsById" resultType="com.qding.bigdata.ds.model.DsMaidianParam" parameterType="java.lang.Long">
+    SELECT c.* FROM ds_maidian_page a, ds_maidian_page_param_relationship b, ds_maidian_param c
+    where a.id=b.page_id and b.param_id=c.id and a.id=#{id}
+  </select>
+  <select id="getMaidianPageByCode" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ds_maidian_page
+    where code = #{code,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteAll">
+    DELETE FROM ds_maidian_page
+  </delete>
+
+  <select id="queryAll" resultMap="BaseResultMap">
+  SELECT * FROM ds_maidian_page a
+  </select>
+    <select id="queryByProductId" resultMap="BaseResultMap">
+        SELECT * FROM ds_maidian_page a where product_id=#{productId}
+    </select>
+</mapper>

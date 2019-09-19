@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.DsMaidianPageParamRelationshipMapper" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.DsMaidianPageParamRelationship" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="page_id" property="pageId" jdbcType="BIGINT" />
+    <result column="param_id" property="paramId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, page_id, param_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ds_maidian_page_param_relationship
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ds_maidian_page_param_relationship
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qding.bigdata.ds.model.DsMaidianPageParamRelationship" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into ds_maidian_page_param_relationship (id, page_id, param_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{pageId,jdbcType=BIGINT}, #{paramId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qding.bigdata.ds.model.DsMaidianPageParamRelationship" >
+    insert into ds_maidian_page_param_relationship
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pageId != null" >
+        page_id,
+      </if>
+      <if test="paramId != null" >
+        param_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="pageId != null" >
+        #{pageId,jdbcType=BIGINT},
+      </if>
+      <if test="paramId != null" >
+        #{paramId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qding.bigdata.ds.model.DsMaidianPageParamRelationship" >
+    update ds_maidian_page_param_relationship
+    <set >
+      <if test="pageId != null" >
+        page_id = #{pageId,jdbcType=BIGINT},
+      </if>
+      <if test="paramId != null" >
+        param_id = #{paramId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qding.bigdata.ds.model.DsMaidianPageParamRelationship" >
+    update ds_maidian_page_param_relationship
+    set page_id = #{pageId,jdbcType=BIGINT},
+      param_id = #{paramId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <delete id="deleteByPageId" parameterType="java.lang.Long" >
+    delete from ds_maidian_page_param_relationship
+    where page_id = #{pageId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteAll">
+     delete from ds_maidian_page_param_relationship
+  </delete>
+</mapper>

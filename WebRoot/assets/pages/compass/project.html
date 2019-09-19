@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no,email=no,address=no">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+
+  <title>罗盘</title>
+  <link rel="stylesheet" type="text/css" href="common/css/base.css">
+  <link rel="stylesheet" type="text/css" href="css/loading.css">
+  <link href="common/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link rel="stylesheet" type="text/css" href="css/compass.css">
+</head>
+
+<body>
+	<div class="mainBody">
+		<div class="loading">
+			<div class="card"><span class="throbber-loader">Loading&#8230;</span></div>
+		</div>
+		<header>
+			<div class="tabHead" style="background-color: #32A1FF;">
+				<div class="calendar" id="timeText" style="border-right: 1px solid #FFFFFF;"></div>
+				<div class="calendar" id="time"></div>
+			</div>
+		</header>
+
+		<div class="listWarp">
+			<div class="listPanel" style="display: none">
+				<div class="item flex" style="font-size: 14px;font-weight: bold;"><div class="tabValue">业务指标</div><div class="tabValue">数值</div><div class="tabValue">环比</div></div>
+
+				<div id="projectData">
+					<div class="item flex" id="pduan_bind_mem">
+						<div class="tabValue">P端绑定员工数</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="pduan_act_mem">
+						<div class="tabValue">P端活跃员工数</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="pduan_atc_lv">
+						<div class="tabValue">P端活跃员工占比</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="gg_notice_num">
+						<div class="tabValue">发布公告数量</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="gg_notice_avg">
+						<div class="tabValue">发布公告日均数量</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="mj_total_num">
+						<div class="tabValue">门禁安装总量</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="mj_nopass_num">
+						<div class="tabValue">30天无人通行门禁数量</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="mj_use_rate">
+						<div class="tabValue">门禁使用率</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="bs_total_num">
+						<div class="tabValue">报事总量</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="bs_yezhu_num">
+						<div class="tabValue">业主报事量</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="bs_wuye_num">
+						<div class="tabValue">物业报事量</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="jf_online_times">
+						<div class="tabValue">在线缴费次数</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="jf_online_jine">
+						<div class="tabValue">在线缴费金额</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="bind_new_inc">
+						<div class="tabValue">新增注册人数</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="bind_act_num">
+						<div class="tabValue">活跃人数</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="bind_new_hushu">
+						<div class="tabValue">新增绑定户数</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="qd_yezhu_zhucelv">
+						<div class="tabValue">APP-业主注册率(参考值80%)</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="qd_room_bdindlv">
+						<div class="tabValue">APP-房屋绑定率(参考值40%)</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="gj_zhucelv">
+						<div class="tabValue">物业云-员工累计注册率(参考值100%)</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="gj_huoyuedu">
+						<div class="tabValue">物业云-活跃度(月活参考值75%)</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="znmj_use_huoyuelv">
+						<div class="tabValue">门禁使用活跃率(参考值40%)</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="crm_gongdan_wanchenglv">
+						<div class="tabValue">CRM-工单完成率(参考值85%)</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="crm_jishifenpailv">
+						<div class="tabValue">CRM-及时分派率(参考值85%)</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="qm_jihua_wanchenglv">
+						<div class="tabValue">QM-计划完成率(参考值80%)</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="jfy_zhangdan_xianshanglv">
+						<div class="tabValue">计费云-全部账单线上化(是/否)</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="jfy_xianshang_jiaofeilv">
+						<div class="tabValue">计费云-线上缴费率(参考值25%)</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="sjy_query_batchs">
+						<div class="tabValue">项目经理及以上管理层查询批次(≥1次/人/周)</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+					<div class="item flex" id="dty_jihua_wanchenglv">
+						<div class="tabValue">电梯云计划完成率(参考值85%)</div>
+						<div class="tabValue">0</div>
+						<div class="tabValue">0%</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class="gohomeIcon" onclick="gohome()" title="回首页" alt="回首页"></div>
+
+  <script src="common/js/global.js"></script>
+  <script src="common/js/jquery-3.2.1.js"></script>
+  <script src="common/js/common.js"></script>
+  <script type="text/javascript" src="common/bootstrap/js/bootstrap.min.js"></script>
+  <script src="js/base.js"></script>
+  <script type="text/javascript">
+      getCommunityDataList();
+      //社区业务指标
+      function getCommunityDataList() {
+          var dataType = getUrlParam("dataType");
+          if(dataType=="1"){
+              $("#timeText").text("日");
+		  }else if(dataType=="2"){
+              $("#timeText").text("月");
+		  }else if(dataType=="3"){
+              $("#timeText").text("年");
+		  }else{
+              $("#timeText").text("日期");
+		  }
+
+          var time = getUrlParam("dateValue");
+          $("#time").text(time);
+          $(".loading").css("display", "table");
+          if(!checkEmptyOrNull(getUrlParam("projectId")) && !checkEmptyOrNull(getUrlParam("dataType")) && !checkEmptyOrNull(getUrlParam("dateValue"))){
+              $.ajax({
+                  url: GUrl + proxy('/dataApiQuery/luopan_project_data?project_id='+getUrlParam("projectId")+'&date_type='+getUrlParam("dataType")+'&date_value='+getUrlParam("dateValue")),
+                  type: 'get',
+                  dataType: 'json',
+                  success: function (res) {
+                      //console.log("社区指标："+JSON.stringify(res));
+                      $(".loading").hide();
+                      if (res.code == 0) {
+                          var list = res.data;
+                          if (!checkEmptyOrNull(list) && list.length > 0) {
+                              for (var i = 0; i < list.length; i++) {
+                                  var key = list[i].key;        //业务指标 string 唯一
+                                  var value = list[i].value;    //数值 number
+                                  var huanbi = list[i].huanbi;  //环比 string
+
+                                  if (key == "pduan_bind_mem") {
+                                      checkProject("#pduan_bind_mem",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "pduan_act_mem") {
+                                      checkProject("#pduan_act_mem",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "pduan_atc_lv") {
+                                      checkProject("#pduan_atc_lv",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "gg_notice_num") {
+                                      checkProject("#gg_notice_num",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "gg_notice_avg") {
+                                      checkProject("#gg_notice_avg",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "mj_total_num") {
+                                      checkProject("#mj_total_num",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "mj_nopass_num") {
+                                      checkProject("#mj_nopass_num",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "mj_use_rate") {
+                                      checkProject("#mj_use_rate",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "bs_total_num") {
+                                      checkProject("#bs_total_num",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "bs_yezhu_num") {
+                                      checkProject("#bs_yezhu_num",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "bs_wuye_num") {
+                                      checkProject("#bs_wuye_num",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "jf_online_times") {
+                                      checkProject("#jf_online_times",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "jf_online_jine") {
+                                      checkProject("#jf_online_jine",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "bind_new_inc") {
+                                      checkProject("#bind_new_inc",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "bind_act_num") {
+                                      checkProject("#bind_act_num",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "bind_new_hushu") {
+                                      checkProject("#bind_new_hushu",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "qd_yezhu_zhucelv") {
+                                      checkProject("#qd_yezhu_zhucelv",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "qd_room_bdindlv") {
+                                      checkProject("#qd_room_bdindlv",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "gj_zhucelv") {
+                                      checkProject("#gj_zhucelv",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "gj_huoyuedu") {
+                                      checkProject("#gj_huoyuedu",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "znmj_use_huoyuelv") {
+                                      checkProject("#znmj_use_huoyuelv",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "crm_gongdan_wanchenglv") {
+                                      checkProject("#crm_gongdan_wanchenglv",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "crm_jishifenpailv") {
+                                      checkProject("#crm_jishifenpailv",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "qm_jihua_wanchenglv") {
+                                      checkProject("#qm_jihua_wanchenglv",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "jfy_zhangdan_xianshanglv") {
+                                      checkProject("#jfy_zhangdan_xianshanglv",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "jfy_xianshang_jiaofeilv") {
+                                      checkProject("#jfy_xianshang_jiaofeilv",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "sjy_query_batchs") {
+                                      checkProject("#sjy_query_batchs",value, huanbi);
+                                      continue;
+                                  }
+                                  if (key == "dty_jihua_wanchenglv") {
+                                      checkProject("#dty_jihua_wanchenglv",value, huanbi);
+                                      continue;
+                                  }
+                              }
+                          } else { //空
+                          }
+                      }else {//错误
+                      }
+                      $(".listPanel").show();
+                  },
+                  error: function () {
+                      $(".loading").hide();
+                      $(".listPanel").show();
+                  }
+              });
+		  }else{
+              $(".loading").hide();
+              $(".listPanel").show();
+		  }
+      }
+
+      function checkProject(key,value,huanbi) {
+          if (!checkEmptyOrNull(value)) {
+              if((key == "#mj_use_rate" || key == "#mj_nopass_num") && getUrlParam("dataType")!="1"){
+                  $(key+" div:nth-child(2)").text("-");
+              }else{
+                  if(key=="#pduan_atc_lv" || key =="#mj_use_rate" || key=="#qd_yezhu_zhucelv" || key=="#qd_room_bdindlv"
+                      || key=="#gj_zhucelv" || key=="#gj_huoyuedu" || key=="#znmj_use_huoyuelv" || key=="#crm_gongdan_wanchenglv"
+                      || key=="#crm_jishifenpailv" || key=="#qm_jihua_wanchenglv" || key=="#jfy_zhangdan_xianshanglv"
+                      || key=="#jfy_xianshang_jiaofeilv" || key=="#dty_jihua_wanchenglv"){
+                      $(key+" div:nth-child(2)").text(value+"%");
+                  }else{
+                      $(key+" div:nth-child(2)").text(value);
+                  }
+              }
+          }else{
+              $(key+" div:nth-child(2)").text("0");
+          }
+
+          if (Number(huanbi) > 0) {
+              $(key+" div:nth-child(3)").text(huanbi+'%').addClass("text-green").append("<span>↑</span>");
+          } else if (Number(huanbi) < 0) {
+              $(key+" div:nth-child(3)").text(huanbi+'%').addClass("text-red").append("<span>↓</span>");
+          }else if(Number(huanbi) == 0){
+              $(key+" div:nth-child(3)").text("0%").removeClass("text-red text-green");
+          }else{
+              $(key+" div:nth-child(3)").text("-").removeClass("text-red text-green");
+          }
+      }
+  </script>
+
+</body>
+</html>

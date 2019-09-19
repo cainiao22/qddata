@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.TaskExecuteLogDao">
+	<resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.TaskExecuteLog">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="task_id" property="taskId" jdbcType="VARCHAR" />
+		<result column="task_type" property="taskType" jdbcType="VARCHAR" />
+		<result column="log" property="log" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+		<result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="table_id" property="tableId" jdbcType="VARCHAR" />
+		<result column="sync_data_status" property="syncDataStatus" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<select id="queryById" resultMap="BaseResultMap" parameterType="String">
+		select *
+		from ds_task_execute_log
+		where tableId=#{id} limit 1 order by  create_time desc
+	</select>
+	<sql id="where_condition">
+		<trim prefix=" where " suffixOverrides="and">
+			<if test="tableId != null">
+				table_id = #{tableId} and
+			</if>
+		</trim>
+	</sql>
+	<sql id="limitAndOrderBy">
+		<if test="sortAndDesc != null">
+			order by  create_time ${sortAndDesc}
+		</if>
+		limit  #{pageCount} offset #{offset}
+	</sql>
+	<select id="list" resultMap="BaseResultMap" parameterType="TaskExecuteLog">
+		select  *
+		from ds_task_execute_log
+		<include refid="where_condition" />
+		<include refid="limitAndOrderBy" />
+	</select>
+	<select id="count" resultType="Integer" parameterType="SchemeInfo">
+		select count(1)
+		from ds_task_execute_log
+		<include refid="where_condition" />
+	</select>
+
+	<insert id="save" parameterType="TaskExecuteLog">
+
+		insert into ds_task_execute_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="taskId != null">
+				task_id,
+			</if>
+			<if test="taskType != null">
+				task_type,
+			</if>
+			<if test="log != null">
+				`log`,
+			</if>
+
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="startTime != null">
+				start_time,
+			</if>
+			<if test="endTime != null">
+				end_time,
+			</if>
+			<if test="tableId != null">
+				table_id,
+			</if>
+			<if test="syncDataStatus != null">
+				sync_data_status,
+		     </if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="taskId != null">
+			  #{taskId},
+			</if>
+			<if test="taskType != null">
+				 #{taskType},
+			</if>
+			<if test="log != null">
+				 #{log},
+			</if>
+
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+
+			<if test="startTime != null">
+				#{startTime},
+			</if>
+			<if test="endTime != null">
+				#{endTime},
+			</if>
+			<if test="tableId != null">
+				#{tableId},
+			</if>
+			<if test="syncDataStatus != null">
+				#{syncDataStatus},
+			</if>
+		</trim>
+	</insert>
+
+</mapper>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qding.bigdata.ds.dao.MidLuopanLuruCityDataDao" >
+  <resultMap id="BaseResultMap" type="com.qding.bigdata.ds.model.MidLuopanLuruCityData" >
+    <result column="region_id" property="regionId" jdbcType="VARCHAR" />
+    <result column="region_name" property="regionName" jdbcType="VARCHAR" />
+    <result column="json_value" property="jsonValue" jdbcType="VARCHAR" />
+    <result column="sort_no" property="sortNo"  jdbcType="BIGINT" />
+    <result column="create_time" property="createtime" jdbcType="VARCHAR" />
+    <result column="update_time" property="updatetime" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+  </resultMap>
+  <!--数据基本信息-->
+  <sql id="base_column_list">*
+  </sql>
+  <!--查询基本条件-->
+  <sql id="where_condition">
+    <trim prefix=" where " suffixOverrides="and">
+      <if test="regionId != null  and regionId !=''">
+        region_id = #{regionId} and
+      </if>
+      <if test="regionName != null  and regionName !=''">
+        region_name = #{regionName} and
+      </if>
+      <if test="jsonValue != null  and jsonValue !=''">
+        json_value = #{jsonValue} and
+      </if>
+      <if test="sortNo != null and sortNo !=''">
+        sort_no = #{sortNo} and
+      </if>
+    </trim>
+  </sql>
+  <!--排序和分页sql-->
+  <sql id="limitAndOrderBy">
+    <if test="sortAndDesc != null">
+      order by ${sortAndDesc}
+    </if>
+    limit  #{pageCount} offset #{offset}
+  </sql>
+
+  <select id="listNopage" parameterType="com.qding.bigdata.ds.model.MidLuopanLuruCityData" resultMap="BaseResultMap">
+    SELECT
+    <include refid="base_column_list" />
+    FROM  mid.mid_luopan_luru_city_data
+    <include refid="where_condition" />
+    <if test="sortAndDesc != null">
+      order by ${sortAndDesc}
+    </if>
+  </select>
+
+  <!--更新一条-->
+  <update id="updateByParam" parameterType="com.qding.bigdata.ds.model.MidLuopanLuruCityData">
+    update mid.mid_luopan_luru_city_data
+    <set>
+      <if test="jsonValue != null">
+        json_value = #{jsonValue},
+      </if>
+      <if test="updatetime != null">
+        update_time = #{updatetime},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser},
+      </if>
+    </set>
+    where region_name = #{regionName}
+    <!--and region_id = #{regionId}-->
+   </update>
+  <!-- 批量更新，通过接收传进来的参数list进行循环着组装sql -->
+  <update id="batchUpdate" parameterType="com.qding.bigdata.ds.model.MidLuopanLuruCityData">
+    <!-- 接收list参数，循环着组装sql语句，注意for循环的写法
+         separator=";" 代表着每次循环完，在sql后面放一个分号
+         item="cus" 循环List的每条的结果集
+         collection="list" list 即为 map传过来的参数key -->
+    <foreach collection="list" separator=";" item="cus">
+      update mid.mid_luopan_luru_city_data
+      <set>
+        <if test="cus.jsonValue != null">
+          json_value = #{cus.jsonValue},
+        </if>
+        <if test="cus.updatetime != null">
+          update_time = #{cus.updatetime},
+        </if>
+        <if test="cus.updateUser != null">
+          update_user = #{cus.updateUser},
+        </if>
+      </set>
+      where region_name = #{cus.regionName}
+    </foreach>
+  </update>
+
+ </mapper>
