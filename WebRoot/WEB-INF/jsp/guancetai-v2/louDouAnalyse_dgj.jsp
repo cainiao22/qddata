@@ -12,18 +12,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/icon.png">
-    <c:import url="/WEB-INF/jsp/common/importCss2.jsp"></c:import>
+    <!-- Bootstrap Core CSS -->
+    <link href="./assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="./assets/css/compass/style.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="./assets/css/compass/colors/megna-dark.css" id="theme" rel="stylesheet">
+
+    <link href="./assets/global/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="./css/datepicker.css">
     <link rel="stylesheet" type="text/css" href="./assets/plugins/datatables/datatables.min.css"/>
     <link rel="stylesheet" type="text/css" href="./thirdlib/Select2/select2.min.css"/>
     <link rel="stylesheet" type="text/css" href="./css/guancetaiCommon.css">
+    <link href="./css/jquery.searchableSelect.css" rel="stylesheet" type="text/css">
     <style>
         table thead th, table thead td {
             border-right: 1px solid #dee2e6;
             border-bottom: 0;
             text-align: center;
         }
-
         table.dataTable thead td, table.dataTable tfoot th {
             font-weight: normal;
             border-top: 1px solid #dee2e6;
@@ -310,7 +317,7 @@
         }
 
         #addLouDou .addSteps {
-            padding-left: 20px;
+            padding-left: 0;
             width: 120px;
             height: 30px;
             line-height: 30px;
@@ -326,10 +333,12 @@
 
         #addLouDou .addSteps span {
             position: relative;
-            top: 14px;
-            right: 20px;
+            top: 8px;
+            right: 10px;
+            display: inline-block;
+            width: 16px;
+            height: 16px;
         }
-
         #addLouDou .addSteps span:after {
             position: absolute;
             content: "";
@@ -570,7 +579,7 @@
         }
 
         #editLouDou .addSteps {
-            padding-left: 20px;
+            padding-left: 0;
             width: 120px;
             height: 30px;
             line-height: 30px;
@@ -586,8 +595,11 @@
 
         #editLouDou .addSteps span {
             position: relative;
-            top: 14px;
-            right: 20px;
+            top: 8px;
+            right: 10px;
+            display: inline-block;
+            width: 16px;
+            height: 16px;
         }
 
         #editLouDou .addSteps span:after {
@@ -625,23 +637,25 @@
             border: .5px solid #ccc;
             cursor: pointer;
         }
-
-
-
+        .ol li:first-of-type{
+            margin-bottom: 10px;
+        }
+        .ol li:first-of-type input{
+            color: #8B93A7;
+            box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+            border: 1px solid #ccc;
+            padding: 6px;
+            min-height: 34px;
+            border-radius: 4px;
+        }
+        .searchable-select{
+            text-align: left!important;
+            min-width: 222px!important;
+        }
     </style>
 </head>
 <body>
-<%--
-<header>
-    <nav>
-        <div class="logo"><img src="./images/logo.png" /></div>
-        <div class="tabControl">
-            <a href="./guancetai"><div data-type="0"><i class="qdLogo_n"></i>千丁App</div></a>
-            <a href="./pathAnalyse_dgj"><div data-type="1" class="active"><i class="dgjLogo"></i>丁管家</div></a>
-        </div>
-    </nav>
-</header>
---%>
+
 
 <div class="wrapper" style="margin-top: 0; margin-left: 0;">
     <div class="controller" style="padding: 0;">
@@ -650,7 +664,7 @@
                 <div class="title">
                     <div>
                         <label style="margin-left: 40px">端:</label>
-                        <%-- onchange="dataStatisticSelect()"--%>
+
                         <select style="margin-right: 20px;" id="appType" onchange="getDevType()">
                             <option value="all">全部端</option>
                             <option value="Android">Android</option>
@@ -665,12 +679,12 @@
                         </div>
 
                         <select  id="louDouEdit" onchange="louDouEditChange()">
-                            <%--<option value="payLouDou">缴费页面漏斗</option>--%>
-                            <%--<option value="pageLouDou">xxx页面漏斗</option>--%>
+
+
                         </select>
-                        <%--新增漏斗与编辑漏斗触发通过一个函数，通过判断进行不同操作--%>
+
                         <a href="javascript:;" onclick="editLouDou()" style="margin-left: 10px" >编辑漏斗</a>
-                        <%--编辑漏斗页面--%>
+
                         <div id="editLouDou" style="clear: both">
                             <div class="addLouDouTop"><span style="margin-left: 20px">添加漏斗</span><span
                                     class="close" onclick="closeEditLouDou()"></span></div>
@@ -687,7 +701,7 @@
 
                         <button onclick="addLouDouPageFn()" id="addLouDouPage">新增漏斗</button>
 
-                        <%-----------------------事件让下面的新增页面addLouDow显示隐藏---------------------------------%>
+
                         <div id="addLouDou" style="clear: both">
                             <div class="addLouDouTop"><span style="margin-left: 20px">添加漏斗</span><span
                                     class="close" onclick="closeAddLouDou()"></span></div>
@@ -709,32 +723,32 @@
                 </div>
 
             </div>
-            <%------------------------------------------------新增漏斗页面END----------------------------------%>
 
-            <%--漏斗示意图--%>
+
+
             <div id="louDouMap">
                 <div class="left">
                     <ol>
-                        <%--<li>页面1</li>--%>
-                        <%--<li>uv:100</li>--%>
-                        <%--<li>--%>
-                        <%--<span>80%</span>--%>
-                        <%--<div class="leftTop"></div>--%>
-                        <%--<div class="leftBot"></div>--%>
-                        <%--</li>--%>
-                        <%--<li>页面2</li>--%>
-                        <%--<li>uv:10</li>--%>
-                        <%--<li>--%>
-                        <%--<span>40%</span>--%>
-                        <%--<div class="leftTop"></div>--%>
-                        <%--<div class="leftBot"></div>--%>
-                        <%--</li>--%>
-                        <%--<li>页面3</li>--%>
-                        <%--<li>uv:100</li>--%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     </ol>
                 </div>
 
-                <%--------------------left是图标  right是表格-----------------------------------%>
+
                 <div class="right">
                     <table border="1" id="louDouMapTable" style="display: none">
                         <tr>
@@ -744,20 +758,7 @@
                             <th>上一步UV转化率</th>
                             <th>总体UV转化率</th>
                         </tr>
-                        <%--     <tr>
-                                 <td>步骤1</td>
-                                 <td>页面一</td>
-                                 <td>88</td>
-                                 <td>88%</td>
-                                 <td>99%</td>
-                             </tr>
-                             <tr>
-                                 <td>步骤1</td>
-                                 <td>页面一</td>
-                                 <td>88</td>
-                                 <td>88%</td>
-                                 <td>99%</td>
-                             </tr>--%>
+
                     </table>
 
                 </div>
@@ -766,7 +767,55 @@
         </div>
     </div>
 
-    <c:import url="/WEB-INF/jsp/common/importJs2.jsp"></c:import>
+
+    <!-- All Jquery -->
+    <script src="./assets/plugins/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="./assets/plugins/bootstrap/js/popper.min.js"></script>
+    <script src="./assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="./assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!--Wave Effects -->
+    <script src="./assets/plugins/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="./assets/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="./assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="./assets/js/custom.min.js"></script>
+    <!-- Style switcher -->
+    <script src="./assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+
+
+    <script src="./assets/plugins/bootstrap-sweetalert/sweetalert.min.js" type="text/javascript"></script>
+    <script src="./assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="./assets/plugins/jquery-cookie/jquery.cookie.js" type="text/javascript"></script>
+    <script type='text/javascript'>
+        $(function(){
+            var realname = decodeURI(Cookies.get("realname"));
+            $("#welcome").text("欢迎您," + realname + "!");
+            //在这儿利用userName去后台发送请求，，如果能获取到则让其展示
+            var realname = decodeURI(Cookies.get("username"));
+            //console.log(realname);
+            if(""!=realname && null!=realname && undefined!=realname && "undefined"!=realname ){
+                $.ajax({
+                    url: "./getUserByName?userName=" +realname,
+                    type: "post",
+                    success: function (data) {
+                        //用户来源(0.compass/1.boss/2.mis)
+                        if (1 != data.userSource || (null!=data.userName && null==data.userSource)) {
+                            // console.log(data)
+                            $("#updatePasswordBtn").show();
+                            /*$("#logOutBtn").css("bottom","5px");*/
+                            $("#logOutBtn").css("bottom","17px");
+                        }
+                    },
+                    error: function (e) {
+                    }
+                });
+            }
+        });
+    </script>
     <script type="text/javascript" src="./js/moment.min.js"></script>
     <script type="text/javascript" src="./js/datepicker.all.min.js"></script>
     <script type="text/javascript" src="./thirdlib/echarts/echarts.min.js"></script>
@@ -776,6 +825,7 @@
     <script type="text/javascript" src="./thirdlib/Select2/select2.min.js"></script>
     <script type="text/javascript" src="./js/guancetai/guancetaiCommon.js"></script>
     <script type="text/javascript" src="./js/guancetai/dataPoint.js"></script>
+    <script type="text/javascript" src="./js/jquery.searchableSelect.js"></script>
     <script type="text/javascript" src="./js/guancetai/loudouAnalyse_dgj_V2.js"></script>
     <script>
 

@@ -244,7 +244,11 @@ $.ajax({//指定页面接口
     }
 });
 
-
+$('#sgmlPage').searchableSelect();
+$('.searchable-select-item').on('click', function () {
+    console.log($(this).data('value'));
+    sgmlPageFn();
+});
 function addNumber(obj, num) {
     // 百分比使用
     var newNum = 0;
@@ -375,7 +379,7 @@ function sgmlPageFn() {
     flagIds = '';
 //获取下拉列表的值
     var sgmlPage = document.getElementById('sgmlPage');
-    var selectValue = sgmlPage[sgmlPage.selectedIndex].value;
+    var selectValue = $('.searchable-select-items .selected').data('value');
     flagEndPi = selectValue == "all" ? '' : selectValue;
     ul.innerHTML = null;
     while (ul.nextElementSibling) {

@@ -12,11 +12,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/icon.png">
-    <c:import url="/WEB-INF/jsp/common/importCss2.jsp"></c:import>
+    <!-- Bootstrap Core CSS -->
+    <link href="./assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="./assets/css/compass/style.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="./assets/css/compass/colors/megna-dark.css" id="theme" rel="stylesheet">
+
+    <link href="./assets/global/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="./css/datepicker.css">
     <link rel="stylesheet" type="text/css" href="./assets/plugins/datatables/datatables.min.css"/>
     <link rel="stylesheet" type="text/css" href="./thirdlib/Select2/select2.min.css"/>
     <link rel="stylesheet" type="text/css" href="./css/guancetaiCommon.css">
+    <link href="./css/jquery.searchableSelect.css" rel="stylesheet" type="text/css">
     <style>
         table thead th, table thead td {
             border-right: 1px solid #dee2e6;
@@ -211,7 +219,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/icon.png">
-        <c:import url="/WEB-INF/jsp/common/importCss2.jsp"></c:import>
+        <!-- Bootstrap Core CSS -->
+        <link href="./assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="./assets/css/compass/style.css" rel="stylesheet">
+        <!-- You can change the theme colors from here -->
+        <link href="./assets/css/compass/colors/megna-dark.css" id="theme" rel="stylesheet">
+
+        <link href="./assets/global/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="./css/datepicker.css">
         <link rel="stylesheet" type="text/css" href="./assets/plugins/datatables/datatables.min.css" />
         <link rel="stylesheet" type="text/css" href="./thirdlib/Select2/select2.min.css"/>
@@ -257,19 +272,7 @@
         </style>
     </head>
 <body>
-<%--<header>
-    <nav>
-        <div class="logo"><img src="./images/logo.png" /></div>
-        <div class="tabControl">
-            <div class="tabControl">
-                <a href="./pageAnalyse"><div data-type="0"><i class="qdLogo_n"></i>千丁App</div></a>
-                <a href="./pageAnalyse_dgj"><div data-type="1" class="active"><i class="dgjLogo"></i>丁管家</div></a>
-            </div>
-        </div>
-    </nav>
-</header>--%>
 <!--leftBar begin-->
-
 <div class="wrapper" style="margin-top: 0; margin-left: 0;">
     <div class="controller" style="padding: 0;">
         <div class="main" id="qdingPanel">
@@ -289,69 +292,80 @@
                             <span class="c-datepicker-range-separator">-</span>
                             <input placeholder="结束日期" name="" class="c-datepicker-data-input only-date" value="">
                         </div>
-
                         <div style="display: inline-block; margin-left: 100px" id="input">
                             <input type="radio" name="analysis" value="pageAnalysis" checked>页面分析
                             <input type="radio" name="analysis" value="eventAnalysis">事件分析
-
                         </div>
-
                     </div>
-
                 </div>
             </div>
-
-            <%--指定页面--%>
             <div class="pageTable" id="pageTable">
                 <label>指定页面:</label>
-                <select name="" id="sgmlPage" onchange="sgmlPageFn()">
-                    <%--通过js动态添加--%>
+                <select name="" id="sgmlPage">
                     <option value="all">无指定</option>
                 </select>
             </div>
-
-
-
-
-
-            <%--页面展示树形图--%>
             <div class="pageTree" id="pageTree">
                 <div class="pageTreeStart">
                     <span> 开始</span>
-                    <%--i标签存下拉箭头三角--%>
                     <div class="startArrow select1">
                         <div class="top"></div>
                         <div class="bot"></div>
                     </div>
                 </div>
-                <%--各个树形图二级页面--%>
+
                 <ul id="ul">
-                    <%--通过js动态添加  不过下面这个是暂时留着--%>
-                    <%--  <li class="select">页面一
-                          <div class="">
-                              <div class="top"></div>
-                              <div class="bot"></div>
-                          </div>
-                          <h5>20%/00</h5>
-                      </li>
-                          <li class="select">页面二
-                          <div class="">
-                              <div class="top"></div>
-                              <div class="bot"></div>
-                          </div>
-                          <h5>20%/00</h5>
-                      </li>--%>
-
                 </ul>
-
-
             </div>
-
         </div>
     </div>
-
-
-    <c:import url="/WEB-INF/jsp/common/importJs2.jsp"></c:import>
+</div>
+    <!-- All Jquery -->
+    <script src="./assets/plugins/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="./assets/plugins/bootstrap/js/popper.min.js"></script>
+    <script src="./assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="./assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!--Wave Effects -->
+    <script src="./assets/plugins/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="./assets/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="./assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="./assets/js/custom.min.js"></script>
+    <!-- Style switcher -->
+    <script src="./assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+    <script src="./assets/plugins/bootstrap-sweetalert/sweetalert.min.js" type="text/javascript"></script>
+    <script src="./assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="./assets/plugins/jquery-cookie/jquery.cookie.js" type="text/javascript"></script>
+    <script type='text/javascript'>
+        $(function(){
+            var realname = decodeURI(Cookies.get("realname"));
+            $("#welcome").text("欢迎您," + realname + "!");
+            //在这儿利用userName去后台发送请求，，如果能获取到则让其展示
+            var realname = decodeURI(Cookies.get("username"));
+            //console.log(realname);
+            if(""!=realname && null!=realname && undefined!=realname && "undefined"!=realname ){
+                $.ajax({
+                    url: "./getUserByName?userName=" +realname,
+                    type: "post",
+                    success: function (data) {
+                        //用户来源(0.compass/1.boss/2.mis)
+                        if (1 != data.userSource || (null!=data.userName && null==data.userSource)) {
+                            // console.log(data)
+                            $("#updatePasswordBtn").show();
+                            /*$("#logOutBtn").css("bottom","5px");*/
+                            $("#logOutBtn").css("bottom","17px");
+                        }
+                    },
+                    error: function (e) {
+                    }
+                });
+            }
+        });
+    </script>
     <script type="text/javascript" src="./js/moment.min.js"></script>
     <script type="text/javascript" src="./js/datepicker.all.min.js"></script>
     <script type="text/javascript" src="./thirdlib/echarts/echarts.min.js"></script>
@@ -361,12 +375,8 @@
     <script type="text/javascript" src="./thirdlib/Select2/select2.min.js"></script>
     <script type="text/javascript" src="./js/guancetai/guancetaiCommon.js"></script>
     <script type="text/javascript" src="./js/guancetai/dataPoint.js"></script>
+    <script src="./js/jquery.searchableSelect.js"></script>
     <script type="text/javascript" src="./js/guancetai/pathAnalyse_dgj_V2.js"></script>
-
-
-    <script>
-
-
-    </script>
 </body>
 </html>
+

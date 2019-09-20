@@ -54,8 +54,7 @@ function closeEditLouDou() {
 function addLouDouPageFn() {
     ol.innerHTML = null;
     var li = document.createElement("li");
-    li.innerHTML = `<span class="stars">*</span>漏斗名称 <input type="text" placeholder="请输入漏斗名称"
-                                                                            class="addLouDouStyle">`
+    li.innerHTML = `<span class="stars">*</span>漏斗名称 <input type="text" placeholder="请输入漏斗名称" class="addLouDouStyle">`
     ol.appendChild(li)
     addLouDouStyle[0].value = '';
     addLouDou.style.display = "block";
@@ -78,6 +77,7 @@ function addLouDouPageFn() {
                                     </span>`;
         li.appendChild(span);
         ol.appendChild(li);
+        $('.addLouDouStyle').eq(1).searchableSelect();
     }
 }
 // <%-----------------------------------%>
@@ -169,7 +169,7 @@ addSteps.addEventListener("click", function () {
                                     </span>`;
     li.appendChild(span);
     ol.appendChild(li);
-
+    $(li).find('.addLouDouStyle').eq(0).searchableSelect();
 }, true);
 
 function deleteSteps(par) {
@@ -186,8 +186,7 @@ function determine() {//确定按钮
     option.innerHTML = addLouDouStyle[0].value || "未命名";
     louDouEdit.appendChild(option);
     closeAddLouDou();
-    ol.innerHTML = `  <li><span class="stars">*</span>漏斗名称 <input type="text" placeholder="漏斗名称"
-                                                                            class="addLouDouStyle">
+    ol.innerHTML = `  <li><span class="stars">*</span>漏斗名称 <input type="text" placeholder="漏斗名称" class="addLouDouStyle">
                                 </li>`;//再次进入恢复初始值
 
     var params = {
@@ -227,8 +226,7 @@ function editLouDou() {
     var text = louDouEdit[louDouEdit.selectedIndex].innerText;
     var values = flagEditValue = louDouEdit[louDouEdit.selectedIndex].value.split(",");
     louDouEditIndex=louDouEdit.selectedIndex;//记录索引
-    li.innerHTML = `<span class="stars">*</span>漏斗名称 <input type="text" placeholder="漏斗名称"
-                                                                            class="addLouDouStyle" value="` + text + `">`
+    li.innerHTML = `<span class="stars">*</span>漏斗名称 <input type="text" placeholder="漏斗名称" class="addLouDouStyle" value="` + text + `">`
     ol.appendChild(li);
     var lis = editLouDouId.getElementsByTagName("li");
     //把原来的数据拿来
@@ -252,6 +250,7 @@ function editLouDou() {
                                     </span>`;
         li.appendChild(span);
         ol.appendChild(li);
+        $('.addLouDouStyle').eq(i+1).searchableSelect()
     }
 
     //编辑的新增漏斗
@@ -278,6 +277,7 @@ function editLouDou() {
                                     </span>`;
         li.appendChild(span);
         ol.appendChild(li);
+        $(li).find('.addLouDouStyle').eq(0).searchableSelect();
     }
 }
 
