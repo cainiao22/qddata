@@ -324,7 +324,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.40</version>
+            <version>8.0.16</version>
         </dependency>
         <!-- hession相关协议 -->
         <dependency>
@@ -968,7 +968,7 @@
                         <groupId>mysql</groupId>
                         <artifactId>mysql-connector-java</artifactId>
                         <!-- 引用依赖库的版本 -->
-                        <version>5.1.40</version>
+                        <version>8.0.16</version>
                     </dependency>
                     <dependency>
                         <groupId>org.mybatis.generator</groupId>
